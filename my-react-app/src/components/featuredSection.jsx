@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import HackathonCard from './hackathonCard';
 
 const getUnique = (arr, key) => [...new Set(arr.map((item) => item[key]))];

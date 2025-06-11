@@ -1,25 +1,29 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import HackathonsList from "./pages/HackathonsList";
-
-
+import { Route, Routes } from 'react-router-dom';
+import LayoutPage from './pages/LayoutPage.jsx';
+import HomePage from './pages/HomePage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
+import HackathonsPage from './pages/HackathonsPage.jsx';
+import AboutPage from './pages/AboutPage.jsx';
+import ContactPage from './pages/ContactPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
 
 function App() {
-
   return (
-
     <Routes>
-
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/hackathons" element={<HackathonsList />} />
-
+      <Route path='/' element={<LayoutPage />}>
+        <Route index element={<HomePage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/hackathons' element={<HackathonsPage />} />
+        <Route path='/about' element={<AboutPage />} />
+        <Route path='/contact' element={<ContactPage />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Route>
     </Routes>
-  );
+  )
 }
 
 export default App;
