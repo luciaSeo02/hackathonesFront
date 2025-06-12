@@ -1,17 +1,17 @@
 const getDataUserLoggedService = async ({ token }) => {
-  const url = `${import.meta.env.VITE_URL_API}/users/login`;
+    const url = `${import.meta.env.VITE_URL_API}/users/login`;
 
-  const response = await fetch(url, {
-    headers: {
-        authorization: token
-    }
-  });
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
-  const json = await response.json();
+    const json = await response.json();
 
-  if (!response.ok) throw new Error(json.message);
+    if (!response.ok) throw new Error(json.message);
 
-  return json.data;
-}
+    return json.data;
+};
 
-export default getDataUserLoggedService
+export default getDataUserLoggedService;
