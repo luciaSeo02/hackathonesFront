@@ -8,7 +8,11 @@ const AuthContextProvider = ({ children }) => {
     const [userLogged, setUserLogged] = useState(null);
 
     useEffect(() => {
-        localStorage.setItem('token', token);
+        if (token) {
+            localStorage.setItem('token', token);
+        } else {
+            localStorage.removeItem('token');
+        }
     }, [token]);
 
     useEffect(() => {
@@ -16,25 +20,24 @@ const AuthContextProvider = ({ children }) => {
             try {
                 const data = await getDataUserLoggedService({ token });
                 setUserLogged(data);
-                
             } catch (error) {
                 console.log(error);
             }
-        }
+        };
         getDataUserLogged();
     }, [token]);
 
     const logout = () => {
         setToken(null);
         setUserLogged(null);
-    }
+    };
 
     return (
         <AuthContext.Provider value={{ token, setToken, userLogged, logout }}>
-            { children }
+            {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
 
 export default AuthContext;
-export { AuthContextProvider }
+export { AuthContextProvider };
