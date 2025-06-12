@@ -8,6 +8,7 @@ import HackathonsPage from './pages/HackathonsPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
+import AdminCreateHackathon from './pages/AdminCreateHackathon.jsx';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/hackathons' element={<HackathonsPage />} />
+        <Route path='/hackathons/create' element={<AdminCreateHackathon />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path='*' element={<NotFoundPage />} />
