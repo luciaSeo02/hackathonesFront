@@ -10,22 +10,22 @@ const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         if (token) {
             localStorage.setItem('token', token);
+            getDataUserLogged(token);
         } else {
             localStorage.removeItem('token');
+            setUserLogged(null);
         }
     }, [token]);
 
-    useEffect(() => {
-        const getDataUserLogged = async () => {
-            try {
-                const data = await getDataUserLoggedService({ token });
-                setUserLogged(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getDataUserLogged();
-    }, [token]);
+    const getDataUserLogged = async (authToken) => {
+        try {
+            const data = await getDataUserLoggedService(authToken);
+            setUserLogged(data);
+        } catch (error) {
+            console.log(error);
+            setToken(null);
+        }
+    };
 
     const logout = () => {
         setToken(null);
