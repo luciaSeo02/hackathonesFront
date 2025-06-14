@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import ButtonBig from './ui/ButtonBig';
+
 const ChangePasswordForm = ({ token, onSuccess }) => {
     const [passwordData, setPasswordData] = useState({
         currentPassword: '',
@@ -16,6 +18,7 @@ const ChangePasswordForm = ({ token, onSuccess }) => {
 
         if (newPassword !== confirmNewPassword) {
             setError('Las contraseñas no coinciden');
+            setMessage('');
             return;
         }
 
@@ -42,7 +45,6 @@ const ChangePasswordForm = ({ token, onSuccess }) => {
 
             setMessage('Contraseña actualizada con éxito');
             setError('');
-
             setPasswordData({
                 currentPassword: '',
                 newPassword: '',
@@ -54,13 +56,21 @@ const ChangePasswordForm = ({ token, onSuccess }) => {
             setMessage('');
         }
     };
-    return (
-        <div>
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
 
-            <p>
-                <strong>Contraseña actual:</strong>{' '}
+    const inputClass =
+        'w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white';
+    const labelClass =
+        'text-sm font-medium text-gray-700 dark:text-gray-200 mb-1';
+
+    return (
+        <div className="space-y-4">
+            {message && (
+                <p className="text-green-600 dark:text-green-400">{message}</p>
+            )}
+            {error && <p className="text-red-600 dark:text-red-400">{error}</p>}
+
+            <div>
+                <label className={labelClass}>Contraseña actual</label>
                 <input
                     type="password"
                     value={passwordData.currentPassword}
@@ -70,10 +80,12 @@ const ChangePasswordForm = ({ token, onSuccess }) => {
                             currentPassword: e.target.value,
                         })
                     }
+                    className={inputClass}
                 />
-            </p>
-            <p>
-                <strong>Nueva contraseña:</strong>{' '}
+            </div>
+
+            <div>
+                <label className={labelClass}>Nueva contraseña</label>
                 <input
                     type="password"
                     value={passwordData.newPassword}
@@ -83,10 +95,12 @@ const ChangePasswordForm = ({ token, onSuccess }) => {
                             newPassword: e.target.value,
                         })
                     }
+                    className={inputClass}
                 />
-            </p>
-            <p>
-                <strong>Confirmar nueva contraseña:</strong>{' '}
+            </div>
+
+            <div>
+                <label className={labelClass}>Confirmar nueva contraseña</label>
                 <input
                     type="password"
                     value={passwordData.confirmNewPassword}
@@ -96,9 +110,11 @@ const ChangePasswordForm = ({ token, onSuccess }) => {
                             confirmNewPassword: e.target.value,
                         })
                     }
+                    className={inputClass}
                 />
-            </p>
-            <button onClick={handleSubmit}>Actualizar contraseña</button>
+            </div>
+
+            <ButtonBig text="Actualizar contraseña" onClick={handleSubmit} />
         </div>
     );
 };
