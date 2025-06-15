@@ -9,6 +9,7 @@ import AboutPage from './pages/AboutPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import AdminCreateHackathon from './pages/AdminCreateHackathon.jsx';
+import HackathonDetailPage from './pages/HackathonDetailsPage.jsx';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path='*' element={<NotFoundPage />} />
+        <Route path="/hackathons/:id" element={<HackathonDetailPage />} />
       </Route>
     </Routes>
   )
