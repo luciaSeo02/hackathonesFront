@@ -1,5 +1,11 @@
+import HackathonsList from '../components/HackathonsList';
+
 const HackathonsPage = () => {
-    return <div>HackathonsPage</div>;
+    return (
+        <>
+            <HackathonsList />
+        </>
+    );
 };
 
 export default HackathonsPage;
