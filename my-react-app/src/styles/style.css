@@ -27,6 +27,18 @@
     }
 
     input {
-        @apply font-body bg-inherit outline-none border-0 text-sm sm:text-base;
+        @apply font-body bg-inherit text-sm sm:text-base;
+    }
+
+    textarea {
+        @apply font-body bg-inherit text-sm sm:text-base;
+    }
+
+    select {
+        @apply font-body bg-inherit text-sm sm:text-base;
+    }
+
+    option {
+        @apply font-body bg-inherit text-sm sm:text-base;
     }
 }
