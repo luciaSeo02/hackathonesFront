@@ -7,7 +7,7 @@ const LayoutPage = () => {
         <>
             <HeaderComponent />
 
-            <main>
+            <main className="pt-14 sm:pt-36">
                 <Outlet />
             </main>
 

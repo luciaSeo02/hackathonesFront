@@ -43,7 +43,9 @@ const NavBar = () => {
                         </NavLink>
                     </>
                 ) : (
-                    <Avatar />
+                    <NavLink to={'/profile'}>
+                        <Avatar />
+                    </NavLink>
                 )}
             </div>
         </nav>
