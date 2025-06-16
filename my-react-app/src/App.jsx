@@ -9,6 +9,7 @@ import AboutPage from './pages/AboutPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import AdminCreateHackathon from './pages/AdminCreateHackathon.jsx';
+import ValidatePage from './pages/ValidatePage.jsx';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path='/' element={<LayoutPage />}>
         <Route index element={<HomePage />} />
         <Route path='/register' element={<RegisterPage />} />
+        <Route path='/users/validate/:registrationCode' element={<ValidatePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/hackathons' element={<HackathonsPage />} />

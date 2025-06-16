@@ -108,5 +108,4 @@ const LoginForm = () => {
         <p>Ya has iniciado sesión</p>
     );
 };
-
 export default LoginForm;
