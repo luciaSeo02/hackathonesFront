@@ -11,14 +11,14 @@ const NavBar = () => {
 
     return (
         <nav className="flex justify-center items-center">
-            <div className="flex text-light-gradient dark:text-dark-gradient sm:hidden">
+            <div className="flex sm:hidden">
                 <NavLink>
                     <Menu size={25} />
                 </NavLink>
             </div>
 
             <div className="hidden justify-center items-center gap-4 sm:flex">
-                <menu className="px-4 flex justify-center items-center gap-8">
+                <menu className="text-white px-4 flex justify-center items-center gap-8">
                     <NavLink>
                         <p>Hackathones</p>
                     </NavLink>
