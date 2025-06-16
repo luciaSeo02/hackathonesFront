@@ -16,6 +16,10 @@
     }
 
     p {
-        @apply font-body;
+        @apply font-body text-sm sm:text-base;
+    }
+
+    input {
+        @apply font-body bg-inherit outline-none border-0 text-sm sm:text-base;
     }
 }
