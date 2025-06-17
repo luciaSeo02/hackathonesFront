@@ -1,54 +1,71 @@
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Footer = () => (
+    <footer className="bg-light-gradient dark:bg-dark-gradient text-white mt-10 px-5 pt-5 pb-10 lg:mt-20 lg:p-10">
+        <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between">
+            {/* Nombre + Logo */}
+            <div className="flex flex-col lg:w-[785px] lg:justify-between">
+                <h3 className="hidden lg:inline-block">
+                    Tecnología e ideas que se encuentran para transformar
+                </h3>
 
-    <footer className="bg-gradient-to-br from-[#1565C0] to-[#9D4EDD] text-white px-6 py-10">
+                <Link to={'/'}>
+                    <h4>HackNMeet</h4>
+                </Link>
+            </div>
 
-    <div className="w-full flex flex-col md:flex-row justify-between gap-8">
+            {/* Navegación + Redes */}
+            <div className="flex flex-col gap-2.5 lg:text-right">
+                <menu className="flex flex-col gap-2.5">
+                    <Link to={'/hackathons'} className="hover:underline">
+                        Hackathones
+                    </Link>
+                    <Link to={'/about'} className="hover:underline">
+                        Sobre HackNMeet
+                    </Link>
+                    <Link to={'/contact'} className="hover:underline">
+                        Contacto
+                    </Link>
+                    <Link to={'/terms'} className="hover:underline">
+                        Términos y Condiciones
+                    </Link>
+                    <Link to={'/privacy'} className="hover:underline">
+                        Política de Privacidad
+                    </Link>
+                </menu>
 
-        {/* Nombre + Logo */}
-        <div className="flex flex-col items-start">
-            <h1 className="text-2xl md:text-3xl font-extrabold leading-tight"> 
-                HackNmeet
-            </h1>
-
-            <div className="border border-gray-200 px-3 py-1 rounded bg-white text-gray-800 font-bold text-xs mt-4">
-                LOGO
+                <div className="mt-2.5 flex gap-2.5 lg:hidden">
+                    <Link to={'https://www.facebook.com/'} target="_blank">
+                        <FaFacebookF size={20} />
+                    </Link>
+                    <Link to={'https://www.instagram.com/'} target="_blank">
+                        <FaInstagram size={20} />
+                    </Link>
+                    <Link to={'https://www.linkedin.com/'} target="_blank">
+                        <FaLinkedinIn size={20} />
+                    </Link>
+                </div>
             </div>
         </div>
-
-        {/* Navegación + Redes */}
-        <div className="flex flex-col items-end text-right justify-between h-full">
-            <nav className="flex flex-col items-end gap-1 text-sm ">
-                <a href="/hackathons" className="hover:underline">Hackathones</a>
-                <a href="/about" className="hover:underline">Sobre Hackathones</a>
-                <a href="/contact" className="hover:underline">Contacto</a>
-                <a href="/terms" className="hover:underline">Términos y Condiciones</a>
-                <a href="/privacy" className="hover:underline">Política de Privacidad</a>
-            </nav>
-        
-            <div className="flex gap-3 mt-2">
-                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">
-                <FaFacebookF size={20} />
-                </a>
-                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
-                <FaInstagram size={20} />
-                </a>
-                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">
-                <FaLinkedinIn size={20} />
-                </a>
-            </div>
-        </div>
-    </div>
 
         {/* Derechos de autor */}
+        <div className="border-t border-white/30 mt-5 pt-5 lg:mt-6 lg:flex lg:justify-between lg:items-center">
+            <p>© Copyright 2025 HackNMeet. Todos los derechos reservados.</p>
 
-        <div className="text-xs text-left border-t border-white/30 mt-8 pt-4">
-            © Copyright 2025 HACKATHONES.
-            Todos los derechos reservados.
+            <div className="hidden gap-2.5 lg:flex">
+                <Link to={'https://www.facebook.com/'} target="_blank">
+                    <FaFacebookF size={20} />
+                </Link>
+                <Link to={'https://www.instagram.com/'} target="_blank">
+                    <FaInstagram size={20} />
+                </Link>
+                <Link to={'https://www.linkedin.com/'} target="_blank">
+                    <FaLinkedinIn size={20} />
+                </Link>
+            </div>
         </div>
-
     </footer>
-    );
+);
 
 export default Footer;
