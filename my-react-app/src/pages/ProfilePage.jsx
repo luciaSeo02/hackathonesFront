@@ -9,6 +9,8 @@ import useProfileForm from '../hooks/useProfileForm';
 import Button from '../components/ui/Button';
 import ButtonBig from '../components/ui/ButtonBig';
 
+import SectionListInscriptions from '../components/SectionListInscriptions';
+
 const ProfilePage = () => {
     const { userLogged, setUserLogged } = useContext(AuthContext);
     const token = localStorage.getItem('token');
@@ -41,7 +43,7 @@ const ProfilePage = () => {
 
             if (!response.ok) {
                 console.error('Respuesta del backend:', json);
-                throw new Error(result.message || 'Error desconocido');
+                throw new Error(json.message || 'Error desconocido');
             }
 
             setUserLogged((prev) => ({ ...prev, ...formData }));
@@ -222,7 +224,11 @@ const ProfilePage = () => {
                     </div>
                 )}
             </div>
+            {
+                <SectionListInscriptions/>
+            }
         </div>
+      
     );
 };
 
