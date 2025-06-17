@@ -1,23 +1,17 @@
 import { useEffect, useState } from 'react';
+import fetchApi from '../services/fetchApi.js';
 
 const useTopics = () => {
     const [topics, setTopics] = useState(null);
+    const { VITE_URL_API } = import.meta.env;
 
     useEffect(() => {
-        try {
-            const getTopics = async () => {
-                const url = `${import.meta.env.VITE_URL_API}/topics`;
+        const getTopics = async () => {
+            const topics = await fetchApi(`${VITE_URL_API}/lists/topics`);
 
-                const response = await fetch(url);
-
-                const json = await response.json();
-
-                setTopics(json.data);
-            };
-            getTopics();
-        } catch (error) {
-            console.log(error.message);
-        }
+            setTopics(topics.data);
+        };
+        getTopics();
     }, []);
 
     return topics;
