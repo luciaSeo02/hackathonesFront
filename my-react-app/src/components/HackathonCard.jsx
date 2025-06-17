@@ -1,6 +1,11 @@
 import Button from './ui/Button';
 
-const HackathonCard = ({ hackathon }) => {
+const HackathonCard = ({ hackathon, onShowDetails }) => {
+
+    const handleDetailsClick = () => {
+        onShowDetails(hackathon.id);
+    };
+
     return (
         <li className="bg-white dark:bg-gray-800 shadow-md rounded-xl p-4 flex flex-col justify-between gap-3 w-full max-w-md mx-auto">
             <span className="text-sm text-indigo-600 font-semibold uppercase tracking-wide">
@@ -12,7 +17,10 @@ const HackathonCard = ({ hackathon }) => {
             </h3>
 
             <div className="mt-2">
-                <Button text="Más info" />
+                <Button 
+                    text="Más info" 
+                    onClick={handleDetailsClick}
+                />
             </div>
         </li>
     );
