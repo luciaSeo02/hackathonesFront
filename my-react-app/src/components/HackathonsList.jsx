@@ -49,11 +49,10 @@ const HackathonsList = () => {
 
     return (
         <div>
-            <h2>Lista de Hackathones</h2>
             <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {hackathons.map((hackathon) => (
-                    <HackathonCard 
-                        key={hackathon.id} 
+                    <HackathonCard
+                        key={hackathon.id}
                         hackathon={hackathon}
                         onShowDetails={handleShowDetails}
                     />

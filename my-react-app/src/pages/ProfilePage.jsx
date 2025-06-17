@@ -1,6 +1,8 @@
 import { useContext, useState } from 'react';
 import AuthContext from '../context/AuthContextProvider';
 
+import { useNavigate } from 'react-router-dom';
+
 import ChangePasswordForm from '../components/ChangePasswordForm';
 import ProfileForm from '../components/ProfileForm';
 import ProfileView from '../components/ProfileView';
@@ -10,7 +12,7 @@ import Button from '../components/ui/Button';
 import ButtonBig from '../components/ui/ButtonBig';
 
 const ProfilePage = () => {
-    const { userLogged, setUserLogged } = useContext(AuthContext);
+    const { userLogged, setUserLogged, logout } = useContext(AuthContext);
     const token = localStorage.getItem('token');
 
     const [isEditing, setIsEditing] = useState(false);
@@ -112,6 +114,13 @@ const ProfilePage = () => {
             username: userLogged.username || '',
             email: userLogged.email || '',
         });
+    };
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
     };
 
     return (
@@ -221,6 +230,10 @@ const ProfilePage = () => {
                         />
                     </div>
                 )}
+            </div>
+
+            <div className="mt-6">
+                <ButtonBig text="Cerrar sesión" onClick={handleLogout} />
             </div>
         </div>
     );
