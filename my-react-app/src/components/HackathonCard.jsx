@@ -20,13 +20,13 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
 
-            <div className="absolute inset-0 bg-black/20 z-10"></div>
+            <div className="absolute inset-0 bg-black/20 z-5"></div>
 
-            <span className="absolute top-4 left-4 z-20 bg-white/80 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-md uppercase tracking-wide shadow-sm">
+            <span className="absolute top-4 left-4 z-6 bg-white/80 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-md uppercase tracking-wide shadow-sm">
                 {hackathon.topic || 'Sin categoría'}
             </span>
 
-            <div className="absolute bottom-4 left-4 right-4 z-20 bg-white bg-opacity-90 rounded-xl px-4 py-3 flex flex-col gap-1 shadow-md">
+            <div className="absolute bottom-4 left-4 right-4 z-6 bg-white bg-opacity-90 rounded-xl px-4 py-3 flex flex-col gap-1 shadow-md">
                 <h3 className="text-base md:text-lg font-bold text-gray-900">
                     {hackathon.name}
                 </h3>

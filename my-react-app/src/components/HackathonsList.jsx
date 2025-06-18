@@ -49,7 +49,7 @@ const HackathonsList = () => {
 
     return (
         <div>
-            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mx-2.5 grid gap-6 sm:grid-cols-2 lg:mx-10 lg:mt-10 lg:grid-cols-3">
                 {hackathons.map((hackathon) => (
                     <HackathonCard
                         key={hackathon.id}

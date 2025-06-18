@@ -11,7 +11,11 @@ const Footer = () => (
                 </h3>
 
                 <Link to={'/'}>
-                    <h4>HackNMeet</h4>
+                    <img
+                        className="h-6"
+                        src="./logo_white.png"
+                        alt="Logo HackNMeet"
+                    />
                 </Link>
             </div>
 

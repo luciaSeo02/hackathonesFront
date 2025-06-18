@@ -11,7 +11,9 @@ const NavBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    {/* Ocultar pagina de menú en la barra de navegación */}
+    {
+        /* Ocultar pagina de menú en la barra de navegación */
+    }
     if (location.pathname === '/menu') return null;
 
     const handleSearch = (query) => {
@@ -21,12 +23,15 @@ const NavBar = () => {
     };
 
     return (
-        <nav className="flex items-center relative px-4 py-2 bg-[#a7a7a7] rounded-lg">
-
+        <nav className="flex justify-center items-center">
             {/* Icono hamburguesa móviles/tablets */}
-            <div className="lg:hidden ml-auto">
+            <div className="lg:hidden ml-auto flex justify-center items-center">
                 <button
-                    onClick={() => navigate('/menu', { state: { from: location.pathname } })}
+                    onClick={() =>
+                        navigate('/menu', {
+                            state: { from: location.pathname },
+                        })
+                    }
                     className="text-[#5F3DC4] bg-transparent border-none"
                     aria-label="Abrir menú"
                 >
@@ -35,13 +40,21 @@ const NavBar = () => {
             </div>
 
             {/* Menú pantallas grandes */}
-            <div className="hidden lg:flex items-center gap-4 ml-auto">
-                <menu className="flex items-center gap-4">
-                    <NavLink to={'/hackathons'}>Hackathones</NavLink>
-                    <NavLink to={'/about'}>Sobre HackNMeet</NavLink>
-                    <NavLink to={'/contact'}>Contacto</NavLink>
+            <div className="hidden justify-center items-center gap-4 lg:flex">
+                <menu className="text-white px-4 flex justify-center items-center gap-8">
+                    <NavLink to={'/hackathons'}>
+                        <p>Hackathones</p>
+                    </NavLink>
+                    <NavLink to={'/about'}>
+                        <p>Sobre HackNMeet</p>
+                    </NavLink>
+                    <NavLink to={'/contact'}>
+                        <p>Contacto</p>
+                    </NavLink>
                 </menu>
+
                 <SearchBar onSearch={handleSearch} />
+
                 {!token ? (
                     <div className="flex gap-4">
                         <NavLink to={'/login'}>

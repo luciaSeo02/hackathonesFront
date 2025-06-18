@@ -10,7 +10,7 @@ const HomePage = () => {
             </section>
 
             <section className="mt-10 flex flex-col gap-3 lg:mt-20">
-                <h2 className="text-center px-10">Nuestas temáticas</h2>
+                <h2 className="text-center px-10">Nuestras temáticas</h2>
                 <p className="text-center px-11 lg:px-80">
                     Descubre las diferentes temáticas de hackathones que
                     HackNMeet ofrece, desde lo más básico hasta lo más

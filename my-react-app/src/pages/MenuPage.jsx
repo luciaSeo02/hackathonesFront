@@ -35,7 +35,7 @@ const MenuPage = () => {
                     className="font-bold text-lg hover:opacity-80 transition"
                     onClick={handleClose}
                 >
-                    HackNMeet
+                    <img className="h-5" src="./logo2.png" alt="Logo HackNMeet" />
                 </NavLink>
                 <X
                     onClick={handleClose}
