@@ -8,7 +8,7 @@ const ProfileView = ({ user }) => {
                 <strong>Apellidos:</strong> {user.lastName}
             </p>
             <p>
-                <strong>Username:</strong> {user.username}
+                <strong>Usuario:</strong> {user.username}
             </p>
             <p>
                 <strong>Email:</strong> {user.email}

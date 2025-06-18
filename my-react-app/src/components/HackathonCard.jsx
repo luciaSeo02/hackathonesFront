@@ -26,7 +26,7 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
 
     const imageUrl = hackathon.image
         ? `${import.meta.env.VITE_URL_API}/uploads/${hackathon.image}`
-        : '/defaultHackathonImage.png';
+        : '/hackathons.jpg';
 
     return (
         <li className="relative w-full max-w-md h-72 rounded-2xl overflow-hidden shadow-xl group mx-auto font-display">
