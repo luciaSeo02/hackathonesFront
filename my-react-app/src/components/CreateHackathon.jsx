@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { createHackathon } from '../services/hackathonService';
 import { Calendar, MapPin, Globe, Tag, Code, MessageSquarePlus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { X } from 'lucide-react';
 import ButtonBig from './ui/ButtonBig.jsx';
 import ErrorDiv from './ui/ErrorDiv.jsx';
 import Success from './ui/Success.jsx';
@@ -22,6 +24,11 @@ function CreateHackathon() {
 
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
+
+    const handleClose = () => {
+        navigate('/hackathons');
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -62,19 +69,33 @@ function CreateHackathon() {
         }
     };
 
+    
+
     return (
         <div className="min-h-screen bg-light-gradient dark:bg-dark-gradient flex items-center justify-center">
             <div className="w-full flex items-center justify-center p-4">
                 <div className="bg-white rounded-3xl shadow-2xl p-4 lg:w-[800px]">
 
                     {/* Header */}
-                    <div className="text-center space-y-2">
+                    <div className="text-center space-y-2 mb-4 relative">
                         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <div className="w-8 h-8 bg-light-gradient dark:bg-dark-gradient rounded-lg flex items-center justify-center">
                                 <span className="text-white text-lg font-bold">
                                     <MessageSquarePlus className="h-5 w-5" />
                                 </span>
                             </div>
+                        </div>
+                        <div className="absolute top-1 right-3">
+                            <X
+                                onClick={handleClose}
+                                width="25"
+                                height="25"
+                                fill="none"
+                                stroke="#5F3DC4"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                                style={{ cursor: 'pointer' }}
+                            />
                         </div>
                         <h1 className="text-2xl font-bold text-gray-900">Crear Hackathon</h1>
                         <p className="text-gray-500 text-sm">
