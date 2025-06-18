@@ -11,21 +11,21 @@ const NavBar = () => {
 
     return (
         <nav className="flex justify-center items-center">
-            <div className="flex text-light-gradient dark:text-dark-gradient sm:hidden">
+            <div className="lg:hidden text-white">
                 <NavLink>
                     <Menu size={25} />
                 </NavLink>
             </div>
 
-            <div className="hidden justify-center items-center gap-4 sm:flex">
-                <menu className="px-4 flex justify-center items-center gap-8">
-                    <NavLink>
+            <div className="hidden justify-center items-center gap-4 lg:flex">
+                <menu className="text-white px-4 flex justify-center items-center gap-8">
+                    <NavLink to={'/hackathons'}>
                         <p>Hackathones</p>
                     </NavLink>
-                    <NavLink>
+                    <NavLink to={'/about'}>
                         <p>Sobre HackNMeet</p>
                     </NavLink>
-                    <NavLink>
+                    <NavLink to={'/contact'}>
                         <p>Contacto</p>
                     </NavLink>
                 </menu>

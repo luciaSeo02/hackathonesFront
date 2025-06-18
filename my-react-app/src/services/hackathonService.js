@@ -1,6 +1,6 @@
 export async function createHackathon(hackathonData) {
 
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem('token');
     const url = `${import.meta.env.VITE_URL_API}/hackathons/create`
 
     const response = await fetch(url, {

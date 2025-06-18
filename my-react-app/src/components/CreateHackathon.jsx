@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { createHackathon } from '../services/hackathonService';
 import { Calendar, MapPin, Globe, Tag, Code } from 'lucide-react';
+import ButtonBig from './ui/ButtonBig.jsx';
+import ErrorDiv from './ui/ErrorDiv.jsx';
+import Success from './ui/Success.jsx';
 
 function CreateHackathon() {
 
@@ -16,7 +19,6 @@ function CreateHackathon() {
         technologyNames: '',
     });
 
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
@@ -27,7 +29,6 @@ function CreateHackathon() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError('');
         setSuccess('');
 
@@ -57,16 +58,15 @@ function CreateHackathon() {
         } catch (error) {
             setError(error.message);
 
-        } finally {
-            setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-purple-600 flex items-center justify-center p-4" 
+        <div className="min-h-screen bg-light-gradient dark:bg-dark-gradient flex items-center justify-center p-4" 
              style={{ fontFamily: 'Orbitron, monospace' }}>
             <div className="w-full max-w-md">
                 <div className="bg-white rounded-3xl shadow-2xl p-8 space-y-6">
+
                     {/* Header */}
                     <div className="text-center space-y-2">
                         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -81,7 +81,8 @@ function CreateHackathon() {
                     </div>
 
                     {/* Form */}
-                    <div className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit}>
+                        
                         {/* Nombre */}
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -123,7 +124,7 @@ function CreateHackathon() {
                                 className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 rounded-2xl text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all appearance-none cursor-pointer"
                             >
                                 <option value="online">Online</option>
-                                <option value="presencial">Presencial</option>
+                                <option value="onsite">Presencial</option>
                             </select>
                         </div>
 
@@ -219,34 +220,16 @@ function CreateHackathon() {
                         </div>
 
                         {/* Submit Button */}
-                        <button
-                            type="button"
-                            onClick={handleSubmit}
-                            disabled={loading}
-                            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-2xl font-semibold hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-blue-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
-                        >
-                            {loading ? (
-                                <div className="flex items-center justify-center space-x-2">
-                                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                                    <span>Creando...</span>
-                                </div>
-                            ) : (
-                                'Crear Hackathon'
-                            )}
-                        </button>
+                        <ButtonBig type="submit" text="Crear hackathon" />
 
                         {/* Messages */}
                         {error && (
-                            <div className="p-4 bg-red-50 border border-red-200 rounded-2xl">
-                                <p className="text-red-600 text-sm text-center">{error}</p>
-                            </div>
+                            <ErrorDiv error={error} />
                         )}
                         {success && (
-                            <div className="p-4 bg-green-50 border border-green-200 rounded-2xl">
-                                <p className="text-green-600 text-sm text-center">{success}</p>
-                            </div>
+                            <Success success={success}/>
                         )}
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -6,13 +6,20 @@
 @tailwind utilities;
 
 @layer base {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        @apply font-display font-black;
+    h1 {
+        @apply font-display font-black text-white text-5xl sm:text-9xl;
+    }
+
+    h2 {
+        @apply font-display font-black text-3xl sm:text-6xl;
+    }
+
+    h3 {
+        @apply font-display font-black text-2xl sm:text-4xl;
+    }
+
+    h4 {
+        @apply font-display font-black text-white;
     }
 
     p {
@@ -20,6 +27,29 @@
     }
 
     input {
-        @apply font-body bg-inherit outline-none border-0 text-sm sm:text-base;
+        @apply font-body bg-inherit text-sm sm:text-base;
+    }
+
+    textarea {
+        @apply font-body bg-inherit text-sm sm:text-base;
+    }
+
+    select {
+        @apply font-body bg-inherit text-sm sm:text-base;
+    }
+
+    option {
+        @apply font-body bg-inherit text-sm sm:text-base;
+    }
+}
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 }

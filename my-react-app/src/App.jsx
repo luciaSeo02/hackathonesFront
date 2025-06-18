@@ -16,14 +16,14 @@ import ViewClassificationPage from "./pages/ViewClassificationPage";
 function App() {
   return (
     <Routes>
+      <Route path='/register' element={<RegisterPage />} />
+      <Route path='/users/validate/:registrationCode' element={<ValidatePage />} />
+      <Route path='/login' element={<LoginPage />} />
+      <Route path='/hackathons/create' element={<AdminCreateHackathon />} />
       <Route path='/' element={<LayoutPage />}>
         <Route index element={<HomePage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/users/validate/:registrationCode' element={<ValidatePage />} />
-        <Route path='/login' element={<LoginPage />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/hackathons' element={<HackathonsPage />} />
-        <Route path='/hackathons/create' element={<AdminCreateHackathon />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path="/hackathons/:hackathonId/classification" element={<PublishRankingPage />} />
