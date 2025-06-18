@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import registerUserService from '../services/registerUserService.js';
+import ButtonBig from './ui/ButtonBig';
+import ErrorDiv from './ui/ErrorDiv';
+import Success from './ui/Success';
 
 const RegisterForm = () => {
     const [username, setUsername] = useState('');
@@ -50,7 +53,7 @@ const RegisterForm = () => {
 
     if (isRegistered) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-[#1565C0] to-[#9D4EDD] flex items-center justify-center p-4">
+            <div className="min-h-screen flex items-center justify-center p-4 bg-light-gradient dark:bg-dark-gradient">
                 <div className="w-full max-w-md">
                     <div className="bg-white rounded-3xl p-8 shadow-2xl text-center">
                         <div className="flex justify-center mb-8">
@@ -73,16 +76,13 @@ const RegisterForm = () => {
                         <h2 className="text-2xl font-bold text-gray-800 mb-4">
                             ¡Registro Exitoso!
                         </h2>
-                        <p className="text-gray-600 mb-6">
-                            Por favor, verifica tu cuenta mediante el email
-                            recibido.
-                        </p>
-                        <a
-                            href="/login"
-                            className="inline-block bg-gradient-to-r from-[#1565C0] to-[#9D4EDD] text-white font-bold py-3 px-6 rounded-2xl hover:from-[#0B3680] hover:to-[#7B2CBF] transition-all duration-300"
-                        >
-                            Ir al inicio de sesión
-                        </a>
+                        <Success success="Por favor, verifica tu cuenta mediante el email recibido." />
+                        <div className="mt-6">
+                            <ButtonBig
+                                text="Ir al inicio de sesión"
+                                onClick={() => navigate('/login')}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@ const RegisterForm = () => {
     }
 
     return (
-        <div className="h-screen bg-gradient-to-br from-[#1565C0] to-[#9D4EDD] flex items-center justify-center p-4">
+        <div className="h-screen flex items-center justify-center p-4 bg-light-gradient dark:bg-dark-gradient">
             <div className="w-full max-w-md">
                 <div className="bg-white rounded-3xl p-8 shadow-2xl">
                     <div className="flex justify-center mb-8">
@@ -286,31 +286,22 @@ const RegisterForm = () => {
                         </div>
 
                         {/* Submit button */}
-                        <button
-                            type="submit"
-                            className="w-full bg-gradient-to-r from-[#1565C0] to-[#9D4EDD] text-white font-bold py-4 rounded-2xl hover:from-[#0B3680] hover:to-[#7B2CBF] transition-all duration-300 transform hover:scale-[1.02] mt-4"
-                        >
-                            Continuar
-                        </button>
+                        <ButtonBig type="submit" text="Continuar" />
+
+                        {/* Login link */}
+                        <p className="text-center text-gray-500 mt-4">
+                            Si ya tienes una cuenta,{' '}
+                            <a
+                                href="/login"
+                                className="text-[#1565C0] hover:text-[#0B3680] transition-colors"
+                            >
+                                inicia sesión
+                            </a>
+                        </p>
+
+                        {/* Error message */}
+                        {error && <ErrorDiv error={error} />}
                     </form>
-
-                    {/* Login link */}
-                    <p className="text-center text-gray-500 mt-4">
-                        Si ya tienes una cuenta,{' '}
-                        <a
-                            href="/login"
-                            className="text-[#1565C0] hover:text-[#0B3680] transition-colors"
-                        >
-                            inicia sesión
-                        </a>
-                    </p>
-
-                    {/* Error message */}
-                    {error && (
-                        <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-2xl">
-                            {error}
-                        </div>
-                    )}
                 </div>
             </div>
         </div>
