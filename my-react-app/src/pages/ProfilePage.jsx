@@ -11,8 +11,6 @@ import useProfileForm from '../hooks/useProfileForm';
 import Button from '../components/ui/Button';
 import ButtonBig from '../components/ui/ButtonBig';
 
-import SectionListInscriptions from '../components/SectionListInscriptions';
-
 const ProfilePage = () => {
     const { userLogged, setUserLogged, logout } = useContext(AuthContext);
     const token = localStorage.getItem('token');
@@ -22,6 +20,7 @@ const ProfilePage = () => {
     const [formData, setFormData] = useProfileForm(userLogged);
     const [isEditingAvatar, setIsEditingAvatar] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
+    const navigate = useNavigate();
 
     if (!userLogged) {
         return <p>Cargando perfil...</p>;
@@ -117,8 +116,6 @@ const ProfilePage = () => {
             email: userLogged.email || '',
         });
     };
-
-    const navigate = useNavigate();
 
     const handleLogout = () => {
         logout();
@@ -237,11 +234,7 @@ const ProfilePage = () => {
             <div className="mt-6">
                 <ButtonBig text="Cerrar sesión" onClick={handleLogout} />
             </div>
-            {
-                <SectionListInscriptions/>
-            }
         </div>
-      
     );
 };
 

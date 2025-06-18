@@ -39,7 +39,7 @@ const ValidateForm = () => {
 
     if (showSuccess) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1565C0] to-[#9D4EDD] px-4 sm:px-6 lg:px-8">
+            <div className="min-h-screen flex items-center justify-center bg-light-gradient dark:bg-dark-gradient px-4 sm:px-6 lg:px-8">
                 <div className="text-center w-full max-w-lg">
                     <img
                         src={spinnerGif}
@@ -64,7 +64,7 @@ const ValidateForm = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1565C0] to-[#9D4EDD] px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen flex items-center justify-center bg-light-gradient dark:bg-dark-gradient px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-sm sm:max-w-md p-4 sm:p-6 md:p-8 bg-white/10 backdrop-blur-lg rounded-lg shadow-xl">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white text-center mb-6 sm:mb-8">
                     Validar tu cuenta
