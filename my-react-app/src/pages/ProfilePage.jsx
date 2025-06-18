@@ -10,6 +10,7 @@ import useProfileForm from '../hooks/useProfileForm';
 
 import Button from '../components/ui/Button';
 import ButtonBig from '../components/ui/ButtonBig';
+import SectionListInscriptions from "../components/SectionListInscriptions";
 
 const ProfilePage = () => {
     const { userLogged, setUserLogged, logout } = useContext(AuthContext);
@@ -234,6 +235,11 @@ const ProfilePage = () => {
             <div className="mt-6">
                 <ButtonBig text="Cerrar sesión" onClick={handleLogout} />
             </div>
+
+            <div className="mt-10">
+                <SectionListInscriptions />
+            </div>
+
         </div>
     );
 };
