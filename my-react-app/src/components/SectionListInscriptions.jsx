@@ -14,6 +14,18 @@ const SectionListInscriptions = () => {
   const [peopleInscriptions, setPeopleInscriptions] = useState([]);
   const [loadingPeople, setLoadingPeople] = useState(true);
 
+   const fetchInscriptions = async () => {
+    setLoadingInscriptions(true);
+    try {
+      const data = await getUserInscriptionsService();
+      setInscriptions(data);
+    } catch {
+      setInscriptions([]);
+    } finally {
+      setLoadingInscriptions(false);
+    }
+  };
+
   useEffect(() => {
     if (!userLogged) return;
 
@@ -40,7 +52,7 @@ const SectionListInscriptions = () => {
       {loadingInscriptions ? (
         <p className="text-gray-500">Cargando inscripciones...</p>
       ) : (
-        <UserInscriptionsList inscriptions={inscriptions} />
+        <UserInscriptionsList inscriptions={inscriptions} onRemove={fetchInscriptions} />
       )}
 
 {userLogged && userLogged.role === "admin" && (
@@ -50,7 +62,7 @@ const SectionListInscriptions = () => {
           {loadingPeople ? (
             <p className="text-gray-500">Cargando personas...</p>
           ): (
-            <PeopleInscriptionsList inscriptions={peopleInscriptions} />
+            <PeopleInscriptionsList inscriptions={peopleInscriptions}  />
           )}
         </>
       )}

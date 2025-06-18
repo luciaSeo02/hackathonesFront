@@ -59,7 +59,7 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                     </button>
                     <button
                         onClick={() => setShowPopup(true)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-[6px] rounded-md text-xs md:text-sm"
+                        className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
                     >
                         Inscribirme
                     </button>
@@ -78,7 +78,7 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                         <div className="flex gap-4">
                             <button
                                 onClick={handleInscription}
-                                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+                                className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
                             >
                                 Sí, inscribirme
                             </button>
