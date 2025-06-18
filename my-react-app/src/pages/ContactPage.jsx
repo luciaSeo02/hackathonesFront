@@ -1,4 +1,4 @@
-import ContactComponent from '../components/ContactForm';
+import ContactComponent from '../components/ContactComponet.jsx';
 
 
 const ContactPage = () => {

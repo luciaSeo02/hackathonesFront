@@ -10,6 +10,7 @@ import ContactPage from './pages/ContactPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import AdminCreateHackathon from './pages/AdminCreateHackathon.jsx';
 import ValidatePage from './pages/ValidatePage.jsx';
+import MenuPage from './pages/MenuPage.jsx';
 import PublishRankingPage from "./pages/PublishRankingPage";
 import ViewClassificationPage from "./pages/ViewClassificationPage";
 
@@ -20,6 +21,7 @@ function App() {
       <Route path='/users/validate/:registrationCode' element={<ValidatePage />} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='/hackathons/create' element={<AdminCreateHackathon />} />
+      <Route path="/menu" element={<MenuPage />} />
       <Route path='/' element={<LayoutPage />}>
         <Route index element={<HomePage />} />
         <Route path='/profile' element={<ProfilePage />} />

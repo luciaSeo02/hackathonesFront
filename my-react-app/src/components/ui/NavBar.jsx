@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import AuthContext from '../../context/AuthContextProvider.jsx';
 import SearchBar from './SearchBar.jsx';
@@ -8,15 +8,38 @@ import Avatar from './Avatar.jsx';
 
 const NavBar = () => {
     const { token } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    {
+        /* Ocultar pagina de menú en la barra de navegación */
+    }
+    if (location.pathname === '/menu') return null;
+
+    const handleSearch = (query) => {
+        if (query) {
+            navigate(`/hackathons=${encodeURIComponent(query)}`);
+        }
+    };
 
     return (
         <nav className="flex justify-center items-center">
-            <div className="lg:hidden text-white">
-                <NavLink>
+            {/* Icono hamburguesa móviles/tablets */}
+            <div className="lg:hidden ml-auto flex justify-center items-center">
+                <button
+                    onClick={() =>
+                        navigate('/menu', {
+                            state: { from: location.pathname },
+                        })
+                    }
+                    className="text-[#5F3DC4] bg-transparent border-none"
+                    aria-label="Abrir menú"
+                >
                     <Menu size={25} />
-                </NavLink>
+                </button>
             </div>
 
+            {/* Menú pantallas grandes */}
             <div className="hidden justify-center items-center gap-4 lg:flex">
                 <menu className="text-white px-4 flex justify-center items-center gap-8">
                     <NavLink to={'/hackathons'}>
@@ -30,18 +53,17 @@ const NavBar = () => {
                     </NavLink>
                 </menu>
 
-                <SearchBar />
+                <SearchBar onSearch={handleSearch} />
 
                 {!token ? (
-                    <>
+                    <div className="flex gap-4">
                         <NavLink to={'/login'}>
                             <Button text="Iniciar Sesión" />
                         </NavLink>
-
                         <NavLink to={'/register'}>
                             <Button text="Registrarse" />
                         </NavLink>
-                    </>
+                    </div>
                 ) : (
                     <NavLink to={'/profile'}>
                         <Avatar />
