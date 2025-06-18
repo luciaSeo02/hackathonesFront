@@ -63,8 +63,7 @@ function CreateHackathon() {
     };
 
     return (
-        <div className="bg-light-gradient dark:bg-dark-gradient flex items-center justify-center w-screen h-screen " 
-             style={{ fontFamily: 'Orbit' }}>
+        <div className="min-h-screen bg-light-gradient dark:bg-dark-gradient flex items-center justify-center">
             <div className="w-full flex items-center justify-center p-4">
                 <div className="bg-white rounded-3xl shadow-2xl p-4 lg:w-[800px]">
 
