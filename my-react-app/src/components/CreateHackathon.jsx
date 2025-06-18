@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { createHackathon } from '../services/hackathonService';
-import { Calendar, MapPin, Globe, Tag, Code } from 'lucide-react';
+import { Calendar, MapPin, Globe, Tag, Code, MessageSquarePlus } from 'lucide-react';
 import ButtonBig from './ui/ButtonBig.jsx';
 import ErrorDiv from './ui/ErrorDiv.jsx';
 import Success from './ui/Success.jsx';
+
 
 function CreateHackathon() {
 
@@ -62,16 +63,18 @@ function CreateHackathon() {
     };
 
     return (
-        <div className="min-h-screen bg-light-gradient dark:bg-dark-gradient flex items-center justify-center p-4" 
-             style={{ fontFamily: 'Orbitron, monospace' }}>
-            <div className="w-full max-w-md">
-                <div className="bg-white rounded-3xl shadow-2xl p-8 space-y-6">
+        <div className="bg-light-gradient dark:bg-dark-gradient flex items-center justify-center w-screen h-screen " 
+             style={{ fontFamily: 'Orbit' }}>
+            <div className="w-full flex items-center justify-center p-4">
+                <div className="bg-white rounded-3xl shadow-2xl p-4 lg:w-[800px]">
 
                     {/* Header */}
                     <div className="text-center space-y-2">
                         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                                <span className="text-white text-lg font-bold">+</span>
+                                <span className="text-white text-lg font-bold">
+                                    <MessageSquarePlus className="h-5 w-5" />
+                                </span>
                             </div>
                         </div>
                         <h1 className="text-2xl font-bold text-gray-900">Crear Hackathon</h1>
