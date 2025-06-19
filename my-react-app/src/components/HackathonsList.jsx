@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
 
-const HackathonsList = () => {
+const HackathonsList = ({ searchParams }) => {
     const [hackathons, setHackathons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -11,9 +11,12 @@ const HackathonsList = () => {
 
     useEffect(() => {
         const fetchHackathons = async () => {
+            setLoading(true);
             try {
                 const res = await fetch(
-                    `${import.meta.env.VITE_URL_API}/hackathons`
+                    `${
+                        import.meta.env.VITE_URL_API
+                    }/hackathons?${searchParams.toString()}`
                 );
                 const json = await res.json();
 
@@ -32,7 +35,7 @@ const HackathonsList = () => {
         };
 
         fetchHackathons();
-    }, []);
+    }, [searchParams]);
 
     const handleShowDetails = (hackathonId) => {
         setSelectedHackathonId(hackathonId);
