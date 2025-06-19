@@ -1,4 +1,4 @@
-const ProfileForm = ({ formData, setFormData }) => {
+const ProfileForm = ({ formData, setFormData, isAdmin }) => {
     const inputClass =
         'w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:bg-gray-800 dark:text-white';
 
@@ -7,35 +7,46 @@ const ProfileForm = ({ formData, setFormData }) => {
 
     return (
         <div className="space-y-4">
-            <div>
-                <label className={labelClass}>Nombre</label>
-                <input
-                    type="text"
-                    value={formData.firstName}
-                    onChange={(e) =>
-                        setFormData({ ...formData, firstName: e.target.value })
-                    }
-                    className={inputClass}
-                />
-            </div>
+            {!isAdmin && (
+                <>
+                    <div>
+                        <label className={labelClass}>Nombre</label>
+                        <input
+                            type="text"
+                            value={formData.firstName}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    firstName: e.target.value,
+                                })
+                            }
+                            className={inputClass}
+                        />
+                    </div>
 
-            <div>
-                <label className={labelClass}>Apellidos</label>
-                <input
-                    type="text"
-                    value={formData.lastName}
-                    onChange={(e) =>
-                        setFormData({ ...formData, lastName: e.target.value })
-                    }
-                    className={inputClass}
-                />
-            </div>
+                    <div>
+                        <label className={labelClass}>Apellidos</label>
+                        <input
+                            type="text"
+                            value={formData.lastName}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    lastName: e.target.value,
+                                })
+                            }
+                            className={inputClass}
+                        />
+                    </div>
+                </>
+            )}
 
             <div>
                 <label className={labelClass}>Username</label>
                 <input
                     type="text"
                     value={formData.username}
+                    disabled={isAdmin}
                     onChange={(e) =>
                         setFormData({ ...formData, username: e.target.value })
                     }
@@ -48,6 +59,7 @@ const ProfileForm = ({ formData, setFormData }) => {
                 <input
                     type="email"
                     value={formData.email}
+                    disabled={isAdmin}
                     onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                     }
@@ -57,5 +69,4 @@ const ProfileForm = ({ formData, setFormData }) => {
         </div>
     );
 };
-
 export default ProfileForm;
