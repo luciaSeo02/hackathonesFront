@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-// Función para agrupar inscripciones por hackathonId
+
 function groupByHackathon(inscriptions) {
   const grouped = {};
   for (const insc of inscriptions) {
@@ -31,37 +31,34 @@ const PeopleInscriptionsList = ({ inscriptions }) => {
 
 const hackathons = groupByHackathon(inscriptions);
 
-  return (
-    <ul>
+ return (
+    <ul className="space-y-4">
       {hackathons.map(({ hackathon, people }) => (
-        <li key={hackathon.id} className="mb-6 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-          <Link
-            to={`/hackathons/${hackathon.id}`}
-            className="text-blue-600 hover:underline font-bold text-lg"
-          >
-            {hackathon.name}
-          </Link>
-          <div className="text-gray-700 dark:text-gray-300 text-sm mb-2">
-            {hackathon.description}
-          </div>
-          <div className="mb-1">
-            <span className="font-semibold">Modalidad:</span> {hackathon.modality}
-          </div>
-          <div className="mb-1">
+        <li key={hackathon.id} className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+          <div className="flex flex-wrap gap-x-6 gap-y-1 items-center text-sm text-gray-700 dark:text-gray-300 mb-2">
+            <Link
+              to={`/hackathons/${hackathon.id}`}
+              className="text-blue-600 hover:underline font-bold text-base"
+            >
+              {hackathon.name}
+            </Link>
+            <span><span className="font-semibold">Descripción:</span> {hackathon.description}</span>
+            <span><span className="font-semibold">Modalidad:</span> {hackathon.modality}</span>
             {hackathon.modality === "online"
-              ? (<><span className="font-semibold">URL:</span> {hackathon.onlineUrl}</>)
-              : (<><span className="font-semibold">Ubicación:</span> {hackathon.location}</>)
+              ? <span><span className="font-semibold">URL:</span> {hackathon.onlineUrl}</span>
+              : <span><span className="font-semibold">Ubicación:</span> {hackathon.location}</span>
             }
+            <span><span className="font-semibold">Fechas:</span> {hackathon.startDate} - {hackathon.endDate}</span>
           </div>
-          <div className="mb-2">
-            <span className="font-semibold">Fechas:</span> {hackathon.startDate} - {hackathon.endDate}
-          </div>
-          <div>
+          <div className="mt-2">
             <span className="font-semibold">Personas inscritas:</span>
             <ul className="list-disc ml-6 mt-1">
-              {people.map((userName, idx) => (
-                <li key={idx}>{userName}</li>
-              ))}
+              {people.length > 0
+                ? people.map((userName, idx) => (
+                    <li key={idx}>{userName}</li>
+                  ))
+                : <li className="italic text-gray-400">Nadie inscrito aún</li>
+              }
             </ul>
           </div>
         </li>

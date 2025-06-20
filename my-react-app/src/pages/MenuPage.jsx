@@ -6,6 +6,7 @@ import Button from '../components/ui/Button.jsx';
 import Avatar from '../components/ui/Avatar.jsx';
 import { useContext } from 'react';
 import AuthContext from '../context/AuthContextProvider.jsx';
+import MenuDropDown from '../components/MenuDropDown.jsx';
 
 const MenuPage = () => {
     const { token } = useContext(AuthContext);
@@ -103,9 +104,7 @@ const MenuPage = () => {
                         </NavLink>
                     </div>
                 ) : (
-                    <NavLink to={'/profile'} onClick={handleClose}>
-                        <Avatar />
-                    </NavLink>
+                      <MenuDropDown />
                 )}
             </menu>
 

@@ -1,5 +1,6 @@
 const inscriptionService = async (hackathonId) => {
     const token = localStorage.getItem("token");
+     if (!token) throw new Error("Debes iniciar sesión para inscribirte.");
 
     const response = await fetch(
         `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}/inscriptions`,
