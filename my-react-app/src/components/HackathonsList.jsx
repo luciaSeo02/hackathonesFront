@@ -13,10 +13,11 @@ const HackathonsList = ({ searchParams }) => {
         const fetchHackathons = async () => {
             setLoading(true);
             try {
+                const queryString = searchParams
+                    ? `?${searchParams.toString()}`
+                    : '';
                 const res = await fetch(
-                    `${
-                        import.meta.env.VITE_URL_API
-                    }/hackathons?${searchParams.toString()}`
+                    `${import.meta.env.VITE_URL_API}/hackathons${queryString}`
                 );
                 const json = await res.json();
 
