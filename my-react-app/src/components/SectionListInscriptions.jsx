@@ -44,6 +44,7 @@ const SectionListInscriptions = () => {
     }
   }, [userLogged]);
 
+  console.log("peopleInscriptions", peopleInscriptions);
  return (
     <section className="mt-10 p-6 bg-neutral-100 dark:bg-gray-800 rounded-xl shadow font-body">
       <h2 className="text-xl font-display font-bold text-gray-900 dark:text-white mb-4">
@@ -58,6 +59,7 @@ const SectionListInscriptions = () => {
 {userLogged && userLogged.role === "admin" && (
         <>
           <h2 className="text-xl font-display font-bold text-gray-900 dark:text-white mt-8 mb-4">
+            {}
             Personas inscritas a mis hackathones</h2>
           {loadingPeople ? (
             <p className="text-gray-500">Cargando personas...</p>
