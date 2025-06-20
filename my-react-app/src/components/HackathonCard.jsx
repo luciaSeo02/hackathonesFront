@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState } from 'react';
 import Button from './ui/Button';
-import inscriptionService from "../services/inscriptionService";
+import inscriptionService from '../services/inscriptionService';
 
 const HackathonCard = ({ hackathon, onShowDetails }) => {
     const [showPopup, setShowPopup] = useState(false);
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState('');
+
+    const imageUrl =
+        hackathon.attachments?.find((att) => att.type === 'image')?.url ||
+        '/hackathons.jpg';
 
     const handleDetailsClick = () => {
         onShowDetails(hackathon.id);
@@ -13,9 +17,9 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
     const handleInscription = async () => {
         try {
             await inscriptionService(hackathon.id);
-            setMessage("¡Inscripción realizada con éxito!");
+            setMessage('¡Inscripción realizada con éxito!');
         } catch (error) {
-            setMessage(error.message || "Error al inscribirse");
+            setMessage(error.message || 'Error al inscribirse');
         } finally {
             setShowPopup(false);
         }
@@ -23,10 +27,6 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
 
     const fallbackDescription =
         'Participa en este emocionante hackathon donde podrás aplicar tus conocimientos en programación, IA, videojuegos y más. ¡No te lo pierdas!';
-
-    const imageUrl = hackathon.image
-        ? `${import.meta.env.VITE_URL_API}/uploads/${hackathon.image}`
-        : '/hackathons.jpg';
 
     return (
         <li className="relative w-full max-w-md h-72 rounded-2xl overflow-hidden shadow-xl group mx-auto font-display">
