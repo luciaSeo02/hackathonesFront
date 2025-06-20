@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import validateUserService from '../services/validateUserService';
-import spinnerGif from '../assets/ZKZg.gif';
+import Loading from './ui/Loading';
 
 const ValidateForm = () => {
     const [registrationCode, setRegistrationCode] = useState('');
@@ -41,11 +41,7 @@ const ValidateForm = () => {
         return (
             <div className="min-h-screen flex items-center justify-center bg-light-gradient dark:bg-dark-gradient px-4 sm:px-6 lg:px-8">
                 <div className="text-center w-full max-w-lg">
-                    <img
-                        src={spinnerGif}
-                        alt="Loading..."
-                        className="w-24 h-24 sm:w-32 sm:h-32 mx-auto mb-4"
-                    />
+                    <Loading size="large" />
                     <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
                         ¡Cuenta validada con éxito!
                     </h2>
@@ -99,7 +95,14 @@ const ValidateForm = () => {
                         disabled={isLoading}
                         className="w-full flex justify-center py-2 sm:py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm sm:text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-colors duration-200"
                     >
-                        {isLoading ? 'Validando...' : 'Validar cuenta'}
+                        {isLoading ? (
+                            <div className="flex items-center">
+                                <Loading size="small" />
+                                <span className="ml-2">Validando...</span>
+                            </div>
+                        ) : (
+                            'Validar cuenta'
+                        )}
                     </button>
                 </form>
             </div>
