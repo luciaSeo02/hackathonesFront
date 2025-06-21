@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 import { createHackathon } from '../services/hackathonService';
-import { Calendar, MapPin, Globe, Tag, Code, MessageSquarePlus, Upload, Image, FileText } from 'lucide-react';
+import {
+    Calendar,
+    MapPin,
+    Globe,
+    Tag,
+    Code,
+    MessageSquarePlus,
+    Upload,
+    Image,
+    FileText,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 import ButtonBig from './ui/ButtonBig.jsx';
@@ -32,7 +42,7 @@ function CreateHackathon() {
             try {
                 const [topics] = await Promise.all([
                     fetch(`${import.meta.env.VITE_URL_API}/lists/topics`),
-                    fetch(`${import.meta.env.VITE_URL_API}/lists/technologies`)
+                    fetch(`${import.meta.env.VITE_URL_API}/lists/technologies`),
                 ]);
                 const topicsData = await topics.json();
 
@@ -56,23 +66,20 @@ function CreateHackathon() {
 
     const handleFileSelect = (e) => {
         const files = Array.from(e.target.files);
-        const newFiles = files.map(file => ({
+        const newFiles = files.map((file) => ({
             file,
             id: Date.now() + Math.random(),
             type: file.type.startsWith('image/') ? 'image' : 'document',
             name: file.name,
-            size: file.size
+            size: file.size,
         }));
-        
-        setSelectedFiles(prev => [...prev, ...newFiles]);
+
+        setSelectedFiles((prev) => [...prev, ...newFiles]);
         e.target.value = '';
     };
 
-    console.log(selectedFiles);
-    
-
     const removeFile = (fileId) => {
-        setSelectedFiles(prev => prev.filter(f => f.id !== fileId));
+        setSelectedFiles((prev) => prev.filter((f) => f.id !== fileId));
     };
 
     const formatFileSize = (bytes) => {
@@ -87,26 +94,30 @@ function CreateHackathon() {
         if (selectedFiles.length === 0) return;
 
         const token = localStorage.getItem('token');
-        
+
         for (const fileItem of selectedFiles) {
             const formData = new FormData();
             formData.append('attachment', fileItem.file);
             formData.append('fileType', fileItem.type);
 
             const response = await fetch(
-                `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}/attachments`,
+                `${
+                    import.meta.env.VITE_URL_API
+                }/hackathons/${hackathonId}/attachments`,
                 {
                     method: 'POST',
                     headers: {
-                        'authorization': token
+                        Authorization: `Bearer ${token}`,
                     },
-                    body: formData
+                    body: formData,
                 }
             );
 
             if (!response.ok) {
                 const json = await response.json();
-                throw new Error(`Error subiendo ${fileItem.name}: ${json.message}`);
+                throw new Error(
+                    `Error subiendo ${fileItem.name}: ${json.message}`
+                );
             }
         }
     };
@@ -119,19 +130,20 @@ function CreateHackathon() {
 
         try {
             const data = {
-            ...formData,
-            technologyNames: formData.technologyNames
-                .split(',')
-                .map((tech) => tech.trim())
-                .filter(Boolean),
-        };
+                ...formData,
+                technologyNames: formData.technologyNames
+                    .split(',')
+                    .map((tech) => tech.trim())
+                    .filter(Boolean),
+            };
 
-            const response = await createHackathon(data);
-            const json = await response.json();
+            const json = await createHackathon(data);
             const hackathonId = json.data?.id || json.hackathonId;
 
             if (!hackathonId) {
-                throw new Error('No se pudo obtener el ID del hackathon creado');
+                throw new Error(
+                    'No se pudo obtener el ID del hackathon creado'
+                );
             }
 
             // Subir archivos si los hay
@@ -139,8 +151,12 @@ function CreateHackathon() {
                 await uploadFiles(hackathonId);
             }
 
-            setSuccess(`Hackathon creado correctamente${selectedFiles.length > 0 ? ' con archivos adjuntos' : ''}.`);
-            
+            setSuccess(
+                `Hackathon creado correctamente${
+                    selectedFiles.length > 0 ? ' con archivos adjuntos' : ''
+                }.`
+            );
+
             setFormData({
                 name: '',
                 description: '',
@@ -153,7 +169,6 @@ function CreateHackathon() {
                 technologyNames: [],
             });
             setSelectedFiles([]);
-
         } catch (error) {
             setError(error.message);
         } finally {
@@ -165,7 +180,6 @@ function CreateHackathon() {
         <div className="min-h-screen bg-light-gradient dark:bg-dark-gradient flex items-center justify-center">
             <div className="w-full flex items-center justify-center p-4">
                 <div className="bg-white rounded-3xl shadow-2xl p-4 lg:w-[800px] max-h-[90vh] overflow-y-auto no-scrollbar">
-
                     {/* Header */}
                     <div className="text-center space-y-2 mb-4 relative">
                         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -187,7 +201,9 @@ function CreateHackathon() {
                                 style={{ cursor: 'pointer' }}
                             />
                         </div>
-                        <h1 className="text-2xl font-bold text-gray-900">Crear Hackathon</h1>
+                        <h1 className="text-2xl font-bold text-gray-900">
+                            Crear Hackathon
+                        </h1>
                         <p className="text-gray-500 text-sm">
                             Completa los detalles para crear un nuevo hackathon.
                         </p>
@@ -195,7 +211,6 @@ function CreateHackathon() {
 
                     {/* Form */}
                     <form className="space-y-4" onSubmit={handleSubmit}>
-                        
                         {/* Nombre */}
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -230,13 +245,15 @@ function CreateHackathon() {
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                 <Globe className="h-5 w-5 text-blue-500" />
                             </div>
-                            <select 
-                                name="modality" 
-                                value={formData.modality} 
+                            <select
+                                name="modality"
+                                value={formData.modality}
                                 onChange={handleChange}
                                 className="w-full pl-12 pr-4 py-4 bg-gray-50 border-0 rounded-2xl text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all appearance-none cursor-pointer"
                             >
-                                <option value="">Selecciona una modalidad</option>
+                                <option value="">
+                                    Selecciona una modalidad
+                                </option>
                                 <option value="online">Online</option>
                                 <option value="onsite">Presencial</option>
                             </select>
@@ -316,7 +333,9 @@ function CreateHackathon() {
                             >
                                 <option value="">Selecciona un tema</option>
                                 {topics.map((topic) => (
-                                    <option key={topic.id} value={topic.name}>{topic.name}</option>
+                                    <option key={topic.id} value={topic.name}>
+                                        {topic.name}
+                                    </option>
                                 ))}
                             </select>
                         </div>
@@ -341,7 +360,7 @@ function CreateHackathon() {
                             <label className="block text-sm font-medium text-gray-700">
                                 Archivos adjuntos
                             </label>
-                            
+
                             {/* Botón de subida */}
                             <div className="relative">
                                 <input
@@ -355,10 +374,12 @@ function CreateHackathon() {
                                     <div className="text-center">
                                         <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                                         <p className="text-sm text-gray-600">
-                                            Arrastra archivos aquí o haz clic para seleccionar
+                                            Arrastra archivos aquí o haz clic
+                                            para seleccionar
                                         </p>
                                         <p className="text-xs text-gray-400 mt-1">
-                                            Imágenes (JPG, PNG, WebP) y documentos (PDF, DOC, DOCX, ZIP)
+                                            Imágenes (JPG, PNG, WebP) y
+                                            documentos (PDF, DOC, DOCX, ZIP)
                                         </p>
                                     </div>
                                 </div>
@@ -368,13 +389,18 @@ function CreateHackathon() {
                             {selectedFiles.length > 0 && (
                                 <div className="space-y-2">
                                     <p className="text-sm font-medium text-gray-700">
-                                        Archivos seleccionados ({selectedFiles.length})
+                                        Archivos seleccionados (
+                                        {selectedFiles.length})
                                     </p>
                                     <div className="max-h-32 overflow-y-auto space-y-2">
                                         {selectedFiles.map((fileItem) => (
-                                            <div key={fileItem.id} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                                            <div
+                                                key={fileItem.id}
+                                                className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
+                                            >
                                                 <div className="flex items-center space-x-3">
-                                                    {fileItem.type === 'image' ? (
+                                                    {fileItem.type ===
+                                                    'image' ? (
                                                         <Image className="h-5 w-5 text-blue-500" />
                                                     ) : (
                                                         <FileText className="h-5 w-5 text-green-500" />
@@ -384,13 +410,22 @@ function CreateHackathon() {
                                                             {fileItem.name}
                                                         </p>
                                                         <p className="text-xs text-gray-500">
-                                                            {formatFileSize(fileItem.size)} • {fileItem.type === 'image' ? 'Imagen' : 'Documento'}
+                                                            {formatFileSize(
+                                                                fileItem.size
+                                                            )}{' '}
+                                                            •{' '}
+                                                            {fileItem.type ===
+                                                            'image'
+                                                                ? 'Imagen'
+                                                                : 'Documento'}
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <button
                                                     type="button"
-                                                    onClick={() => removeFile(fileItem.id)}
+                                                    onClick={() =>
+                                                        removeFile(fileItem.id)
+                                                    }
                                                     className="text-red-500 hover:text-red-700 p-1"
                                                 >
                                                     <X className="h-4 w-4" />
@@ -403,19 +438,19 @@ function CreateHackathon() {
                         </div>
 
                         {/* Submit Button */}
-                        <ButtonBig 
-                            type="submit" 
-                            text={isUploading ? "Creando hackathon..." : "Crear hackathon"} 
+                        <ButtonBig
+                            type="submit"
+                            text={
+                                isUploading
+                                    ? 'Creando hackathon...'
+                                    : 'Crear hackathon'
+                            }
                             disabled={isUploading}
                         />
 
                         {/* Messages */}
-                        {error && (
-                            <ErrorDiv error={error} />
-                        )}
-                        {success && (
-                            <Success success={success}/>
-                        )}
+                        {error && <ErrorDiv error={error} />}
+                        {success && <Success success={success} />}
                     </form>
                 </div>
             </div>
