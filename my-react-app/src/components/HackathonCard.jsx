@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { Star, StarOff } from 'lucide-react';
 import inscriptionService from '../services/inscriptionService';
 import AuthContext from '../context/AuthContextProvider';
+import Button from '../components/ui/Button';
 
 const HackathonCard = ({ hackathon, onShowDetails }) => {
     const { userLogged } = useContext(AuthContext);
@@ -120,18 +121,16 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                 </p>
 
                 <div className="mt-2 self-end flex gap-2">
-                    <button
+                    <Button
                         onClick={handleDetailsClick}
                         className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
-                    >
-                        Más info
-                    </button>
-                    <button
+                        text="Más info"
+                    />
+                    <Button
                         onClick={() => setShowPopup(true)}
                         className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
-                    >
-                        Inscribirme
-                    </button>
+                        text="Inscribirme"
+                    />
                 </div>
                 {message && (
                     <p className="text-green-600 text-xs mt-2">{message}</p>
@@ -145,18 +144,16 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                             ¿Seguro que quieres inscribirte en este hackathon?
                         </p>
                         <div className="flex gap-4">
-                            <button
+                            <Button
                                 onClick={handleInscription}
                                 className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
-                            >
-                                Sí, inscribirme
-                            </button>
-                            <button
+                                text="Sí, inscribirme"
+                            />
+                            <Button
                                 onClick={() => setShowPopup(false)}
                                 className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg"
-                            >
-                                Cancelar
-                            </button>
+                                text="Cancelar"
+                            />
                         </div>
                     </div>
                 </div>
