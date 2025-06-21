@@ -2,7 +2,7 @@ import ServiceCard from './ui/ServiceCard.jsx';
 
 const ServicesList = () => {
     return (
-        <ul className="m-2.5 flex flex-col gap-2.5 lg:m-10 lg:mb-0 lg:flex-row lg:gap-5">
+        <ul className="m-2.5 flex flex-col gap-2.5 lg:m-10 lg:mb-0 lg:flex-row lg:justify-between">
             <ServiceCard
                 name={'Explora y encuentra eventos'}
                 description={

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Lock, LogIn, Mail } from 'lucide-react';
+import { Eye, EyeOff, Lock, LogIn, Mail, X } from 'lucide-react';
 import ButtonBig from './ui/ButtonBig.jsx';
 import AuthContext from '../context/AuthContextProvider.jsx';
 import loginUserService from '../services/loginUserService.js';
@@ -8,11 +8,16 @@ import loginUserService from '../services/loginUserService.js';
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
     const { token, setToken } = useContext(AuthContext);
+
+    const handleClose = () => {
+        navigate('/');
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,9 +37,22 @@ const LoginForm = () => {
 
     return !token ? (
         <div className="bg-light-gradient dark:bg-dark-gradient w-screen h-screen p-2.5 flex justify-center items-center">
-            <section className="bg-white p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
+            <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
                 <div className="bg-neutral-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
                     <LogIn className="w-5 h-5 sm:w-7 sm:h-7" />
+                </div>
+
+                <div className="absolute top-2.5 right-2.5 lg:top-4 lg:right-4">
+                    <X
+                        onClick={handleClose}
+                        width="25"
+                        height="25"
+                        fill="none"
+                        stroke="#5F3DC4"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                        style={{ cursor: 'pointer' }}
+                    />
                 </div>
 
                 <article>
@@ -73,15 +91,30 @@ const LoginForm = () => {
 
                         <input
                             className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             name="password"
                             placeholder="Contraseña"
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+
+                        <button
+                            type="button"
+                            className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                <EyeOff className="size-[18px] text-blue-600" />
+                            ) : (
+                                <Eye className="size-[18px] text-blue-600" />
+                            )}
+                        </button>
                     </div>
 
-                    <Link className="w-full px-1 flex justify-end items-center gap-2">
+                    <Link
+                        to={'/password/recover'}
+                        className="w-full px-1 flex justify-end items-center gap-2"
+                    >
                         <p>Recuperar contraseña</p>
                     </Link>
 
@@ -109,7 +142,16 @@ const LoginForm = () => {
             </section>
         </div>
     ) : (
-        <p>Ya has iniciado sesión</p>
+        <div className="bg-light-gradient dark:bg-dark-gradient w-screen h-screen p-2.5 flex justify-center items-center">
+            <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
+                <h3 className="text-center text-2xl sm:text-4xl">
+                    ¡Ya has iniciado sesión!
+                </h3>
+                <Link to={'/'}>
+                    <ButtonBig text="Volver a la página principal" />
+                </Link>
+            </section>
+        </div>
     );
 };
 export default LoginForm;
