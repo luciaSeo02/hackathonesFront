@@ -32,7 +32,14 @@ const HomePage = () => {
                     novedades más interesantes del momento en el mundo
                     tecnológico.
                 </p>
-                <HackathonsList />
+                <HackathonsList
+                    searchParams={
+                        new URLSearchParams({
+                            isFavourite: 'true',
+                            orderBy: 'startDate',
+                        })
+                    }
+                />
             </section>
         </>
     );

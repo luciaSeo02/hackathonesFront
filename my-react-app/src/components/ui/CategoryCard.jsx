@@ -15,11 +15,22 @@ const CategoryCard = ({ name, description, cover }) => {
             onClick={handleClick}
         >
             {/* Imagen principal con gradiente */}
-            <img
-                src={cover || '/topics.jpg'}
-                alt={name}
-                className="w-full h-full object-cover rounded-xl md:rounded-2xl"
-            />
+            {cover?.endsWith('.mp4') ? (
+                <video
+                    src={cover}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover rounded-xl md:rounded-2xl"
+                />
+            ) : (
+                <img
+                    src={cover || '/topics.jpg'}
+                    alt={name}
+                    className="w-full h-full object-cover rounded-xl md:rounded-2xl"
+                />
+            )}
 
             {/* Overlay con gradiente */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/80 rounded-xl md:rounded-2xl" />
