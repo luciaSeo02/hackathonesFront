@@ -13,6 +13,8 @@ import ValidatePage from './pages/ValidatePage.jsx';
 import MenuPage from './pages/MenuPage.jsx';
 import PublishRankingPage from "./pages/PublishRankingPage";
 import ViewClassificationPage from "./pages/ViewClassificationPage";
+import RecoverPasswordPage from './pages/RecoverPasswordPage.jsx';
+import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <Route path='/register' element={<RegisterPage />} />
       <Route path='/users/validate/:registrationCode' element={<ValidatePage />} />
       <Route path='/login' element={<LoginPage />} />
+      <Route path='/password/recover' element={<RecoverPasswordPage />} />
+      <Route path='/password/change' element={<ChangePasswordPage />} />
       <Route path='/hackathons/create' element={<AdminCreateHackathon />} />
       <Route path="/menu" element={<MenuPage />} />
       <Route path='/' element={<LayoutPage />}>
