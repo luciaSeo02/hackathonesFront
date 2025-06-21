@@ -201,10 +201,10 @@ function CreateHackathon() {
                                 style={{ cursor: 'pointer' }}
                             />
                         </div>
-                        <h1 className="text-2xl font-bold text-gray-900">
+                        <h3>
                             Crear Hackathon
-                        </h1>
-                        <p className="text-gray-500 text-sm">
+                        </h3>
+                        <p>
                             Completa los detalles para crear un nuevo hackathon.
                         </p>
                     </div>
