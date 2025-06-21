@@ -6,7 +6,8 @@ import {
     Globe,
     Tag,
     Code,
-    MessageSquarePlus,
+    CalendarPlus,
+    PencilLine,
     Upload,
     Image,
     FileText,
@@ -183,10 +184,8 @@ function CreateHackathon() {
                     {/* Header */}
                     <div className="text-center space-y-2 mb-4 relative">
                         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <div className="w-8 h-8 bg-light-gradient dark:bg-dark-gradient rounded-lg flex items-center justify-center">
-                                <span className="text-white text-lg font-bold">
-                                    <MessageSquarePlus className="h-5 w-5" />
-                                </span>
+                            <div className="bg-neutral-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
+                                <CalendarPlus className="w-5 h-5 sm:w-7 sm:h-7" />
                             </div>
                         </div>
                         <div className="absolute top-1 right-3">
@@ -214,7 +213,7 @@ function CreateHackathon() {
                         {/* Nombre */}
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <Tag className="h-5 w-5 text-blue-500" />
+                                <PencilLine className="h-5 w-5 text-blue-500" />
                             </div>
                             <input
                                 type="text"
