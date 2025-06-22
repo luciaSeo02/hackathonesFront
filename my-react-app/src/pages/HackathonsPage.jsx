@@ -4,7 +4,7 @@ import AuthContext from '../context/AuthContextProvider';
 
 import HackathonsList from '../components/HackathonsList';
 import HackathonFilters from '../components/HackathonFilters';
-import Button from '../components/ui/Button';
+import { Plus } from 'lucide-react';
 
 const HackathonsPage = () => {
     const { userLogged } = useContext(AuthContext);
@@ -28,13 +28,16 @@ const HackathonsPage = () => {
     return (
         <div className="p-4 md:p-8 lg:mt-8">
             <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Lista de Hackathones</h2>
+                <h2 className="text-2xl font-bold">Nuestros Hackathones</h2>
 
                 {userLogged?.role === 'admin' && (
-                    <Button
-                        text="Crear hackathon"
+                    <button
                         onClick={handleCreateClick}
-                    />
+                        className="fixed bottom-6 right-6 z-50 bg-light-gradient hover:bg-indigo-700 text-white p-4 rounded-full"
+                        title="Crear nuevo hackathon"
+                    >
+                        <Plus className="w-6 h-6" />
+                    </button>
                 )}
             </div>
 
