@@ -40,7 +40,7 @@ const CategoryCard = ({ name, description, cover }) => {
                 <h3 className="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2 group-hover:transform group-hover:-translate-y-1 transition-transform">
                     {name}
                 </h3>
-                <p className="text-white/90 text-sm md:text-base line-clamp-2 group-hover:transform group-hover:-translate-y-1 transition-transform">
+                <p className="text-white/90 text-sm md:text-base group-hover:transform group-hover:-translate-y-1 transition-transform">
                     {description}
                 </p>
             </div>
