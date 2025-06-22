@@ -41,6 +41,10 @@
     option {
         @apply font-body bg-inherit text-sm sm:text-base;
     }
+
+    body {
+        overflow-x: hidden;
+    }
 }
 
 @layer utilities {
