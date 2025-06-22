@@ -4,12 +4,14 @@ import AuthContext from '../../context/AuthContextProvider.jsx';
 const Avatar = () => {
     const { userLogged } = useContext(AuthContext);
 
+    if (!userLogged) return null;
+
     return (
-        <div className="border-light-gradient dark:border-dark-gradient border-2 rounded-lg">
+        <div className="border-light-gradient dark:border-dark-gradient border-2 rounded-lg overflow-hidden w-8 h-8">
             <img
-                src={'/defaultAvatar.png'}
+                src={userLogged.avatar || '/defaultAvatar.png'}
                 alt="Avatar"
-                className="size-8 object-cover"
+                className="w-full h-full object-cover"
             />
         </div>
     );
