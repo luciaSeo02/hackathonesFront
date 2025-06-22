@@ -5,6 +5,7 @@ import AuthContext from '../../context/AuthContextProvider.jsx';
 import SearchBar from './SearchBar.jsx';
 import Button from './Button.jsx';
 import Avatar from './Avatar.jsx';
+import MenuDropDown from '../MenuDropDown.jsx';
 
 const NavBar = () => {
     const { token } = useContext(AuthContext);
@@ -65,9 +66,9 @@ const NavBar = () => {
                         </NavLink>
                     </div>
                 ) : (
-                    <NavLink to={'/profile'}>
-                        <Avatar />
-                    </NavLink>
+                    <div className="hidden lg:flex items-center">
+                        <MenuDropDown />
+                    </div>
                 )}
             </div>
         </nav>

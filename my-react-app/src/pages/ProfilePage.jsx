@@ -237,9 +237,6 @@ const ProfilePage = () => {
                 <ButtonBig text="Cerrar sesión" onClick={handleLogout} />
             </div>
 
-            <div className="mt-10">
-                <SectionListInscriptions />
-            </div>
         </div>
     );
 };

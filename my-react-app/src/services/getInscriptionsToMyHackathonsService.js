@@ -1,9 +1,16 @@
-import fetchApi from "./fetchApi";
+const getInscriptionsToMyHackathonsService = async () => {
+    const token = localStorage.getItem("token");
+    const url = `${import.meta.env.VITE_URL_API}/inscriptions-to-my-hackathons`;
 
-const getInscriptionsToMyHackathonsService = async ()=> {
-    const url = `${import.meta.env.VITE_API_URL}/user/hackathons/inscriptions`;
-    const data = await fetchApi(url);
+    const response = await fetch(url, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
     return data.inscriptions;
-}
+};
 
-export default getInscriptionsToMyHackathonsService
+export default getInscriptionsToMyHackathonsService;

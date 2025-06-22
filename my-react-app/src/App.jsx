@@ -15,6 +15,7 @@ import PublishRankingPage from "./pages/PublishRankingPage";
 import ViewClassificationPage from "./pages/ViewClassificationPage";
 import RecoverPasswordPage from './pages/RecoverPasswordPage.jsx';
 import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
+import MyInscriptionsPage from './pages/MyInscriptionPage.jsx';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path='/contact' element={<ContactPage />} />
         <Route path="/hackathons/:hackathonId/classification" element={<PublishRankingPage />} />
         <Route path="/hackathons/:hackathonId/classification/view" element={<ViewClassificationPage />} />
+        <Route path="/my-inscriptions" element={<MyInscriptionsPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Route>
     </Routes>
