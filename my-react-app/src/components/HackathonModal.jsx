@@ -1,10 +1,39 @@
 import { useEffect, useState } from 'react';
 import Button from './ui/Button';
+import Success from './ui/Success';
+import ErrorDiv from './ui/ErrorDiv';
+
+import inscriptionService from '../services/inscriptionService';
 
 const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
     const [hackathon, setHackathon] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleInscription = async () => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setShowPopup(false);
+        try {
+            await inscriptionService(hackathon.id);
+            setSuccessMessage('¡Inscripción realizada con éxito!');
+        } catch (error) {
+            setErrorMessage(error.message || 'Error al inscribirse');
+        }
+    };
+
+    useEffect(() => {
+        if (successMessage || errorMessage) {
+            const timer = setTimeout(() => {
+                setSuccessMessage('');
+                setErrorMessage('');
+            }, 4000);
+            return () => clearTimeout(timer);
+        }
+    }, [successMessage, errorMessage]);
 
     useEffect(() => {
         if (isOpen && hackathonId) {
@@ -15,14 +44,14 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
     const fetchHackathonDetails = async () => {
         setLoading(true);
         setError('');
-        
+
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}`
             );
 
             console.log(response);
-            
+
             const json = await response.json();
 
             if (!response.ok) {
@@ -41,7 +70,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
         return new Date(dateString).toLocaleDateString('es-ES', {
             year: 'numeric',
             month: 'long',
-            day: 'numeric'
+            day: 'numeric',
         });
     };
 
@@ -54,13 +83,12 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div 
+        <div
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
             onClick={handleOverlayClick}
         >
             <div className="bg-white dark:bg-gray-800 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-6">
-
                     {/* Cabecera */}
                     <div className="flex justify-between items-start mb-6">
                         <div>
@@ -82,7 +110,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                     {/* Contenido */}
                     {loading && (
                         <div className="text-center py-8">
-                            <p className="text-gray-600 dark:text-gray-300">Cargando detalles...</p>
+                            <p className="text-gray-600 dark:text-gray-300">
+                                Cargando detalles...
+                            </p>
                         </div>
                     )}
 
@@ -94,7 +124,6 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
 
                     {hackathon && !loading && (
                         <div className="space-y-6">
-
                             {/* Descripcion */}
                             <div>
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -113,9 +142,12 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             Modalidad
                                         </h4>
                                         <p className="text-gray-600 dark:text-gray-300">
-                                            {hackathon.modality === 'online' ? 'Online' : 
-                                             hackathon.modality === 'onsite' ? 'Presencial' : 
-                                             hackathon.modality}
+                                            {hackathon.modality === 'online'
+                                                ? 'Online'
+                                                : hackathon.modality ===
+                                                  'onsite'
+                                                ? 'Presencial'
+                                                : hackathon.modality}
                                         </p>
                                     </div>
 
@@ -135,7 +167,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                                                 URL del evento
                                             </h4>
-                                            <a 
+                                            <a
                                                 href={hackathon.onlineUrl}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
@@ -172,14 +204,16 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                 Tecnologías
                                             </h4>
                                             <div className="flex flex-wrap gap-2">
-                                                {hackathon.technolyNames.split(',').map((tech, index) => (
-                                                    <span 
-                                                        key={index}
-                                                        className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-sm rounded-full"
-                                                    >
-                                                        {tech.trim()}
-                                                    </span>
-                                                ))}
+                                                {hackathon.technolyNames
+                                                    .split(',')
+                                                    .map((tech, index) => (
+                                                        <span
+                                                            key={index}
+                                                            className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-sm rounded-full"
+                                                        >
+                                                            {tech.trim()}
+                                                        </span>
+                                                    ))}
                                             </div>
                                         </div>
                                     )}
@@ -188,19 +222,53 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
 
                             {/* Botones */}
                             <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-                                <Button 
-                                    text="Cerrar" 
-                                    onClick={onClose}
+                                <Button
                                     className="bg-gray-500 hover:bg-gray-600"
+                                    onClick={() => setShowPopup(true)}
+                                    text="Inscribirme"
                                 />
                                 {hackathon.onlineUrl && (
-                                    <Button 
-                                        text="Ir al evento" 
-                                        onClick={() => window.open(hackathon.onlineUrl, '_blank')}
+                                    <Button
+                                        text="Ir al evento"
+                                        onClick={() =>
+                                            window.open(
+                                                hackathon.onlineUrl,
+                                                '_blank'
+                                            )
+                                        }
                                         className="bg-indigo-600 hover:bg-indigo-700"
                                     />
                                 )}
                             </div>
+
+                            {showPopup && (
+                                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+                                    <div className="bg-white p-6 rounded-xl shadow-xl flex flex-col items-center">
+                                        <p className="mb-4 font-semibold text-gray-800">
+                                            ¿Seguro que quieres inscribirte en
+                                            este hackathon?
+                                        </p>
+                                        <div className="flex gap-4">
+                                            <Button
+                                                onClick={handleInscription}
+                                                className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
+                                                text="Sí, inscribirme"
+                                            />
+                                            <Button
+                                                onClick={() =>
+                                                    setShowPopup(false)
+                                                }
+                                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg"
+                                                text="Cancelar"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {successMessage && (
+                                <Success success={successMessage} />
+                            )}
+                            {errorMessage && <ErrorDiv error={errorMessage} />}
                         </div>
                     )}
                 </div>

@@ -1,14 +1,10 @@
 import { useState, useContext } from 'react';
 import { Star, StarOff } from 'lucide-react';
-import inscriptionService from '../services/inscriptionService';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
 
 const HackathonCard = ({ hackathon, onShowDetails }) => {
     const { userLogged } = useContext(AuthContext);
-
-    const [showPopup, setShowPopup] = useState(false);
-    const [message, setMessage] = useState('');
     const [imageIndex, setImageIndex] = useState(0);
     const [isFavourite, setIsFavourite] = useState(
         hackathon.isFavourite || false
@@ -29,17 +25,6 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
 
     const handleDetailsClick = () => {
         onShowDetails(hackathon.id);
-    };
-
-    const handleInscription = async () => {
-        try {
-            await inscriptionService(hackathon.id);
-            setMessage('¡Inscripción realizada con éxito!');
-        } catch (error) {
-            setMessage(error.message || 'Error al inscribirse');
-        } finally {
-            setShowPopup(false);
-        }
     };
 
     const handleToggleFavourite = async () => {
@@ -126,38 +111,8 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                         className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
                         text="Más info"
                     />
-                    <Button
-                        onClick={() => setShowPopup(true)}
-                        className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
-                        text="Inscribirme"
-                    />
                 </div>
-                {message && (
-                    <p className="text-green-600 text-xs mt-2">{message}</p>
-                )}
             </div>
-
-            {showPopup && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-                    <div className="bg-white p-6 rounded-xl shadow-xl flex flex-col items-center">
-                        <p className="mb-4 font-semibold text-gray-800">
-                            ¿Seguro que quieres inscribirte en este hackathon?
-                        </p>
-                        <div className="flex gap-4">
-                            <Button
-                                onClick={handleInscription}
-                                className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm md:px-4 md:py-2 md:rounded-lg text-white text-xs md:text-sm"
-                                text="Sí, inscribirme"
-                            />
-                            <Button
-                                onClick={() => setShowPopup(false)}
-                                className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg"
-                                text="Cancelar"
-                            />
-                        </div>
-                    </div>
-                </div>
-            )}
         </li>
     );
 };

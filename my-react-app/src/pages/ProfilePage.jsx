@@ -276,8 +276,6 @@ const ProfilePage = () => {
                     )}
                 </div>
 
-<<<<<<< HEAD
-=======
                 {/* Cerrar sesión */}
                 <div className="mt-6">
                     <ButtonBig text="Cerrar sesión" onClick={handleLogout} />
@@ -288,7 +286,6 @@ const ProfilePage = () => {
                     <SectionListInscriptions />
                 </div>
             </div>
->>>>>>> b4e0aea399c51cafd9d7ecf8653ffd41d1484b64
         </div>
     );
 };
