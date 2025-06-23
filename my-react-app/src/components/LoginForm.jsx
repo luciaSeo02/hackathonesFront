@@ -125,11 +125,11 @@ const LoginForm = () => {
                         </button>
                     </div>
 
-                    <Link to={'/password/recover'} className="w-full px-1 flex justify-end text-sm">
-                        Recuperar contraseña
+                    <Link to={'/password/recover'} className="w-full px-1 flex justify-end">
+                        <p>Recuperar contraseña</p>
                     </Link>
 
-                    <div className="w-full px-1 flex justify-start items-center gap-2 text-sm">
+                    <div className="w-full px-1 flex justify-start items-center gap-2 ">
                         <input
                             type="checkbox"
                             name="rememberMe"
@@ -141,10 +141,10 @@ const LoginForm = () => {
 
                     <ButtonBig type="submit" text="Continuar" />
 
-                    <div className="my-3 flex gap-1 text-sm">
+                    <div className="my-3 flex gap-1">
                         <p>Si no tienes cuenta,</p>
                         <Link className="text-blue-600" to={'/register'}>
-                            regístrate
+                            <p>regístrate</p>
                         </Link>
                     </div>
 
