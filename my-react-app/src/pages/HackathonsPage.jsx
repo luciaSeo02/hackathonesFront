@@ -17,11 +17,9 @@ const HackathonsPage = () => {
 
     const handleFiltersChange = (filters) => {
         const newParams = new URLSearchParams();
-
-        Object.entries(filters).forEach(([Key, value]) => {
-            if (value) newParams.set(Key, value);
+        Object.entries(filters).forEach(([key, value]) => {
+            if (value) newParams.set(key, value);
         });
-
         setSearchParams(newParams);
     };
 
@@ -42,7 +40,7 @@ const HackathonsPage = () => {
             </div>
 
             <HackathonFilters onChange={handleFiltersChange} />
-            <HackathonsList searchParams={searchParams} />
+            <HackathonsList searchParams={searchParams} redirectIfEmpty={false} /> 
         </div>
     );
 };
