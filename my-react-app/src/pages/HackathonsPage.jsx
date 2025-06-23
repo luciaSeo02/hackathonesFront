@@ -25,8 +25,8 @@ const HackathonsPage = () => {
 
     return (
         <div className="p-4 md:p-8 lg:mt-8">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">Nuestros Hackathones</h2>
+            <div className="mb-6 text-center px-10">
+                <h2>Nuestros Hackathones</h2>
 
                 {userLogged?.role === 'admin' && (
                     <button

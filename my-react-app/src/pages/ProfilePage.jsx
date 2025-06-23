@@ -132,11 +132,11 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-b from-indigo-100 to-white dark:from-indigo-900 dark:to-gray-900 pt-6">
-            <div className="w-full max-w-3xl mx-auto p-6 bg-white dark:bg-gray-900 rounded-xl shadow-xl">
-                <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 font-display">
+        <div className="min-h-screen w-full pt-6">
+            <div className="w-full max-w-3xl mx-auto p-6 rounded-xl shadow-xl mt-16">
+                <h3 className="mb-4">
                     Perfil del usuario
-                </h1>
+                </h3>
 
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                     <div className="relative group w-32 h-32">
