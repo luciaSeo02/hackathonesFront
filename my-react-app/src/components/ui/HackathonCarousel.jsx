@@ -1,6 +1,9 @@
-import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 const HackathonCard = ({ title, description, isActive, onClick }) => {
     const navigate = useNavigate();
@@ -36,38 +39,33 @@ const HackathonCard = ({ title, description, isActive, onClick }) => {
 };
 
 const HackathonCarousel = ({ hackathons = [] }) => {
-    const [activeIndex, setActiveIndex] = useState(0);
-
     return (
         <div className="relative">
-            <div className="relative">
-                <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-8 px-2.5 lg:gap-5 lg:px-10">
-                    {hackathons.map((hackathon, index) => (
+            <Swiper
+                modules={[Pagination]}
+                pagination={{
+                    clickable: true,
+                    dynamicBullets: true,
+                }}
+                spaceBetween={20}
+                slidesPerView={1}
+                breakpoints={{
+                    1024: {
+                        slidesPerView: 'auto',
+                        spaceBetween: 40,
+                    },
+                }}
+                className="w-full"
+            >
+                {hackathons.map((hackathon) => (
+                    <SwiperSlide key={hackathon.id}>
                         <HackathonCard
-                            key={hackathon.id}
                             title={hackathon.title}
                             description={hackathon.description}
-                            isActive={index === activeIndex}
-                            onClick={() => setActiveIndex(index)}
                         />
-                    ))}
-                </div>
-            </div>
-
-            {/* Indicadores de navegación */}
-            <div className="flex justify-center gap-2 mt-4">
-                {hackathons.map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setActiveIndex(index)}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                            index === activeIndex
-                                ? 'bg-purple-600 w-8'
-                                : 'bg-gray-300 dark:bg-gray-600'
-                        }`}
-                    />
+                    </SwiperSlide>
                 ))}
-            </div>
+            </Swiper>
         </div>
     );
 };
