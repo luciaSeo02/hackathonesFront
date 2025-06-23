@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Star, StarOff } from 'lucide-react';
+import { Star, StarOff, ChevronLeft, ChevronRight } from 'lucide-react';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
 
@@ -68,13 +68,13 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                         onClick={handlePrev}
                         className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 text-white text-lg bg-black/30 hover:bg-black/50 p-2 rounded-full"
                     >
-                        ◀
+                        <ChevronLeft className="w-5 h-5" />
                     </button>
                     <button
                         onClick={handleNext}
                         className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 text-white text-lg bg-black/30 hover:bg-black/50 p-2 rounded-full"
                     >
-                        ▶
+                        <ChevronRight className="w-5 h-5" />
                     </button>
                 </>
             )}

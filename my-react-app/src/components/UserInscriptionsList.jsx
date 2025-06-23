@@ -1,6 +1,9 @@
 import deleteInscriptionService from '../services/deleteInscriptionService';
 import { useState } from 'react';
+import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import HackathonModal from './HackathonModal';
+import StarRating from './StarRating';
 
 const UserInscriptionsList = ({ inscriptions, onRemove }) => {
     const [message, setMessage] = useState('');
@@ -10,20 +13,23 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
     const [imageIndex, setImageIndex] = useState({});
 
     const handleNext = (hackathonId, totalImages) => {
-        setImageIndex((prev) => ({
-            ...prev,
-            [hackathonId]: (prev[hackathonId] + 1) % totalImages,
-        }));
+        setImageIndex((prev) => {
+            const current = prev[hackathonId] ?? 0;
+            return {
+                ...prev,
+                [hackathonId]: (current + 1) % totalImages,
+            };
+        });
     };
 
     const handlePrev = (hackathonId, totalImages) => {
-        setImageIndex((prev) => ({
-            ...prev,
-            [hackathonId]:
-                prev[hackathonId] === 0
-                    ? totalImages - 1
-                    : prev[hackathonId] - 1,
-        }));
+        setImageIndex((prev) => {
+            const current = prev[hackathonId] ?? 0;
+            return {
+                ...prev,
+                [hackathonId]: current === 0 ? totalImages - 1 : current - 1,
+            };
+        });
     };
 
     const handleDelete = async (hackathonId) => {
@@ -65,42 +71,44 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                     return (
                         <li
                             key={hackathonId}
-                            className="relative flex flex-col sm:flex-row gap-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-md p-4 w-full sm:h-48 overflow-hidden"
+                            className="group relative flex flex-col sm:flex-row gap-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-md p-4 w-full sm:h-48 overflow-hidden"
                         >
-                            <img
-                                src={imageUrl}
-                                alt={hackathon.name}
-                                className="w-full h-full object-cover rounded-xl"
-                            />
+                            <div className="relative w-full sm:w-1/3 aspect-video overflow-hidden rounded-xl bg-gray-200">
+                                <img
+                                    src={imageUrl}
+                                    alt={hackathon.name}
+                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                                {images.length > 1 && (
+                                    <>
+                                        <button
+                                            onClick={() =>
+                                                handlePrev(
+                                                    hackathonId,
+                                                    images.length
+                                                )
+                                            }
+                                            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full"
+                                        >
+                                            <ChevronLeft className="w-5 h-5" />
+                                        </button>
 
-                            {images.length > 1 && (
-                                <>
-                                    <button
-                                        onClick={() =>
-                                            handlePrev(
-                                                hackathonId,
-                                                images.length
-                                            )
-                                        }
-                                        className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 text-white text-lg bg-black/30 hover:bg-black/50 p-2 rounded-full"
-                                    >
-                                        ◀
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            handleNext(
-                                                hackathonId,
-                                                images.length
-                                            )
-                                        }
-                                        className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 text-white text-lg bg-black/30 hover:bg-black/50 p-2 rounded-full"
-                                    >
-                                        ▶
-                                    </button>
-                                </>
-                            )}
+                                        <button
+                                            onClick={() =>
+                                                handleNext(
+                                                    hackathonId,
+                                                    images.length
+                                                )
+                                            }
+                                            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full"
+                                        >
+                                            <ChevronRight className="w-5 h-5" />
+                                        </button>
+                                    </>
+                                )}
+                            </div>
 
-                            <div className="flex-grow">
+                            <div className="flex flex-col flex-grow">
                                 <button
                                     onClick={() =>
                                         setModalHackathonId(hackathonId)
@@ -117,8 +125,8 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
 
                                 <div className="text-sm text-gray-500 mt-2 flex flex-wrap gap-4">
                                     {insc.startDate && (
-                                        <span>
-                                            📅{' '}
+                                        <span className="flex items-center gap-1">
+                                            <CalendarDays className="w-4 h-4 text-gray-500" />
                                             {new Date(
                                                 insc.startDate
                                             ).toLocaleString('es-ES', {
@@ -130,22 +138,26 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                                             })}
                                         </span>
                                     )}
-                                    {insc.technology && (
-                                        <span>💻 {insc.technology}</span>
-                                    )}
                                 </div>
-                            </div>
 
-                            <div className="flex flex-col justify-between items-end gap-2 ml-2">
-                                <button
-                                    onClick={() => {
-                                        setShowPopup(true);
-                                        setSelectedId(hackathonId);
-                                    }}
-                                    className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded text-xs"
-                                >
-                                    Eliminar
-                                </button>
+                                <div className="mt-auto flex items-center gap-3">
+                                    <button
+                                        onClick={() => {
+                                            setShowPopup(true);
+                                            setSelectedId(hackathonId);
+                                        }}
+                                        className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded text-sm"
+                                    >
+                                        Eliminar
+                                    </button>
+                                    {hackathon?.endDate &&
+                                        new Date(hackathon.endDate) <
+                                            new Date() && (
+                                            <StarRating
+                                                hackathonId={hackathonId}
+                                            />
+                                        )}
+                                </div>
                             </div>
                         </li>
                     );
