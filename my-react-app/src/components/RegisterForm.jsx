@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { Eye, EyeOff, Lock, LogIn, Mail, User, X } from 'lucide-react';
 import registerUserService from '../services/registerUserService.js';
 import ButtonBig from './ui/ButtonBig';
 import ErrorDiv from './ui/ErrorDiv';
@@ -15,6 +16,10 @@ const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
+
+    const handleClose = () => {
+        navigate('/');
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,10 +38,8 @@ const RegisterForm = () => {
             });
             console.log('Respuesta del servidor:', response);
 
-            // Si llegamos aquí, el registro fue exitoso
             setIsRegistered(true);
 
-            // Esperar un momento antes de redirigir
             if (response.registrationCode) {
                 setTimeout(() => {
                     navigate(`/users/validate/${response.registrationCode}`);
@@ -53,36 +56,32 @@ const RegisterForm = () => {
 
     if (isRegistered) {
         return (
-            <div className="min-h-screen flex items-center justify-center p-4 bg-light-gradient dark:bg-dark-gradient">
-                <div className="w-full max-w-md">
-                    <div className="bg-white rounded-3xl p-8 shadow-2xl text-center">
-                        <div className="flex justify-center mb-8">
-                            <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center">
-                                <svg
-                                    className="w-8 h-8 text-green-500"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M5 13l4 4L19 7"
-                                    />
-                                </svg>
-                            </div>
+            <div className="bg-light-gradient dark:bg-dark-gradient w-screen h-screen p-2.5 flex justify-center items-center">
+                <div className="bg-white rounded-2xl p-10 shadow-2xl lg:w-[440px]">
+                    <div className="flex justify-center mb-8">
+                        <div className="bg-green-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
+                            <svg
+                                className="w-5 h-5 text-green-500 sm:w-7 sm:h-7"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
                         </div>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                            ¡Registro Exitoso!
-                        </h2>
-                        <Success success="Por favor, verifica tu cuenta mediante el email recibido." />
-                        <div className="mt-6">
-                            <ButtonBig
-                                text="Ir al inicio de sesión"
-                                onClick={() => navigate('/login')}
-                            />
-                        </div>
+                    </div>
+                    <h2 className="text-2xl font-bold text-center mb-4 sm:text-4xl"></h2>
+                    <Success success="Por favor, verifica tu cuenta mediante el email recibido." />
+                    <div className="mt-6">
+                        <ButtonBig
+                            text="Ir al inicio de sesión"
+                            onClick={() => navigate('/login')}
+                        />
                     </div>
                 </div>
             </div>
@@ -90,220 +89,146 @@ const RegisterForm = () => {
     }
 
     return (
-        <div className="h-screen flex items-center justify-center p-4 bg-light-gradient dark:bg-dark-gradient">
-            <div className="w-full max-w-md">
-                <div className="bg-white rounded-3xl p-8 shadow-2xl">
-                    <div className="flex justify-center mb-8">
-                        <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center relative">
-                            <svg
-                                className="w-7 h-7"
-                                fill="url(#userGradient)"
-                                viewBox="0 0 24 24"
-                            >
-                                <defs>
-                                    <linearGradient
-                                        id="userGradient"
-                                        x1="0%"
-                                        y1="0%"
-                                        x2="100%"
-                                        y2="100%"
-                                    >
-                                        <stop offset="0%" stopColor="#1565C0" />
-                                        <stop
-                                            offset="100%"
-                                            stopColor="#9D4EDD"
-                                        />
-                                    </linearGradient>
-                                </defs>
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                            </svg>
-                            <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-[#1565C0] to-[#9D4EDD] rounded-full flex items-center justify-center">
-                                <svg
-                                    className="w-3 h-3 text-white"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2.5"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        d="M12 4v16m8-8H4"
-                                    />
-                                </svg>
-                            </div>
+        <div className="bg-light-gradient dark:bg-dark-gradient w-screen h-screen p-2.5 flex justify-center items-center">
+            <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
+                <div className="bg-neutral-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
+                    <LogIn className="w-5 h-5 sm:w-7 sm:h-7" />
+                </div>
+
+                <div className="absolute top-2.5 right-2.5 lg:top-4 lg:right-4">
+                    <X
+                        onClick={handleClose}
+                        width="25"
+                        height="25"
+                        fill="none"
+                        stroke="#5F3DC4"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                        style={{ cursor: 'pointer' }}
+                    />
+                </div>
+
+                <article>
+                    <h3 className="text-center text-2xl sm:text-4xl">
+                        Registrarse
+                    </h3>
+                    <p className="mt-1 text-center text-sm sm:text-base">
+                        Crea una cuenta para disfrutar de <br /> nuestros
+                        servicios
+                    </p>
+                </article>
+
+                <form
+                    onSubmit={handleSubmit}
+                    className="w-full flex flex-col justify-center items-center gap-2"
+                >
+                    {/* Username field */}
+                    <div className="relative w-full">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <User className="size-[18px] text-blue-600" />
                         </div>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            placeholder="Nombre de usuario"
+                            required
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        />
                     </div>
 
-                    <h1
-                        className="text-3xl font-black text-center text-black mb-8"
-                        style={{ fontFamily: 'Orbitron' }}
-                    >
-                        Registrarse
-                    </h1>
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {/* Username field */}
-                        <div className="relative">
-                            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                <svg
-                                    className="w-5 h-5 text-[#1565C0]"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                </svg>
-                            </div>
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                placeholder="Nombre de usuario"
-                                required
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className="w-full bg-gray-100 rounded-2xl pl-12 pr-4 py-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1565C0] focus:bg-white transition-all"
-                            />
+                    {/* Email field */}
+                    <div className="relative w-full">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <Mail className="size-[18px] text-blue-600" />
                         </div>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            placeholder="Correo electrónico"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        />
+                    </div>
 
-                        {/* Email field */}
-                        <div className="relative">
-                            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                <svg
-                                    className="w-5 h-5 text-[#1565C0]"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                                </svg>
-                            </div>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                placeholder="Correo electrónico"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-gray-100 rounded-2xl pl-12 pr-4 py-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1565C0] focus:bg-white transition-all"
-                            />
+                    {/* Password field */}
+                    <div className="relative w-full">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <Lock className="size-[18px] text-blue-600" />
                         </div>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            id="password"
+                            placeholder="Contraseña"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="size-[18px] text-blue-600" />
+                            ) : (
+                                <Eye className="size-[18px] text-blue-600" />
+                            )}
+                        </button>
+                    </div>
 
-                        {/* Password field */}
-                        <div className="relative">
-                            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                <svg
-                                    className="w-5 h-5 text-[#1565C0]"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM15.1 8H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                                </svg>
-                            </div>
-                            <input
-                                type={showPassword ? 'text' : 'password'}
-                                name="password"
-                                id="password"
-                                placeholder="Contraseña"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-gray-100 rounded-2xl pl-12 pr-12 py-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1565C0] focus:bg-white transition-all"
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 transform -translate-y-1/2"
-                            >
-                                <svg
-                                    className="w-5 h-5 text-[#1565C0]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d={
-                                            showPassword
-                                                ? 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21'
-                                                : 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-                                        }
-                                    />
-                                </svg>
-                            </button>
+                    {/* Confirm Password field */}
+                    <div className="relative w-full">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <Lock className="size-[18px] text-blue-600" />
                         </div>
+                        <input
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            name="confirmPassword"
+                            id="confirmPassword"
+                            placeholder="Repetir contraseña"
+                            required
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        />
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        >
+                            {showConfirmPassword ? (
+                                <EyeOff className="size-[18px] text-blue-600" />
+                            ) : (
+                                <Eye className="size-[18px] text-blue-600" />
+                            )}
+                        </button>
+                    </div>
 
-                        {/* Confirm Password field */}
-                        <div className="relative">
-                            <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                                <svg
-                                    className="w-5 h-5 text-[#1565C0]"
-                                    fill="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM15.1 8H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
-                                </svg>
-                            </div>
-                            <input
-                                type={showConfirmPassword ? 'text' : 'password'}
-                                name="confirmPassword"
-                                id="confirmPassword"
-                                placeholder="Repetir contraseña"
-                                required
-                                value={confirmPassword}
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
-                                className="w-full bg-gray-100 rounded-2xl pl-12 pr-12 py-4 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1565C0] focus:bg-white transition-all"
-                            />
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    setShowConfirmPassword(!showConfirmPassword)
-                                }
-                                className="absolute right-4 top-1/2 transform -translate-y-1/2"
-                            >
-                                <svg
-                                    className="w-5 h-5 text-[#1565C0]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d={
-                                            showConfirmPassword
-                                                ? 'M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21'
-                                                : 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-                                        }
-                                    />
-                                </svg>
-                            </button>
-                        </div>
+                    {/* Submit button */}
+                    <ButtonBig type="submit" text="Continuar" />
 
-                        {/* Submit button */}
-                        <ButtonBig type="submit" text="Continuar" />
+                    {/* Login link */}
+                    <div className="my-3 flex gap-1">
+                        <p>Si ya tienes una cuenta,</p>
+                        <Link className="text-blue-600" to={'/login'}>
+                            <p>inicia sesión</p>
+                        </Link>
+                    </div>
 
-                        {/* Login link */}
-                        <p className="text-center text-gray-500 mt-4">
-                            Si ya tienes una cuenta,{' '}
-                            <a
-                                href="/login"
-                                className="text-[#1565C0] hover:text-[#0B3680] transition-colors"
-                            >
-                                inicia sesión
-                            </a>
-                        </p>
-
-                        {/* Error message */}
-                        {error && <ErrorDiv error={error} />}
-                    </form>
-                </div>
-            </div>
+                    {/* Error message */}
+                    {error && <ErrorDiv error={error} />}
+                </form>
+            </section>
         </div>
     );
 };
