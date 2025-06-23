@@ -1,4 +1,4 @@
-import CreateHackathon from "../components/CreateHackathon.jsx";
+import CreateHackathon from "../components/CreateHackathon/CreateHackathon.jsx";
 
 
 const AdminCreateHackathon = () => {
