@@ -1,5 +1,5 @@
 import { Upload, Image, FileText, X } from 'lucide-react';
-import { formatFileSize } from '../../services/fileUtils';
+import formatFileSize from '../../services/fileUtils';
 
 const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) => {
     const handleFileChange = (e) => {
