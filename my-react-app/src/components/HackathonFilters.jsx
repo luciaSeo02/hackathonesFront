@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Filter, ChevronLeft, ChevronRight, ChevronDown, X } from 'lucide-react';
+import { Filter, ChevronLeft, ChevronRight, ChevronDown, FunnelX  } from 'lucide-react';
 import FilterModal from './FilterModal';
-import SearchBar from './ui/SearchBar';
-import Button from './ui/Button';
+
 
 const HackathonFilters = ({ onChange }) => {
     const [filters, setFilters] = useState({
@@ -125,8 +124,6 @@ const HackathonFilters = ({ onChange }) => {
     return (
         <div className="w-full flex flex-col items-center gap-4">
             
-
-            
             <div className="w-full max-w-5xl flex items-center justify-between px-4 gap-2">
                 <button
                     onClick={handleToggleFilters}
@@ -139,10 +136,11 @@ const HackathonFilters = ({ onChange }) => {
             
                 <button
                     onClick={clearFilters}
-                    className="text-xs sm:text-sm border-indigo-500 text-indigo-600 hover:bg-indigo-50"
+                    className="flex items-center gap-2 p-2 rounded-full border-[2px] border-indigo-500 text-indigo-600 hover:bg-indigo-50"
                 >
-                Limpiar filtros
-                </button>
+                    <FunnelX  size={15} />
+                    <span className="hidden sm:inline text-xs">Limpiar filtros</span>
+                </button >
             </div>
 
             
