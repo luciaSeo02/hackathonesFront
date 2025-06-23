@@ -42,10 +42,6 @@ const HackathonFilters = ({ onChange }) => {
         updateFilters({ ...filters, [name]: value });
     };
 
-    const handleSearchChange = (value) => {
-        updateFilters({ ...filters, search: value });
-    };
-
     const handleChipClick = (topicName) => {
         updateFilters({
             ...filters,
@@ -129,13 +125,6 @@ const HackathonFilters = ({ onChange }) => {
     return (
         <div className="w-full flex flex-col items-center gap-4">
             
-            <div className="w-full max-w-5xl px-4">
-                <SearchBar
-                    value={filters.search}
-                    onChange={handleSearchChange}
-                    placeholder="Buscar hackathons..."
-                />
-            </div>
 
             
             <div className="w-full max-w-5xl flex items-center justify-between px-4 gap-2">
