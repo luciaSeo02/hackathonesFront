@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff, Lock, LogIn, Mail, User, X } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail, User, UserRoundPlus, X } from 'lucide-react';
 import registerUserService from '../services/registerUserService.js';
 import ButtonBig from './ui/ButtonBig';
 import ErrorDiv from './ui/ErrorDiv';
@@ -92,7 +92,7 @@ const RegisterForm = () => {
         <div className="bg-light-gradient dark:bg-dark-gradient w-screen h-screen p-2.5 flex justify-center items-center">
             <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
                 <div className="bg-neutral-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
-                    <LogIn className="w-5 h-5 sm:w-7 sm:h-7" />
+                    <UserRoundPlus className="w-5 h-5 sm:w-7 sm:h-7" />
                 </div>
 
                 <div className="absolute top-2.5 right-2.5 lg:top-4 lg:right-4">

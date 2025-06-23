@@ -16,11 +16,11 @@ const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) =>
     };
 
     return (
-        <div className="space-y-3">
-            <label className="block text-sm font-medium text-gray-700">
+        <div className="space-y-2">
+            <label className="block mt-4 text-sm font-semibold">
                 Archivos adjuntos
             </label>
-            <div className="relative">
+            <div className="relative w-full">
                 <input
                     type="file"
                     multiple
@@ -28,7 +28,7 @@ const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) =>
                     onChange={handleFileChange}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
-                <div className="flex items-center justify-center w-full h-32 bg-gray-50 border-2 border-dashed border-gray-300 rounded-2xl hover:bg-gray-100 transition-colors">
+                <div className="flex items-center justify-center h-32 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg hover:bg-gray-100 transition-colors">
                     <div className="text-center">
                         <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                         <p className="text-sm text-gray-600">
@@ -53,7 +53,7 @@ const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) =>
                             >
                                 <div className="flex items-center space-x-3">
                                     {fileItem.type === 'image' ? (
-                                        <Image className="h-5 w-5 text-blue-500" />
+                                        <Image className="h-5 w-5 text-blue-600" />
                                     ) : (
                                         <FileText className="h-5 w-5 text-green-500" />
                                     )}

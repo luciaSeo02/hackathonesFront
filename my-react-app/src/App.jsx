@@ -16,18 +16,20 @@ import ViewClassificationPage from "./pages/ViewClassificationPage";
 import RecoverPasswordPage from './pages/RecoverPasswordPage.jsx';
 import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
 import MyInscriptionsPage from './pages/MyInscriptionPage.jsx';
-
+import LayoutPage2 from './pages/LayoutPage2.jsx';
 
 function App() {
   return (
     <Routes>
-      <Route path='/register' element={<RegisterPage />} />
-      <Route path='/users/validate/:registrationCode' element={<ValidatePage />} />
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/password/recover' element={<RecoverPasswordPage />} />
-      <Route path='/password/change' element={<ChangePasswordPage />} />
-      <Route path='/hackathons/create' element={<AdminCreateHackathon />} />
-      <Route path="/menu" element={<MenuPage />} />
+      <Route element={<LayoutPage2 />}>
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/users/validate/:registrationCode' element={<ValidatePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/password/recover' element={<RecoverPasswordPage />} />
+        <Route path='/password/change' element={<ChangePasswordPage />} />
+        <Route path='/hackathons/create' element={<AdminCreateHackathon />} />
+        <Route path="/menu" element={<MenuPage />} />
+      </Route>
       <Route path='/' element={<LayoutPage />}>
         <Route index element={<HomePage />} />
         <Route path='/profile' element={<ProfilePage />} />
@@ -38,7 +40,6 @@ function App() {
         <Route path="/hackathons/:hackathonId/classification/view" element={<ViewClassificationPage />} />
         <Route path="/my-inscriptions" element={<MyInscriptionsPage />} />
         <Route path='*' element={<NotFoundPage />} />
-
       </Route>
     </Routes>
   )

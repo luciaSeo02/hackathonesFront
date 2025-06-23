@@ -24,14 +24,14 @@ const HackathonsPage = () => {
     };
 
     return (
-        <div className="p-4 md:p-8 lg:mt-8">
+        <div className="p-4 lg:mt-8">
             <div className="mb-6 text-center px-10">
                 <h2>Nuestros Hackathones</h2>
 
                 {userLogged?.role === 'admin' && (
                     <button
                         onClick={handleCreateClick}
-                        className="fixed bottom-6 right-6 z-50 bg-light-gradient hover:bg-indigo-700 text-white p-4 rounded-full"
+                        className="fixed top-28 right-6 z-50 bg-light-gradient hover:bg-indigo-700 text-white p-4 rounded-full"
                         title="Crear nuevo hackathon"
                     >
                         <Plus className="w-6 h-6" />

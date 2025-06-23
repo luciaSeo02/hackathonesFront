@@ -112,7 +112,7 @@ const CreateHackathonForm = ({
     };
 
     return (
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-2" onSubmit={handleSubmit}>
             <HackathonNameInput value={formData.name} onChange={handleChange} />
             <HackathonDescriptionInput value={formData.description} onChange={handleChange} />
             <HackathonModalitySelect value={formData.modality} onChange={handleChange} />
