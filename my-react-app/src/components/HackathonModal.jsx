@@ -1,30 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Button from './ui/Button';
 import CloseX from './ui/CloseX.jsx';
 import Success from './ui/Success';
 import ErrorDiv from './ui/ErrorDiv';
-
+import AuthContext from '../context/AuthContextProvider.jsx';
 import inscriptionService from '../services/inscriptionService';
 
 const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
+    const { userLogged, token } = useContext(AuthContext);
+
     const [hackathon, setHackathon] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-
-    const handleInscription = async () => {
-        setSuccessMessage('');
-        setErrorMessage('');
-        setShowPopup(false);
-        try {
-            await inscriptionService(hackathon.id);
-            setSuccessMessage('¡Inscripción realizada con éxito!');
-        } catch (error) {
-            setErrorMessage(error.message || 'Error al inscribirse');
-        }
-    };
+    const [isEditing, setIsEditing] = useState(false);
+    const [editData, setEditData] = useState({});
 
     useEffect(() => {
         if (successMessage || errorMessage) {
@@ -55,6 +47,17 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                 throw new Error(json.message || 'Error al cargar los detalles');
             }
             setHackathon(json.data);
+            setEditData({
+                name: json.data.name,
+                description: json.data.description,
+                modality: json.data.modality,
+                location: json.data.location,
+                onlineUrl: json.data.onlineUrl,
+                startDate: json.data.startDate?.slice(0, 10),
+                endDate: json.data.endDate?.slice(0, 10),
+                topic: json.data.topic,
+                technolyNames: json.data.technolyNames,
+            });
         } catch (err) {
             setError(err.message);
         } finally {
@@ -76,9 +79,71 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
         }
     };
 
+    const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleEditSave = async () => {
+        setLoading(true);
+        setError('');
+        setSuccessMessage('');
+        setErrorMessage('');
+        try {
+            const res = await fetch(
+                `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: token ? `Bearer ${token}` : '',
+                    },
+                    body: JSON.stringify({
+                        name: editData.name,
+                        description: editData.description,
+                        modality: editData.modality,
+                        location: editData.location,
+                        onlineUrl: editData.onlineUrl,
+                        startDate: editData.startDate,
+                        endDate: editData.endDate,
+                        topicName: editData.topic,
+                        technologyNames: editData.technolyNames?.split(',').map(t => t.trim()),
+                    }),
+                }
+            );
+            const json = await res.json();
+            if (!res.ok) throw new Error(json.message || 'Error al editar');
+            setSuccessMessage('¡Hackathon editado correctamente!');
+            setIsEditing(false);
+            fetchHackathonDetails();
+        } catch (err) {
+            setErrorMessage(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleInscription = async () => {
+        setSuccessMessage('');
+        setErrorMessage('');
+        setShowPopup(false);
+        try {
+            await inscriptionService(hackathon.id);
+            setSuccessMessage('¡Inscripción realizada con éxito!');
+        } catch (error) {
+            setErrorMessage(error.message || 'Error al inscribirse');
+        }
+    };
+
+    const isAdmin = userLogged?.role === 'admin';
+    const isDev = userLogged?.role === 'dev';
+
+    if (!isAdmin && !isDev) return null;
     if (!isOpen) return null;
 
-    // Imágenes
     const images = hackathon?.attachments?.filter(a => a.type === 'image' || a.fileType === 'image') || [];
     const mainImage = images[0]?.url || images[0]?.fileUrl;
     const smallImage1 = images[1]?.url || images[1]?.fileUrl;
@@ -94,6 +159,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
 
                     {/* Columna de imágenes */}
                     <div className="md:w-1/2 w-full flex flex-col items-center">
+                    
                         {/* Imagen principal */}
                         <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden mb-4" style={{ minHeight: 260 }}>
                             {mainImage ? (
@@ -107,6 +173,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                 <span className="text-gray-400">Sin imagen</span>
                             )}
                         </div>
+
                         {/* Imágenes pequeñas */}
                         <div className="flex w-full gap-4">
                             <div className="w-1/2 aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
@@ -136,14 +203,35 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
 
                     {/* Columna de información */}
                     <section className="md:w-1/2 w-full flex flex-col">
+
                         {/* Cabecera */}
                         <div className="flex justify-between items-start mb-6">
                             <div>
                                 <h2 className="text-4xl mb-2">
-                                    {hackathon?.name || 'Cargando...'}
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={editData.name || ''}
+                                            onChange={handleEditChange}
+                                            className="border rounded px-2 py-1 w-full"
+                                        />
+                                    ) : (
+                                        hackathon?.name || 'Cargando...'
+                                    )}
                                 </h2>
                                 <span className="text-sm text-indigo-600 font-semibold uppercase tracking-wide">
-                                    {hackathon?.topic || 'Sin categoría'}
+                                    {isEditing ? (
+                                        <input
+                                            type="text"
+                                            name="topic"
+                                            value={editData.topic || ''}
+                                            onChange={handleEditChange}
+                                            className="border rounded px-2 py-1 w-full"
+                                        />
+                                    ) : (
+                                        hackathon?.topic || 'Sin categoría'
+                                    )}
                                 </span>
                             </div>
                             <CloseX onClick={onClose} size={24} />
@@ -164,14 +252,24 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
 
                         {hackathon && !loading && (
                             <div className="space-y-6">
+
                                 {/* Descripcion */}
                                 <div>
                                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                                         Descripción
                                     </h3>
-                                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                        {hackathon.description}
-                                    </p>
+                                    {isEditing ? (
+                                        <textarea
+                                            name="description"
+                                            value={editData.description || ''}
+                                            onChange={handleEditChange}
+                                            className="border rounded px-2 py-1 w-full"
+                                        />
+                                    ) : (
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            {hackathon.description}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Detalle */}
@@ -181,36 +279,79 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                                                 Modalidad
                                             </h4>
-                                            <p className="text-gray-600 dark:text-gray-300">
-                                                {hackathon.modality === 'online' ? 'Online' :
-                                                    hackathon.modality === 'onsite' ? 'Presencial' :
-                                                        hackathon.modality}
-                                            </p>
+                                            {isEditing ? (
+                                                <select
+                                                    name="modality"
+                                                    value={editData.modality || ''}
+                                                    onChange={handleEditChange}
+                                                    className="border rounded px-2 py-1 w-full"
+                                                >
+                                                    <option value="">Selecciona</option>
+                                                    <option value="online">Online</option>
+                                                    <option value="onsite">Presencial</option>
+                                                </select>
+                                            ) : (
+                                                <p className="text-gray-600 dark:text-gray-300">
+                                                    {hackathon.modality === 'online' ? 'Online' :
+                                                        hackathon.modality === 'onsite' ? 'Presencial' :
+                                                            hackathon.modality}
+                                                </p>
+                                            )}
                                         </div>
-                                        {hackathon.location && (
+                                        {isEditing ? (
                                             <div>
                                                 <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                                                     Ubicación
                                                 </h4>
-                                                <p>
-                                                    {hackathon.location}
-                                                </p>
+                                                <input
+                                                    type="text"
+                                                    name="location"
+                                                    value={editData.location || ''}
+                                                    onChange={handleEditChange}
+                                                    className="border rounded px-2 py-1 w-full"
+                                                />
                                             </div>
+                                        ) : (
+                                            hackathon.location && (
+                                                <div>
+                                                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                                                        Ubicación
+                                                    </h4>
+                                                    <p>
+                                                        {hackathon.location}
+                                                    </p>
+                                                </div>
+                                            )
                                         )}
-                                        {hackathon.onlineUrl && (
+                                        {isEditing ? (
                                             <div>
                                                 <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                                                     URL del evento
                                                 </h4>
-                                                <a
-                                                    href={hackathon.onlineUrl}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 break-all"
-                                                >
-                                                    {hackathon.onlineUrl}
-                                                </a>
+                                                <input
+                                                    type="text"
+                                                    name="onlineUrl"
+                                                    value={editData.onlineUrl || ''}
+                                                    onChange={handleEditChange}
+                                                    className="border rounded px-2 py-1 w-full"
+                                                />
                                             </div>
+                                        ) : (
+                                            hackathon.onlineUrl && (
+                                                <div>
+                                                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                                                        URL del evento
+                                                    </h4>
+                                                    <a
+                                                        href={hackathon.onlineUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 break-all"
+                                                    >
+                                                        {hackathon.onlineUrl}
+                                                    </a>
+                                                </div>
+                                            )
                                         )}
                                     </div>
                                     <div className="space-y-4">
@@ -218,47 +359,99 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                                                 Fecha de inicio
                                             </h4>
-                                            <p>
-                                                {formatDate(hackathon.startDate)}
-                                            </p>
+                                            {isEditing ? (
+                                                <input
+                                                    type="date"
+                                                    name="startDate"
+                                                    value={editData.startDate || ''}
+                                                    onChange={handleEditChange}
+                                                    className="border rounded px-2 py-1 w-full"
+                                                />
+                                            ) : (
+                                                <p>
+                                                    {formatDate(hackathon.startDate)}
+                                                </p>
+                                            )}
                                         </div>
                                         <div>
                                             <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
                                                 Fecha de fin
                                             </h4>
-                                            <p>
-                                                {formatDate(hackathon.endDate)}
-                                            </p>
+                                            {isEditing ? (
+                                                <input
+                                                    type="date"
+                                                    name="endDate"
+                                                    value={editData.endDate || ''}
+                                                    onChange={handleEditChange}
+                                                    className="border rounded px-2 py-1 w-full"
+                                                />
+                                            ) : (
+                                                <p>
+                                                    {formatDate(hackathon.endDate)}
+                                                </p>
+                                            )}
                                         </div>
-                                        {hackathon.technolyNames && (
-                                            <div>
-                                                <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
-                                                    Tecnologías
-                                                </h4>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {hackathon.technolyNames.split(',').map((tech, index) => (
-                                                        <span
-                                                            key={index}
-                                                            className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-sm rounded-full"
-                                                        >
-                                                            {tech.trim()}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
+                                        <div>
+                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1">
+                                                Tecnologías
+                                            </h4>
+                                            {isEditing ? (
+                                                <input
+                                                    type="text"
+                                                    name="technolyNames"
+                                                    value={editData.technolyNames || ''}
+                                                    onChange={handleEditChange}
+                                                    className="border rounded px-2 py-1 w-full"
+                                                    placeholder="Separadas por coma"
+                                                />
+                                            ) : (
+                                                hackathon.technolyNames && (
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {hackathon.technolyNames.split(',').map((tech, index) => (
+                                                            <span
+                                                                key={index}
+                                                                className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-sm rounded-full"
+                                                            >
+                                                                {tech.trim()}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                )
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
 
                                 {/* Botones */}
                                 <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
-                                    <Button
-                                        onClick={() => setShowPopup(true)}
-                                        text="Inscribirme"
-                                    />
-                                    <Button
-                                            text="Editar"
-                                    />
+                                    {!isEditing && (
+                                        <>
+                                            <Button
+                                                onClick={() => setShowPopup(true)}
+                                                text="Inscribirme"
+                                            />
+                                            {isAdmin && (
+                                                <Button
+                                                    text="Editar"
+                                                    onClick={() => setIsEditing(true)}
+                                                />
+                                            )}
+                                        </>
+                                    )}
+                                    {isEditing && (
+                                        <>
+                                            <Button
+                                                text="Guardar"
+                                                onClick={handleEditSave}
+                                                className="bg-green-600 hover:bg-green-700"
+                                            />
+                                            <Button
+                                                text="Cancelar"
+                                                onClick={() => setIsEditing(false)}
+                                                className="bg-gray-400 hover:bg-gray-500"
+                                            />
+                                        </>
+                                    )}
                                 </div>
 
                                 {/* Popup inscripción */}
