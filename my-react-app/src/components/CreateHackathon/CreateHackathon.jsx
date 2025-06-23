@@ -32,6 +32,7 @@ const CreateHackathon = () => {
         <div className="min-h-screen bg-light-gradient dark:bg-dark-gradient flex items-center justify-center">
             <div className="w-full flex items-center justify-center p-4">
                 <div className="bg-white rounded-3xl shadow-2xl p-4 lg:w-[800px] max-h-[90vh] overflow-y-auto no-scrollbar">
+
                     {/* Header */}
                     <div className="text-center space-y-2 mb-4 relative">
                         <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -54,6 +55,7 @@ const CreateHackathon = () => {
                         <h3>Crear Hackathon</h3>
                         <p>Completa los detalles para crear un nuevo hackathon.</p>
                     </div>
+                    
                     {/* Formulario */}
                     <CreateHackathonForm
                         topics={topics}
