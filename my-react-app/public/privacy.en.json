@@ -1,0 +1,46 @@
+{
+  "title": "HackNMeet Privacy Policy",
+  "lastUpdate": "Last updated: June 24, 2025",
+  "sections": [
+    {
+      "heading": "1. Introduction",
+      "content": "At HackNMeet, we value the privacy and protection of our users' personal data. This Privacy Policy explains how we collect, use, store, and protect your personal information when you access and use our platform. By using HackNMeet, you accept the practices described in this policy."
+    },
+    {
+      "heading": "2. Information We Collect",
+      "content": "We collect personal information you provide when registering, such as your name, email address, username, and password. We may also collect additional information such as your profile photo, interests, and event participation data. Additionally, we automatically collect technical information such as IP address, browser type, pages visited, and access times."
+    },
+    {
+      "heading": "3. Use of Information",
+      "content": "We use your personal information to manage your account, allow you to participate in hackathons, send you relevant notifications, and improve our services. We may also use your data for statistical purposes, internal analysis, and to personalize your experience on the platform. We will not use your information for purposes other than those established in this policy without your prior consent."
+    },
+    {
+      "heading": "4. Sharing Information with Third Parties",
+      "content": "We do not share your personal information with third parties, except in the following cases: when necessary to provide the service (e.g., technology providers), when required by law or a competent authority, or when you have given your express consent. We will never sell your personal data to third parties."
+    },
+    {
+      "heading": "5. Data Security",
+      "content": "We implement technical and organizational security measures to protect your personal information against unauthorized access, loss, alteration, or disclosure. However, you should be aware that no system is completely secure, and we cannot guarantee the absolute security of your data."
+    },
+    {
+      "heading": "6. Data Retention",
+      "content": "We will retain your personal information as long as you have an active account on HackNMeet or as necessary to fulfill the purposes described in this policy. You may request the deletion of your account and personal data at any time, unless the law requires us to retain them for an additional period."
+    },
+    {
+      "heading": "7. User Rights",
+      "content": "As a user, you have the right to access, rectify, update, or delete your personal data. You may also object to the processing of your data or request its limitation. To exercise these rights, you can contact us through the contact form available on our website."
+    },
+    {
+      "heading": "8. Cookies and Similar Technologies",
+      "content": "We use cookies and similar technologies to improve the platform's functionality, analyze usage, and personalize content. You can configure your browser to reject cookies, although this may affect your experience on HackNMeet."
+    },
+    {
+      "heading": "9. Changes to the Privacy Policy",
+      "content": "We reserve the right to modify this Privacy Policy at any time. We will notify you of significant changes through the platform or by email. Continued use of HackNMeet after changes are posted implies your acceptance of the new policy."
+    },
+    {
+      "heading": "10. Contact",
+      "content": "If you have questions, concerns, or requests related to this Privacy Policy or the processing of your personal data, please contact us through the contact form on our website. We will be happy to assist you."
+    }
+  ]
+}
