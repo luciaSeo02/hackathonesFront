@@ -12,11 +12,13 @@ const MenuPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    {/* Obtengo ruta previa */}
+    {
+        /* Obtengo ruta previa */
+    }
     const from = location.state?.from || '/';
 
     const handleClose = () => {
-        navigate(from, { replace: true });
+        navigate(from);
     };
 
     const handleSearch = (query) => {
@@ -26,16 +28,15 @@ const MenuPage = () => {
     };
 
     return (
-        <div className="fixed inset-0 bg-[#a7a7a7] z-50 flex flex-col">
-            
+        <div className="fixed inset-0 bg-[#afafaf80] backdrop-blur-md z-50 flex flex-col">
             {/* Header */}
-            <header className="flex justify-between items-center px-2 pt-2">
-                <NavLink
-                    to="/"
-                    className="font-bold text-lg hover:opacity-80 transition"
-                    onClick={handleClose}
-                >
-                    <img className="h-5" src="./logo2.png" alt="Logo HackNMeet" />
+            <header className="flex justify-between items-center p-[18px]">
+                <NavLink to="/">
+                    <img
+                        className="h-5"
+                        src="./logo2.png"
+                        alt="Logo HackNMeet"
+                    />
                 </NavLink>
                 <X
                     onClick={handleClose}
@@ -51,59 +52,42 @@ const MenuPage = () => {
 
             {/* Menú central */}
             <menu className="flex flex-col items-center flex-1 justify-center pt-20 gap-2">
-                <NavLink
-                    to={'/hackathons'}
-                    onClick={handleClose}
-                    className="text-white"
-                >
+                <NavLink to={'/hackathons'} className="text-white">
                     Hackathones
                 </NavLink>
-                <NavLink
-                    to={'/about'}
-                    onClick={handleClose}
-                    className="text-white"
-                >
+                <NavLink to={'/about'} className="text-white">
                     Sobre Hackathones
                 </NavLink>
-                <NavLink
-                    to={'/contact'}
-                    onClick={handleClose}
-                    className="text-white"
-                >
+                <NavLink to={'/contact'} className="text-white">
                     Contacto
                 </NavLink>
-                <NavLink
-                    to={'/terms'}
-                    onClick={handleClose}
-                    className="text-white"
-                >
+                <NavLink to={'/terms'} className="text-white">
                     Términos y Condiciones
                 </NavLink>
-                <NavLink
-                    to={'/privacy'}
-                    onClick={handleClose}
-                    className="text-white"
-                >
+                <NavLink to={'/privacy'} className="text-white">
                     Política de Privacidad
                 </NavLink>
 
                 {/* SearchBar */}
-                <div className="w-70 mt-8">
+                <div className="mt-8">
                     <SearchBar onSearch={handleSearch} />
                 </div>
 
                 {/* Botones */}
                 {!token ? (
-                    <div className="flex justify-center gap-3 mt-8">
+                    <div className="flex justify-center gap-3 mt-5">
                         <NavLink to={'/login'} onClick={handleClose}>
-                            <Button text="Iniciar sesión" className="w-[104px]" />
+                            <Button
+                                text="Iniciar sesión"
+                                className="w-[104px]"
+                            />
                         </NavLink>
                         <NavLink to={'/register'} onClick={handleClose}>
                             <Button text="Registrarse" className="w-[104px]" />
                         </NavLink>
                     </div>
                 ) : (
-                      <MenuDropDown />
+                    <MenuDropDown />
                 )}
             </menu>
 

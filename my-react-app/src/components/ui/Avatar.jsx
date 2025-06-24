@@ -7,7 +7,7 @@ const Avatar = () => {
     if (!userLogged) return null;
 
     return (
-        <div className="border-light-gradient dark:border-dark-gradient border-2 rounded-lg overflow-hidden w-8 h-8">
+        <div className="border-[#5F3DC4] border-2 rounded-lg overflow-hidden w-9 h-9">
             <img
                 src={userLogged.avatar || '/defaultAvatar.png'}
                 alt="Avatar"

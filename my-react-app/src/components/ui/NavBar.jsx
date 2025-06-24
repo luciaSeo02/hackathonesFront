@@ -46,13 +46,34 @@ const NavBar = () => {
             {/* Menú pantallas grandes */}
             <div className="hidden justify-center items-center gap-4 lg:flex">
                 <menu className="px-4 flex justify-center items-center gap-8">
-                    <NavLink to={'/hackathons'}>
+                    <NavLink
+                        to={'/hackathons'}
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'bg-light-gradient dark:bg-dark-gradient bg-clip-text text-transparent'
+                                : 'null'
+                        }
+                    >
                         <p>Hackathones</p>
                     </NavLink>
-                    <NavLink to={'/about'}>
+                    <NavLink
+                        to={'/about'}
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'bg-light-gradient dark:bg-dark-gradient bg-clip-text text-transparent'
+                                : 'null'
+                        }
+                    >
                         <p>Sobre HackNMeet</p>
                     </NavLink>
-                    <NavLink to={'/contact'}>
+                    <NavLink
+                        to={'/contact'}
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'bg-light-gradient dark:bg-dark-gradient bg-clip-text text-transparent'
+                                : 'null'
+                        }
+                    >
                         <p>Contacto</p>
                     </NavLink>
                 </menu>
