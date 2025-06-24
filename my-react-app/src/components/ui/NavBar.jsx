@@ -4,7 +4,6 @@ import { Menu } from 'lucide-react';
 import AuthContext from '../../context/AuthContextProvider.jsx';
 import SearchBar from './SearchBar.jsx';
 import Button from './Button.jsx';
-import Avatar from './Avatar.jsx';
 import MenuDropDown from '../MenuDropDown.jsx';
 
 const NavBar = () => {
@@ -12,9 +11,6 @@ const NavBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    {
-        /* Ocultar pagina de menú en la barra de navegación */
-    }
     if (location.pathname === '/menu') return null;
 
     const handleSearch = (query) => {
@@ -42,7 +38,7 @@ const NavBar = () => {
 
             {/* Menú pantallas grandes */}
             <div className="hidden justify-center items-center gap-4 lg:flex">
-                <menu className="text-white px-4 flex justify-center items-center gap-8">
+                <menu className="px-4 flex justify-center items-center gap-8">
                     <NavLink to={'/hackathons'}>
                         <p>Hackathones</p>
                     </NavLink>
@@ -59,10 +55,10 @@ const NavBar = () => {
                 {!token ? (
                     <div className="flex gap-4">
                         <NavLink to={'/login'}>
-                            <Button text="Iniciar Sesión" />
+                            <Button text="Iniciar Sesión" className="w-32" />
                         </NavLink>
                         <NavLink to={'/register'}>
-                            <Button text="Registrarse" />
+                            <Button text="Registrarse" className="w-32" />
                         </NavLink>
                     </div>
                 ) : (

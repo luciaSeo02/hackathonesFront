@@ -52,20 +52,44 @@
 }
 
 .swiper-pagination-bullet {
-    width: 0.5rem !important;
+    width: 1.5rem !important;
     height: 0.5rem !important;
     margin: 0 !important;
     background: theme('colors.gray.300') !important;
     opacity: 0.5;
     transition: all 0.3s ease;
     cursor: pointer;
+    border-radius: 0.5rem;
 }
 
 .swiper-pagination-bullet-active {
     opacity: 1;
     width: 1.5rem !important;
     background: var(--light-gradient) !important;
-    border-radius: 0.5rem;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .swiper-pagination-bullet {
+        width: 2rem !important;
+        height: 0.75rem !important;
+    }
+
+    .swiper-pagination-bullet-active {
+        width: 2rem !important;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .swiper-pagination-bullet {
+        width: 2.5rem !important;
+        height: 1rem !important;
+    }
+
+    .swiper-pagination-bullet-active {
+        width: 2.5rem !important;
+    }
 }
 
 /* Dark mode adjustments */

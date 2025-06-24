@@ -3,7 +3,6 @@ import { X } from 'lucide-react';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import SearchBar from '../components/ui/SearchBar.jsx';
 import Button from '../components/ui/Button.jsx';
-import Avatar from '../components/ui/Avatar.jsx';
 import { useContext } from 'react';
 import AuthContext from '../context/AuthContextProvider.jsx';
 import MenuDropDown from '../components/MenuDropDown.jsx';
@@ -97,10 +96,10 @@ const MenuPage = () => {
                 {!token ? (
                     <div className="flex justify-center gap-3 mt-8">
                         <NavLink to={'/login'} onClick={handleClose}>
-                            <Button text="Iniciar sesión" />
+                            <Button text="Iniciar sesión" className="w-[104px]" />
                         </NavLink>
                         <NavLink to={'/register'} onClick={handleClose}>
-                            <Button text="Registrarse" />
+                            <Button text="Registrarse" className="w-[104px]" />
                         </NavLink>
                     </div>
                 ) : (

@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
 
-const HackathonsList = ({ searchParams }) => {
+const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
     const [hackathons, setHackathons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [selectedHackathonId, setSelectedHackathonId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchHackathons = async () => {
@@ -21,11 +23,10 @@ const HackathonsList = ({ searchParams }) => {
                 );
                 const json = await res.json();
 
-                if (!res.ok) {
+                if (!res.ok)
                     throw new Error(
                         json.message || 'Error al cargar los hackathones'
                     );
-                }
 
                 setHackathons(json.data);
             } catch (err) {
@@ -36,7 +37,7 @@ const HackathonsList = ({ searchParams }) => {
         };
 
         fetchHackathons();
-    }, [searchParams]);
+    }, [searchParams, redirectIfEmpty, navigate]);
 
     const handleShowDetails = (hackathonId) => {
         setSelectedHackathonId(hackathonId);
@@ -53,21 +54,29 @@ const HackathonsList = ({ searchParams }) => {
 
     return (
         <div>
-            <ul className="mx-2.5 grid gap-6 sm:grid-cols-2 lg:mx-10 lg:mt-10 lg:grid-cols-3">
-                {hackathons.map((hackathon) => (
-                    <HackathonCard
-                        key={hackathon.id}
-                        hackathon={hackathon}
-                        onShowDetails={handleShowDetails}
-                    />
-                ))}
-            </ul>
+            {hackathons.length === 0 ? (
+                <p className="text-center text-gray-600 mt-10">
+                    No se encontraron hackathones con los filtros aplicados.
+                </p>
+            ) : (
+                <>
+                    <ul className="mx-2.5 grid gap-6 sm:grid-cols-2 lg:mx-10 lg:mt-10 lg:grid-cols-3">
+                        {hackathons.map((hackathon) => (
+                            <HackathonCard
+                                key={hackathon.id}
+                                hackathon={hackathon}
+                                onShowDetails={handleShowDetails}
+                            />
+                        ))}
+                    </ul>
 
-            <HackathonModal
-                hackathonId={selectedHackathonId}
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-            />
+                    <HackathonModal
+                        hackathonId={selectedHackathonId}
+                        isOpen={isModalOpen}
+                        onClose={handleCloseModal}
+                    />
+                </>
+            )}
         </div>
     );
 };
