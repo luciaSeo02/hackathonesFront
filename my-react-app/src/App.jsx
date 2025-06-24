@@ -11,17 +11,19 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 import AdminCreateHackathon from './pages/AdminCreateHackathon.jsx';
 import ValidatePage from './pages/ValidatePage.jsx';
 import MenuPage from './pages/MenuPage.jsx';
-import PublishRankingPage from './pages/PublishRankingPage';
+import PublishRankingPage from './pages/PublishRankingForm.jsx';
 import ViewClassificationPage from './pages/ViewClassificationPage';
 import RecoverPasswordPage from './pages/RecoverPasswordPage.jsx';
 import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
 import MyInscriptionsPage from './pages/MyInscriptionPage.jsx';
 import LayoutPage2 from './pages/LayoutPage2.jsx';
-
 import Terms from './pages/Terms.jsx';
 import Privacy from './pages/Privacy.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import NotAuthorizedPage from './pages/NotAuthorizedPage.jsx';
+import HackathonClasification from './pages/hackathonClasification.jsx';
+import UserHackathonClassifications from './pages/UserHackathonClassifications.jsx';
+
 
 function App() {
     return (
@@ -68,10 +70,6 @@ function App() {
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route
-                    path="/hackathons/:hackathonId/classification"
-                    element={<PublishRankingPage />}
-                />
-                <Route
                     path="/hackathons/:hackathonId/classification/view"
                     element={<ViewClassificationPage />}
                 />
@@ -81,9 +79,13 @@ function App() {
                 />
                 <Route path="*" element={<NotFoundPage />} />
                 <Route path="/not-authorized" element={<NotAuthorizedPage />} />
+                <Route path="/hackathons/classification" element={<PublishRankingPage />} />
+                <Route path="/hackathons/:hackathonId/classification" element={<HackathonClasification />} />
+                <Route path="/my-classifications" element={<UserHackathonClassifications />} />
             </Route>
         </Routes>
     );
 }
 
 export default App;
+
