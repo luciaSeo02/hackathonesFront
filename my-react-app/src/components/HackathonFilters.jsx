@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Filter, ChevronLeft, ChevronRight, ChevronDown, FunnelX  } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Filter, ChevronDown, FunnelX  } from 'lucide-react';
 import FilterModal from './FilterModal';
 
 
@@ -13,10 +13,10 @@ const HackathonFilters = ({ onChange }) => {
         technologies: '',
     });
 
-    const [topics, setTopics] = useState([]);
+    const [setTopics] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
-    const scrollRef = useRef(null);
+
 
     useEffect(() => {
         const fetchTopics = async () => {
@@ -41,13 +41,6 @@ const HackathonFilters = ({ onChange }) => {
         updateFilters({ ...filters, [name]: value });
     };
 
-    const handleChipClick = (topicName) => {
-        updateFilters({
-            ...filters,
-            topic: topicName === filters.topic ? '' : topicName,
-        });
-    };
-
     const clearFilters = () => {
         const emptyFilters = {
             search: '',
@@ -58,14 +51,6 @@ const HackathonFilters = ({ onChange }) => {
             technologies: '',
         };
         updateFilters(emptyFilters);
-    };
-
-    const scrollLeft = () => {
-        scrollRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
-    };
-
-    const scrollRight = () => {
-        scrollRef.current?.scrollBy({ left: 200, behavior: 'smooth' });
     };
 
     const handleToggleFilters = () => {
@@ -79,6 +64,29 @@ const HackathonFilters = ({ onChange }) => {
     const AdvancedFilters = (
         <div className="w-full flex justify-center">
             <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end sm:gap-4">
+                
+                <div className="relative w-full sm:w-[170px]">
+                    <select
+                        name="topic"
+                        value={filters.topic}
+                        onChange={handleChange}
+                        className="appearance-none bg-transparent text-xs sm:text-sm font-medium text-gray-800 border-indigo-500 border-[2px] px-4 py-3 rounded-sm sm:rounded-lg w-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                        <option value=""> Temática </option>
+                        <option value="Inteligencia Artificial"> Inteligencia Artificial </option>
+                        <option value="Desarrollador de Software"> Desarrollador de Software </option>
+                        <option value="Desarrollo Web"> Desarrollo Web </option>
+                        <option value="Data Science"> Data Science </option>
+                        <option value="Ciberseguridad"> Ciberseguridad </option>
+                        <option value="Realidad Virtual"> Realidad Virtual </option>
+                        <option value="Robótica"> Robótica </option>
+                        <option value="Hardware"> Hardware </option>
+                        <option value="Gaming"> Gaming </option>
+                        <option value="LAN Parties"> LAN Parties </option>
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={20} />
+                </div>
+
                 <div className="relative w-full sm:w-[150px]">
                     <select
                         name="modality"
@@ -124,7 +132,7 @@ const HackathonFilters = ({ onChange }) => {
     return (
         <div className="w-full flex flex-col items-center gap-4">
             
-            <div className="w-full max-w-5xl flex items-center justify-between px-4 gap-2">
+            <div className="max-w-5xl flex items-center justify-between px-4 gap-2">
                 <button
                     onClick={handleToggleFilters}
                     className="flex items-center gap-2 p-2 rounded-full border-[2px] border-indigo-500 text-indigo-600 hover:bg-indigo-50"
@@ -141,46 +149,6 @@ const HackathonFilters = ({ onChange }) => {
                     <FunnelX  size={15} />
                     <span className="hidden sm:inline text-xs">Limpiar filtros</span>
                 </button >
-            </div>
-
-            
-            <div className="w-full max-w-5xl px-4 relative">
-                <button
-                    onClick={scrollLeft}
-                    className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-1 z-10"
-                >
-                    <ChevronLeft className="w-5 h-5" />
-                </button>
-
-                <div
-                    ref={scrollRef}
-                    className="flex overflow-x-auto no-scrollbar space-x-3 px-2 py-2 scroll-smooth sm:px-8"
-                    style={{
-                        WebkitOverflowScrolling: 'touch',
-                        scrollSnapType: 'x mandatory',
-                    }}
-                >
-                    {topics.map((t) => (
-                        <button
-                            key={t.id}
-                            onClick={() => handleChipClick(t.name)}
-                            className={`whitespace-nowrap px-4 py-[6px] rounded-sm sm:px-4 sm:py-2 sm:rounded-lg border text-xs sm:text-sm font-medium scroll-snap-align-start ${
-                                filters.topic === t.name
-                                    ? 'bg-light-gradient dark:bg-dark-gradient text-white border-transparent'
-                                    : 'bg-transparent text-gray-800 border-[2px] border-indigo-500 hover:bg-indigo-50'
-                            }`}
-                        >
-                            {t.name}
-                        </button>
-                    ))}
-                </div>
-
-                <button
-                    onClick={scrollRight}
-                    className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-1 z-10"
-                >
-                    <ChevronRight className="w-5 h-5" />
-                </button>
             </div>
 
             
