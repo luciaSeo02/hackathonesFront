@@ -1,18 +1,18 @@
 import { useState } from "react";
-import TermsContent from "../components/TermsContent";
+import PrivacyContent from "../components/PrivacyContent";
 import { US } from 'country-flag-icons/react/3x2';
-import { ES } from 'country-flag-icons/react/3x2'; 
+import { ES } from 'country-flag-icons/react/3x2';
 
-const Terms = () => {
+const Privacy = () => {
     const [lang, setLang] = useState("es");
 
     return (
         <section>
             <div className="bg-light-gradient dark:bg-dark-gradient text-white text-center h-[60vh] -mt-20 px-14 flex flex-col justify-center items-center gap-3 lg:px-64">
 
-                <h2>Términos y Condiciones</h2>
+                <h2>Política de Privacidad</h2>
                 <p>
-                    Bienvenido a HackNMeet. Al utilizar nuestra plataforma, aceptas cumplir con nuestros términos y condiciones.
+                    Tu privacidad es importante para HackNMeet. Consulta nuestra política para saber cómo protegemos tus datos.
                 </p>
 
                 {/* Selector de idioma */}
@@ -34,9 +34,9 @@ const Terms = () => {
                     </button>
                 </div>
             </div>
-            <TermsContent lang={lang} />
+            <PrivacyContent lang={lang} />
         </section>
     );
 };
 
-export default Terms;
+export default Privacy;
