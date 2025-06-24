@@ -15,11 +15,18 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
         const fetchHackathons = async () => {
             setLoading(true);
             try {
-                const queryString = searchParams ? `?${searchParams.toString()}` : '';
-                const res = await fetch(`${import.meta.env.VITE_URL_API}/hackathons${queryString}`);
+                const queryString = searchParams
+                    ? `?${searchParams.toString()}`
+                    : '';
+                const res = await fetch(
+                    `${import.meta.env.VITE_URL_API}/hackathons${queryString}`
+                );
                 const json = await res.json();
 
-                if (!res.ok) throw new Error(json.message || 'Error al cargar los hackathones');
+                if (!res.ok)
+                    throw new Error(
+                        json.message || 'Error al cargar los hackathones'
+                    );
 
                 setHackathons(json.data);
             } catch (err) {

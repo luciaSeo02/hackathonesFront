@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Search } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const SearchBar = ({ initialValue = '' }) => {
     const [query, setQuery] = useState(initialValue);
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
     const handleChange = (e) => {
         setQuery(e.target.value);
@@ -12,15 +13,16 @@ const SearchBar = ({ initialValue = '' }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const trimmedQuery = query.trim();
 
+        // Mantén los filtros activos al buscar
+        const params = new URLSearchParams(searchParams);
         if (trimmedQuery !== '') {
-            navigate(`/hackathons?search=${encodeURIComponent(trimmedQuery)}`);
+            params.set('search', trimmedQuery);
         } else {
-            navigate('/hackathons'); 
+            params.delete('search');
         }
-
+        navigate(`/hackathons?${params.toString()}`);
         setQuery('');
     };
 
@@ -37,11 +39,11 @@ const SearchBar = ({ initialValue = '' }) => {
                 placeholder="Buscar hackathones"
                 className="bg-transparent outline-none text-xs md:text-sm text-gray-800 w-full"
             />
-            <button type="submit" className="hidden">Buscar</button>
+            <button type="submit" className="hidden">
+                Buscar
+            </button>
         </form>
     );
 };
 
 export default SearchBar;
-
-

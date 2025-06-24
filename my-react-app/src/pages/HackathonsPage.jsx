@@ -11,23 +11,30 @@ const HackathonsPage = () => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
 
+    // Convierte los searchParams a objeto para los filtros y la búsqueda
+    const filtersObject = Object.fromEntries([...searchParams.entries()]);
+
+    // Cuando cambian los filtros avanzados
+    const handleFiltersChange = (filters) => {
+    const newParams = new URLSearchParams();
+    // Solo añade search si tiene valor
+    if (filters.search) newParams.set('search', filters.search);
+    Object.entries(filters).forEach(([key, value]) => {
+        if (key !== 'search' && value) newParams.set(key, value);
+    });
+    setSearchParams(newParams);
+};
+
     const handleCreateClick = () => {
         navigate('/hackathons/create');
-    };
-
-    const handleFiltersChange = (filters) => {
-        const newParams = new URLSearchParams();
-        Object.entries(filters).forEach(([key, value]) => {
-            if (value) newParams.set(key, value);
-        });
-        setSearchParams(newParams);
     };
 
     return (
         <div className="p-4 lg:mt-8">
             <div className="mb-6 text-center px-10">
                 <h2>Nuestros Hackathones</h2>
-
+                
+                
                 {userLogged?.role === 'admin' && (
                     <button
                         onClick={handleCreateClick}
@@ -38,9 +45,14 @@ const HackathonsPage = () => {
                     </button>
                 )}
             </div>
-
-            <HackathonFilters onChange={handleFiltersChange} />
-            <HackathonsList searchParams={searchParams} redirectIfEmpty={false} /> 
+            <HackathonFilters
+                filters={filtersObject}
+                onChange={handleFiltersChange}
+            />
+            <HackathonsList
+                searchParams={searchParams}
+                redirectIfEmpty={false}
+            />
         </div>
     );
 };
