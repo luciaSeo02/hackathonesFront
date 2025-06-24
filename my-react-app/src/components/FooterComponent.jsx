@@ -2,7 +2,7 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Footer = () => (
-    <footer className="bg-light-gradient dark:bg-dark-gradient text-white -mt-10 px-5 pt-5 pb-10 lg:-mt-5 lg:p-10">
+    <footer className="bg-light-gradient dark:bg-dark-gradient text-white mt-10 px-5 pt-5 pb-10 lg:mt-20 lg:p-10">
         <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between">
             {/* Nombre + Logo */}
             <div className="flex flex-col lg:w-[785px] lg:justify-between">
