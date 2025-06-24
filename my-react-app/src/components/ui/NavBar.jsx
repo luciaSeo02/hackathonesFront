@@ -55,10 +55,10 @@ const NavBar = () => {
                 {!token ? (
                     <div className="flex gap-4">
                         <NavLink to={'/login'}>
-                            <Button text="Iniciar Sesión" />
+                            <Button text="Iniciar Sesión" className="w-32" />
                         </NavLink>
                         <NavLink to={'/register'}>
-                            <Button text="Registrarse" />
+                            <Button text="Registrarse" className="w-32" />
                         </NavLink>
                     </div>
                 ) : (
