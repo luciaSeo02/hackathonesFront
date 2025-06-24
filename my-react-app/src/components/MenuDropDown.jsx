@@ -30,14 +30,12 @@ const MenuDropDown = () => {
             <button
                 onClick={() => setOpen((prev) => !prev)}
                 className={`
-          flex items-center justify-center
-          w-60 py-2 rounded text-white text-lg
-          mt-1 font-semibold mx-auto
-          bg-transparent
-          hover:bg-[#5F3DC4]/80
-          transition
-          lg:w-auto lg:py-0 lg:mt-0 lg:bg-transparent lg:hover:bg-[#5F3DC4]/20
-        `}
+                    flex items-center justify-center
+                    w-60 py-2 rounded text-white text-lg
+                    mt-1 font-semibold mx-auto
+                    bg-transparent
+                    lg:w-auto lg:py-0 lg:mt-0 lg:bg-transparent
+                `}
                 aria-label="Abrir menú de usuario"
                 style={{ outline: 'none' }}
             >
@@ -48,18 +46,18 @@ const MenuDropDown = () => {
             {open && (
                 <div
                     className={`
-            flex flex-col items-center mt-2 w-60 rounded-lg shadow-lg py-2 z-50 mx-auto
-            bg-white
-            lg:absolute lg:right-0 lg:mt-12 lg:w-48 lg:bg-white lg:dark:bg-gray-800
-          `}
+                        flex flex-col items-center mt-2 w-60 rounded-lg shadow-lg py-2 z-50 mx-auto
+                        bg-white
+                        lg:absolute lg:right-0 lg:mt-12 lg:w-48 lg:bg-white lg:dark:bg-gray-800
+                    `}
                 >
                     <NavLink
                         to="/profile"
                         className={`
-              text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
-              hover:bg-[#5F3DC4]/20
-              lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
-            `}
+                        text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
+                        hover:bg-[#5F3DC4]/20
+                        lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
+                        `}
                         onClick={() => setOpen(false)}
                     >
                         Perfil
@@ -67,10 +65,10 @@ const MenuDropDown = () => {
                     <NavLink
                         to="/my-inscriptions"
                         className={`
-              text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
-              hover:bg-[#5F3DC4]/20
-              lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
-            `}
+                        text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
+                        hover:bg-[#5F3DC4]/20
+                        lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
+                        `}
                         onClick={() => setOpen(false)}
                     >
                         Mis inscripciones
@@ -80,10 +78,10 @@ const MenuDropDown = () => {
                         <NavLink
                             to="/hackathons/classification"
                             className={`
-              text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
-              hover:bg-[#5F3DC4]/20
-              lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
-            `}
+                            text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
+                            hover:bg-[#5F3DC4]/20
+                            lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
+                            `}
                             onClick={() => setOpen(false)}
                         >
                             Publicar Clasificación
@@ -93,10 +91,10 @@ const MenuDropDown = () => {
                     <NavLink
                         to="/my-classifications"
                         className={`
-    text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
-    hover:bg-[#5F3DC4]/20
-    lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
-  `}
+                            text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
+                            hover:bg-[#5F3DC4]/20
+                            lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
+                        `}
                         onClick={() => setOpen(false)}
                     >
                         Mis Clasificaciones
@@ -105,10 +103,10 @@ const MenuDropDown = () => {
                     <button
                         onClick={handleLogout}
                         className={`
-              text-red-600 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
-              hover:bg-[#5F3DC4]/20
-              lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
-            `}
+                        text-red-600 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
+                        hover:bg-[#5F3DC4]/20
+                        lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
+                        `}
                     >
                         Cerrar sesión
                     </button>

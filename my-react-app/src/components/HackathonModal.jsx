@@ -611,7 +611,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                         <>
                                             <Button
                                                 onClick={() => setShowPopup(true)}
-                                                text="Inscribirme"
+                                                text="Reservar hackathon"
                                             />
                                             {isAdmin && (
                                                 <Button

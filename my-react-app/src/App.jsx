@@ -24,7 +24,6 @@ import NotAuthorizedPage from './pages/NotAuthorizedPage.jsx';
 import HackathonClasification from './pages/hackathonClasification.jsx';
 import UserHackathonClassifications from './pages/UserHackathonClassifications.jsx';
 
-
 function App() {
     return (
         <Routes>
