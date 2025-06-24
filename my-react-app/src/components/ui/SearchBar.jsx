@@ -29,15 +29,15 @@ const SearchBar = ({ initialValue = '' }) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="bg-neutral-100 w-full sm:w-60 px-[10px] py-2 rounded-lg flex items-center gap-[10px]"
+            className="bg-neutral-100 w-60 h-9 px-[10px] py-2 rounded-md flex items-center gap-[10px]"
         >
-            <Search size={15} stroke="#5F3DC4" strokeWidth="2" />
+            <Search size={20} stroke="#5F3DC4" strokeWidth="2" />
             <input
                 type="text"
                 value={query}
                 onChange={handleChange}
                 placeholder="Buscar hackathones"
-                className="bg-transparent outline-none text-xs md:text-sm text-gray-800 w-full"
+                className="bg-transparent outline-none text-gray-800 w-full"
             />
             <button type="submit" className="hidden">
                 Buscar
