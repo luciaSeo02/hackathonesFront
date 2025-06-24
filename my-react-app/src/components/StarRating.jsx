@@ -6,8 +6,42 @@ import Success from './ui/Success';
 const StarRating = ({ hackathonId }) => {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
+    const [hasRated, setHasRated] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchUserRating = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const res = await fetch(
+                    `${
+                        import.meta.env.VITE_URL_API
+                    }/hackathons/${hackathonId}/rating`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (!res.ok) return;
+
+                const data = await res.json();
+
+                console.log(data);
+
+                if (typeof data.rating === 'number') {
+                    setRating(data.rating);
+                    setHasRated(true);
+                }
+            } catch (err) {
+                console.error('Error al cargar el rating del usuario');
+            }
+        };
+
+        fetchUserRating();
+    }, [hackathonId]);
 
     useEffect(() => {
         if (error) {
@@ -17,14 +51,14 @@ const StarRating = ({ hackathonId }) => {
     }, [error]);
 
     useEffect(() => {
-        if (submitted) {
-            const timeout = setTimeout(() => setSubmitted(false), 4000);
+        if (showSuccess) {
+            const timeout = setTimeout(() => setShowSuccess(false), 4000);
             return () => clearTimeout(timeout);
         }
-    }, [submitted]);
+    }, [showSuccess]);
 
     const handleSubmit = async (value) => {
-        if (submitted) return;
+        if (hasRated) return;
 
         const token = localStorage.getItem('token');
 
@@ -46,17 +80,16 @@ const StarRating = ({ hackathonId }) => {
             if (!res.ok) {
                 const text = await res.text();
                 let message = 'Error al enviar rating';
-
                 try {
                     const json = JSON.parse(text);
                     message = json.message || message;
                 } catch (_) {}
-
                 throw new Error(message);
             }
 
             setRating(value);
-            setSubmitted(true);
+            setHasRated(true);
+            setShowSuccess(true);
             setError(null);
         } catch (err) {
             setError(err.message);
@@ -73,11 +106,12 @@ const StarRating = ({ hackathonId }) => {
                         onClick={() => handleSubmit(val)}
                         onMouseEnter={() => setHover(val)}
                         onMouseLeave={() => setHover(null)}
+                        disabled={hasRated}
                     >
                         <Star
                             size={20}
                             className={`${
-                                (hover || rating) >= val
+                                (hover !== null ? hover : rating) >= val
                                     ? 'fill-yellow-400 stroke-yellow-400'
                                     : 'stroke-gray-300'
                             } transition`}
@@ -86,7 +120,7 @@ const StarRating = ({ hackathonId }) => {
                 ))}
             </div>
 
-            {submitted && !error && (
+            {showSuccess && !error && (
                 <div className="w-40">
                     <Success success="¡Gracias por valorar!" />
                 </div>
