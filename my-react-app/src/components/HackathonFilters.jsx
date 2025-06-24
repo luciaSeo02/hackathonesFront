@@ -132,7 +132,7 @@ const HackathonFilters = ({ onChange }) => {
     return (
         <div className="w-full flex flex-col items-center gap-4">
             
-            <div className="max-w-5xl flex items-center justify-between px-4 gap-2">
+            <div className="max-w-5xl flex items-center justify-between mb-6 gap-2">
                 <button
                     onClick={handleToggleFilters}
                     className="flex items-center gap-2 p-2 rounded-full border-[2px] border-indigo-500 text-indigo-600 hover:bg-indigo-50"
