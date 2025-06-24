@@ -57,7 +57,7 @@ const HackathonFilters = ({ filters, onChange }) => {
                         onChange={handleChange}
                         className="appearance-none bg-transparent text-xs sm:text-sm font-medium text-gray-800 border-indigo-500 border-[2px] px-4 py-3 rounded-sm sm:rounded-lg w-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
-                        <option value=""> Temática </option>
+                        <option value="" disabled hidden> Temática </option>
                         <option value="Inteligencia Artificial">Inteligencia Artificial</option>
                         <option value="Desarrollador de Software">Desarrollador de Software</option>
                         <option value="Desarrollo Web"> Desarrollo Web </option>
@@ -82,7 +82,7 @@ const HackathonFilters = ({ filters, onChange }) => {
                         onChange={handleChange}
                         className="appearance-none bg-transparent text-xs sm:text-sm font-medium text-gray-800 border-indigo-500 border-[2px] px-4 py-3 rounded-sm sm:rounded-lg w-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
-                        <option value="">Modalidad</option>
+                        <option value=""disabled hidden>Modalidad</option>
                         <option value="online">Online</option>
                         <option value="onsite">Presencial</option>
                     </select>
@@ -99,7 +99,7 @@ const HackathonFilters = ({ filters, onChange }) => {
                         onChange={handleChange}
                         className="appearance-none bg-transparent text-xs sm:text-sm font-medium text-gray-800 border-indigo-500 border-[2px] px-4 py-3 rounded-sm sm:rounded-lg w-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
-                        <option value="">Tecnología</option>
+                        <option value=""disabled hidden>Tecnología</option>
                         <option value="JavaScript">JavaScript</option>
                         <option value="Python">Python</option>
                         <option value="Java">Java</option>

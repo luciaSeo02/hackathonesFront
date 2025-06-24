@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import AuthContext from '../../context/AuthContextProvider.jsx';
 import SearchBar from './SearchBar.jsx';
@@ -10,14 +10,21 @@ const NavBar = () => {
     const { token } = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const [searchParams] = useSearchParams();
 
     if (location.pathname === '/menu') return null;
 
+    const filtersObject = Object.fromEntries([...searchParams.entries()]);
+
     const handleSearch = (query) => {
-        if (query) {
-            navigate(`/hackathons=${encodeURIComponent(query)}`);
-        }
-    };
+    const params = new URLSearchParams(filtersObject);
+    if (query) {
+        params.set('search', query);
+    } else {
+        params.delete('search');
+    }
+    navigate(`/hackathons?${params.toString()}`);
+};
 
     return (
         <nav className="flex justify-center items-center">
@@ -50,7 +57,11 @@ const NavBar = () => {
                     </NavLink>
                 </menu>
 
-                <SearchBar onSearch={handleSearch} />
+                <SearchBar
+                    initialValue={filtersObject.search || ''}
+                    filters={filtersObject}
+                    onSearch={handleSearch}
+                />
 
                 {!token ? (
                     <div className="flex gap-4">
