@@ -11,11 +11,13 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 import AdminCreateHackathon from './pages/AdminCreateHackathon.jsx';
 import ValidatePage from './pages/ValidatePage.jsx';
 import MenuPage from './pages/MenuPage.jsx';
-import PublishRankingPage from "./pages/PublishRankingPage";
+import PublishRankingPage from "./pages/PublishRankingForm.jsx";
 import ViewClassificationPage from "./pages/ViewClassificationPage";
 import RecoverPasswordPage from './pages/RecoverPasswordPage.jsx';
 import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
 import MyInscriptionsPage from './pages/MyInscriptionPage.jsx';
+import HackathonClasification from './pages/hackathonClasification.jsx';
+import UserHackathonClassifications from './pages/UserHackathonClassifications.jsx';
 
 function App() {
   return (
@@ -33,8 +35,10 @@ function App() {
         <Route path='/hackathons' element={<HackathonsPage />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/contact' element={<ContactPage />} />
-        <Route path="/hackathons/:hackathonId/classification" element={<PublishRankingPage />} />
+        <Route path="/hackathons/classification" element={<PublishRankingPage />} />
+        <Route path="/hackathons/:hackathonId/classification" element={<HackathonClasification />} />
         <Route path="/hackathons/:hackathonId/classification/view" element={<ViewClassificationPage />} />
+        <Route path="/my-classifications" element={<UserHackathonClassifications />} />
         <Route path="/my-inscriptions" element={<MyInscriptionsPage />} />
         <Route path='*' element={<NotFoundPage />} />
       </Route>
@@ -43,3 +47,4 @@ function App() {
 }
 
 export default App;
+// ...
