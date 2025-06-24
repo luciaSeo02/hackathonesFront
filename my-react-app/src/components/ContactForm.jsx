@@ -15,7 +15,7 @@ const ContactForm = ({
     setSuccess,
 }) => {
     const inputClass =
-        'w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-50 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 ';
+        "bg-neutral-100 size-full px-4 py-3 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all";
 
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ const handleSubmit = async (e) => {
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     placeholder="Mensaje"
                     className={inputClass + ' resize-none '}
-                    rows="4"
+                    rows="3"
                     required
                 />
             </div>

@@ -15,17 +15,23 @@ const ContactComponent = () => {
     const [success, setSuccess] = useState('');
 
     return (
-        <div className="min-h-screen flex flex-col md:flex-row">
-            {/* Form */}
-            <div className="md:w-2/3 px-6 md:pl-12 md:pr-6 pt-8 pb-4 flex flex-col justify-center bg-white">
-                <h2 className="mb-2">Contáctanos</h2>
+        <div className="flex flex-col lg:flex-row lg:justify-between">
+            {/* Imagen */}
+            <img
+                src="./contact.jpg"
+                alt="Imagen de contacto"
+                className="w-screen h-[50vh] -mt-20 object-cover lg:order-last lg:w-[32vw] lg:h-full lg:-mb-20"
+            />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Form */}
+            <div className="px-6 pt-8 pb-4 flex flex-col justify-center lg:w-[67vw] lg:pt-20 lg:pl-10">
+                <h2 className="mb-2 lg:mb-4">Contáctanos</h2>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div>
                         <p className="text-gray-600 text-base mb-6">
                             Si tienes alguna pregunta o comentario, no dudes en
-                            ponerte en contacto con nosotros. Estamos aquí para
-                            ayudarte.
+                            ponerte en contacto con nosotros.
                         </p>
 
                         <ContactForm
@@ -41,8 +47,8 @@ const ContactComponent = () => {
                     </div>
 
                     {/* Info contacto */}
-                    <div className="flex flex-col justify-between gap-4 mb-8 md:mb-0">
-                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                    <div className="flex flex-col justify-between gap-4">
+                        <div className="flex items-center gap-4 px-4 py-3 bg-gray-50 rounded-lg shadow-sm">
                             <Mail className="text-blue-600" />
                             <div>
                                 <p className="font-semibold">Email</p>
@@ -50,7 +56,7 @@ const ContactComponent = () => {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                        <div className="flex items-center gap-4 px-4 py-3 bg-gray-50 rounded-lg shadow-sm">
                             <Phone className="text-blue-600" />
                             <div>
                                 <p className="font-semibold">Teléfono</p>
@@ -58,7 +64,7 @@ const ContactComponent = () => {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                        <div className="flex items-center gap-4 px-4 py-3 bg-gray-50 rounded-lg shadow-sm">
                             <MapPin className="text-blue-600" />
                             <div>
                                 <p className="font-semibold">Ubicación</p>
@@ -66,7 +72,7 @@ const ContactComponent = () => {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                        <div className="flex items-center gap-4 px-4 py-3 bg-gray-50 rounded-lg shadow-sm">
                             <Clock className="text-blue-600" />
                             <div>
                                 <p className="font-semibold">Horario</p>
@@ -75,15 +81,6 @@ const ContactComponent = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Imagen */}
-            <div className="md:w-2/5 h-40 md:h-auto relative -mb-10 md:-mb-20">
-                <img
-                    src="./contact.jpg"
-                    alt="Imagen de contacto"
-                    className="w-full h-full object-cover absolute inset-0"
-                />
             </div>
         </div>
     );
