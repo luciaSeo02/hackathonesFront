@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { Star, StarOff, ChevronLeft, ChevronRight } from 'lucide-react';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
+import LoginRequiredModal from './LoginRequiredModal';
 
 const HackathonCard = ({ hackathon, onShowDetails }) => {
     const { userLogged } = useContext(AuthContext);
@@ -9,6 +10,7 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
     const [isFavourite, setIsFavourite] = useState(
         hackathon.isFavourite || false
     );
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
     const images =
         hackathon.attachments?.filter((att) => att.type === 'image') || [];
@@ -24,6 +26,10 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
     };
 
     const handleDetailsClick = () => {
+        if (!userLogged) {
+            setShowLoginModal(true);
+            return;
+        }
         onShowDetails(hackathon.id);
     };
 
@@ -113,6 +119,9 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                     />
                 </div>
             </div>
+            {showLoginModal && (
+                <LoginRequiredModal onClose={() => setShowLoginModal(false)} />
+            )}
         </li>
     );
 };
