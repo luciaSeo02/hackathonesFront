@@ -2,24 +2,36 @@ import { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 import AuthContext from '../context/AuthContextProvider';
-import fetchApiAuth from "../services/Postclassification";
+import fetchApiAuth from '../services/Postclassification';
+import ErrorDiv from '../components/ui/ErrorDiv';
+import Success from '../components/ui/Success';
 
 const PublishRankingPage = () => {
     const { hackathonId } = useParams();
     const { userLogged } = useContext(AuthContext);
     const [ranking, setRanking] = useState([{ userId: '', position: '' }]);
     const [participants, setParticipants] = useState([]);
-    const [message, setMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}/participants`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
-            },
-        })
-            .then(res => res.json())
-            .then(data => setParticipants(data.data || []));
+        fetch(
+            `${
+                import.meta.env.VITE_URL_API
+            }/hackathons/${hackathonId}/participants`,
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                },
+            }
+        )
+            .then((res) => res.json())
+            .then((data) => setParticipants(data.data || []))
+            .catch((err) => {
+                console.error('Error fetching participants:', err);
+                setErrorMessage('Error cargando participantes');
+            });
     }, [hackathonId]);
 
     if (!userLogged || userLogged.role !== 'admin') {
@@ -40,6 +52,9 @@ const PublishRankingPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
+        setSuccessMessage('');
+
         try {
             const rankingToSend = ranking.map((row) => ({
                 userId: Number(row.userId),
@@ -47,19 +62,33 @@ const PublishRankingPage = () => {
             }));
 
             await fetchApiAuth(
-                `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}/classification`,
+                `${
+                    import.meta.env.VITE_URL_API
+                }/hackathons/${hackathonId}/classification`,
                 {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ranking: rankingToSend }),
                 }
             );
-            setMessage('Clasificación publicada correctamente');
+
+            setSuccessMessage('Clasificación publicada correctamente');
             setRanking([{ userId: '', position: '' }]);
         } catch (error) {
-            setMessage(
-                `Error al publicar la clasificación: ${error.message || error.toString()}`
-            );
+            if (
+                error.message.includes('Duplicate entry') ||
+                error.message.toLowerCase().includes('duplicate')
+            ) {
+                setErrorMessage(
+                    'Ya has publicado clasificación para uno o más participantes seleccionados.'
+                );
+            } else {
+                setErrorMessage(
+                    `Error al publicar la clasificación: ${
+                        error.message || error.toString()
+                    }`
+                );
+            }
             console.error('Error al publicar la clasificación:', error);
         }
     };
@@ -76,22 +105,39 @@ const PublishRankingPage = () => {
                 >
                     <X size={28} />
                 </button>
-                <h2 className="text-2xl font-bold text-blue-700 mb-6">Publicar Clasificación</h2>
+
+                <h2 className="text-2xl font-bold text-blue-700 mb-6">
+                    Publicar Clasificación
+                </h2>
+
                 <form className="w-full space-y-4" onSubmit={handleSubmit}>
                     {ranking.map((row, i) => (
                         <div key={i} className="flex gap-3 items-center">
                             <select
                                 className="w-1/2 px-4 py-2 rounded-md border border-gray-300"
                                 value={row.userId}
-                                onChange={e => handleChange(i, "userId", e.target.value)}
+                                onChange={(e) =>
+                                    handleChange(i, 'userId', e.target.value)
+                                }
                                 required
                             >
-                                <option value="">Selecciona participante</option>
+                                <option value="">
+                                    Selecciona participante
+                                </option>
                                 {participants
-                                    .filter(u => !ranking.some((r, idx) => r.userId === String(u.id) && idx !== i))
-                                    .map(u => (
+                                    .filter(
+                                        (u) =>
+                                            !ranking.some(
+                                                (r, idx) =>
+                                                    r.userId === String(u.id) &&
+                                                    idx !== i
+                                            )
+                                    )
+                                    .map((u) => (
                                         <option key={u.id} value={String(u.id)}>
-                                            {u.username ? `${u.username} (${u.email})` : u.email}
+                                            {u.username
+                                                ? `${u.username} (${u.email})`
+                                                : u.email}
                                         </option>
                                     ))}
                             </select>
@@ -99,7 +145,9 @@ const PublishRankingPage = () => {
                                 className="w-1/2 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
                                 placeholder="Posición"
                                 value={row.position}
-                                onChange={e => handleChange(i, "position", e.target.value)}
+                                onChange={(e) =>
+                                    handleChange(i, 'position', e.target.value)
+                                }
                                 required
                                 type="number"
                                 min="1"
@@ -116,6 +164,7 @@ const PublishRankingPage = () => {
                             )}
                         </div>
                     ))}
+
                     <div className="flex gap-2">
                         <button
                             type="button"
@@ -133,9 +182,9 @@ const PublishRankingPage = () => {
                         </button>
                     </div>
                 </form>
-                {message && (
-                    <p className="mt-4 text-center font-bold text-green-600">{message}</p>
-                )}
+
+                {errorMessage && <ErrorDiv error={errorMessage} />}
+                {successMessage && <Success success={successMessage} />}
             </div>
         </div>
     );

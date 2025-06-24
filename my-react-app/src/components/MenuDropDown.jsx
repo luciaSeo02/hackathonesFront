@@ -1,8 +1,10 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Avatar from '../components/ui/Avatar.jsx';
+import AuthContext from '../context/AuthContextProvider.jsx';
 
 const MenuDropDown = () => {
+    const { userLogged, logout } = useContext(AuthContext);
     const [open, setOpen] = useState(false);
     const ref = useRef();
     const navigate = useNavigate();
@@ -19,7 +21,7 @@ const MenuDropDown = () => {
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
+        logout();
         navigate('/login');
     };
 
@@ -74,17 +76,19 @@ const MenuDropDown = () => {
                         Mis inscripciones
                     </NavLink>
 
-                    <NavLink
-                        to="/hackathons/classification"
-                        className={`
-        text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
-        hover:bg-[#5F3DC4]/20
-        lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
-      `}
-                        onClick={() => setOpen(false)}
-                    >
-                        Publicar Clasificación
-                    </NavLink>
+                    {userLogged?.role === 'admin' && (
+                        <NavLink
+                            to="/hackathons/classification"
+                            className={`
+              text-gray-800 text-lg w-60 text-center py-2 rounded transition whitespace-nowrap
+              hover:bg-[#5F3DC4]/20
+              lg:text-gray-800 lg:dark:text-white lg:w-48 lg:hover:bg-[#5F3DC4]/20 lg:dark:hover:bg-gray-700
+            `}
+                            onClick={() => setOpen(false)}
+                        >
+                            Publicar Clasificación
+                        </NavLink>
+                    )}
 
                     <NavLink
                         to="/my-classifications"
