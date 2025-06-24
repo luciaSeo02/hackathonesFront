@@ -10,86 +10,88 @@ const ContactComponent = () => {
         message: '',
     });
 
-const [status, setStatus] = useState('');
-const [error, setError] = useState('');
-const [success, setSuccess] = useState('');
+    const [status, setStatus] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     return (
-        <div className="min-h-screen flex items-center justify-center py-28 px-4 md:px-12 ">
-        
-            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-10">
+        <div className="h-screen -mt-20 flex flex-col md:flex-row">
 
-        {/* Form*/}
-            <div className="w-full md:w-3/5">
-                <h1 className="text-3xl font-extrabold text-black mb-1 text-center md:text-left">
-                Contáctanos
-                </h1>
-                <p className="text-gray-600 text-base mb-4 text-center md:text-left">
-                Si tienes alguna pregunta o comentario, no dudes en
-                ponerte en contacto con nosotros. Estamos aquí para ayudarte.
-                </p>
 
-                <ContactForm
-                    form={form}
-                    setForm={setForm}
-                    status={status}
-                    setStatus={setStatus}
-                    error={error}
-                    setError={setError}
-                    success={success}
-                    setSuccess={setSuccess}
+            {/* Form */}
+            <div className="h-screen md:w-2/3 px-6 md:px-12 flex flex-col justify-center bg-white">
+                <h2 className="mb-2">
+                    Contáctanos
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <p className="text-gray-600 text-base mb-6">
+                            Si tienes alguna pregunta o comentario, no dudes en ponerte en contacto con nosotros. Estamos aquí para ayudarte.
+                        </p>
+
+                        <ContactForm
+                            form={form}
+                            setForm={setForm}
+                            status={status}
+                            setStatus={setStatus}
+                            error={error}
+                            setError={setError}
+                            success={success}
+                            setSuccess={setSuccess}
+                        />
+                    </div>
+
+
+                    {/* Info contacto */}
+                    <div className="flex flex-col justify-between gap-2">
+                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                            <Mail className="text-blue-600" />
+                            <div>
+                                <p className="font-semibold">Email</p>
+                                <p>hackathones2025@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                            <Phone className="text-blue-600" />
+                            <div>
+                                <p className="font-semibold">Teléfono</p>
+                                <p>986 09 09 09</p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                            <MapPin className="text-blue-600" />
+                            <div>
+                                <p className="font-semibold">Ubicación</p>
+                                <p>Rúa Nicaragua, 8, 15005 A Coruña</p>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-4 px-4 py-2 bg-gray-50 rounded-lg shadow-sm">
+                            <Clock className="text-blue-600" />
+                            <div>
+                                <p className="font-semibold">Horario</p>
+                                <p>Lunes a Viernes, 9:00 - 18:00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Imagen */}
+            <div className="hidden md:block w-1/3 "> 
+                <img
+                    src="./contact.jpg"
+                    alt="Imagen de contacto"
+                    className="h-full "
                 />
             </div>
-
-            {/* Información de contacto */}
-            <div className="w-full md:w-2/5 flex flex-col gap-4">
-
-            {/* Email */}
-            <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                <Mail className="text-purple-600" />
-                <div>
-                    <p className="font-bold text-sm">Email</p>
-                    <p className="text-sm text-gray-600">hackathones2025@gmail.com</p>
-                </div>
-            </div>
-
-            {/* Teléfono */}
-            <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                <Phone className="text-purple-600" />
-                <div>
-                    <p className="font-bold text-sm">Teléfono</p>
-                    <p className="text-sm text-gray-600">986 09 09 09</p>
-                </div>
-            </div>
-
-            {/* Ubicación */}
-            <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                <MapPin className="text-purple-600" />
-                <div>
-                    <p className="font-bold text-sm">Ubicación</p>
-                    <a
-                        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0xd2e7d407997464b:0x5ee1171fbad2ceca?sa=X&ved=1t:8290&ictx=111"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-gray-600 hover:underline"
-                    >
-                        Rúa Nicaragua, 8, 15005 A Coruña
-                    </a>
-                </div>
-            </div>
-
-            {/* Horario */}
-                <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                    <Clock className="text-purple-600" />
-                <div>
-                    <p className="font-bold text-sm">Horario</p>
-                    <p className="text-sm text-gray-600">Lunes a Viernes, 9:00 - 18:00</p>
-                </div>
-            </div>
         </div>
-    </div>
-</div>
-);
+    );
 };
 
 export default ContactComponent;
+
+
