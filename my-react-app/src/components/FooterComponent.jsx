@@ -31,7 +31,7 @@ const Footer = () => (
                     <Link to={'/contact'} className="hover:underline">
                         Contacto
                     </Link>
-                    <Link to="#" className="hover:underline">
+                    <Link to={'/terms'} className="hover:underline">
                         Términos y Condiciones
                     </Link>
                     <Link to="#" className="hover:underline">

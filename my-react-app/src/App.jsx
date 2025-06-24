@@ -18,6 +18,7 @@ import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
 import MyInscriptionsPage from './pages/MyInscriptionPage.jsx';
 import LayoutPage2 from './pages/LayoutPage2.jsx';
 
+import Terms from './pages/Terms.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import NotAuthorizedPage from './pages/NotAuthorizedPage.jsx';
 
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/hackathons" element={<HackathonsPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/contact" element={<ContactPage />} />
+                <Route path="/terms" element={<Terms />} />
                 <Route
                     path="/hackathons/:hackathonId/classification"
                     element={<PublishRankingPage />}
