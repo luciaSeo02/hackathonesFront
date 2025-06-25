@@ -76,7 +76,7 @@ const MyInscriptionsPage = () => {
     };
 
     return (
-        <div className="flex-1 flex items-start justify-center w-full px-4 pt-8">
+        <div className="flex-1 flex items-start justify-center w-full px-4 pt-14">
             <div className="bg-white rounded-3xl shadow-2xl px-4 py-6 w-full max-w-3xl mx-auto">
                 <h3 className="mb-6">Todas mis inscripciones</h3>
 

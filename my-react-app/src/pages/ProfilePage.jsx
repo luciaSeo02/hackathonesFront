@@ -205,7 +205,7 @@ const ProfilePage = () => {
                                             text="Subir avatar"
                                             type="submit"
                                         />
-                                        <Button
+                                        <ButtonBig
                                             text="Cancelar"
                                             onClick={() => {
                                                 setSelectedFile(null);
