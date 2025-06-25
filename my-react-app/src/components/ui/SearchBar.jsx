@@ -89,21 +89,21 @@ const SearchBar = ({ initialValue = '', filters = {} }) => {
                 </button>
             </form>
             {showSuggestions && (
-                <ul className="absolute z-50 left-0 right-0 bg-white border border-gray-200 rounded-b shadow max-h-48 overflow-y-auto no-scrollbar">
-                    {suggestions.length > 0 ? (
-                        suggestions.map((s, i) => (
-                            <li
-                                key={i}
-                                className="px-4 py-2 cursor-pointer hover:bg-indigo-50 text-xs "
-                                onMouseDown={() => handleSuggestionClick(s)}
-                            >
-                                {s}
-                            </li>
-                        ))
-                    ) : (
-                        <li className="px-4 py-2 text-xs text-gray-400">Sin sugerencias</li>
-                    )}
-                </ul>
+                <ul className="absolute z-50 left-0 right-0 bg-white border border-indigo-200 rounded-b-lg shadow-lg max-h-48 overflow-y-auto font-sans text-gray-800 text-xs md:text-sm">
+        {suggestions.length > 0 ? (
+            suggestions.map((s, i) => (
+                <li
+                    key={i}
+                    className="px-4 py-2 cursor-pointer hover:bg-indigo-100 transition-colors duration-150 font-medium"
+                    onMouseDown={() => handleSuggestionClick(s)}
+                >
+                    {s}
+                </li>
+            ))
+        ) : (
+            <li className="px-4 py-2 text-xs text-gray-400 font-medium">Sin sugerencias</li>
+        )}
+    </ul>
             )}
         </div>
     );
