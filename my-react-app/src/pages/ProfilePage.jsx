@@ -132,10 +132,10 @@ const ProfilePage = () => {
     };
 
     return (
-        <div className="min-h-screen w-full pt-6">
+        <div className="min-h-screen w-screen pt-6">
             <div className="w-full max-w-6xl mx-auto p-6 rounded-xl shadow-xl mt-16">
                 <div className="flex flex-col lg:flex-row gap-12">
-                    <div className="w-full lg:w-1/2 flex flex-col items-center text-center space-y-8">
+                    <div className="w-full lg:w-1/3 flex flex-col items-center text-center space-y-8">
                         <h3>
                             Perfil del usuario
                         </h3>
@@ -304,7 +304,7 @@ const ProfilePage = () => {
                         </div>
                     </div>
 
-                    <div className="w-full lg:w-1/2">
+                    <div className="w-full lg:w-2/3">
                         <SectionListInscriptions />
                     </div>
                 </div>

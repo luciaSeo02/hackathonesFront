@@ -53,7 +53,7 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                             key={hackathonId}
                             className="group relative flex flex-col sm:flex-row gap-4 bg-white border border-gray-200 rounded-xl shadow-md p-4 w-full sm:h-48 overflow-hidden"
                         >
-                            <div className="relative w-full sm:w-1/3 aspect-video overflow-hidden rounded-xl bg-gray-200">
+                            <div className="relative w-full sm:w-1/3 aspect-square overflow-hidden rounded-xl bg-gray-200">
                                 <img
                                     src={imageUrl}
                                     alt={hackathon.name}
@@ -97,7 +97,7 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                                             setShowPopup(true);
                                             setSelectedId(hackathonId);
                                         }}
-                                        className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded text-sm"
+                                        className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded text-sm mt-4 lg:mt-0"
                                     >
                                         Eliminar
                                     </button>

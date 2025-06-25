@@ -51,9 +51,7 @@ const SectionListInscriptions = () => {
 
     return (
         <section className="mt-10 p-6 bg-neutral-100 rounded-xl shadow font-body">
-            <h4 className="text-black mb-4">
-                Mis inscripciones
-            </h4>
+            <h4 className="text-black mb-4">Mis inscripciones</h4>
             {loadingInscriptions ? (
                 <p className="text-gray-500">Cargando inscripciones...</p>
             ) : (
@@ -63,10 +61,11 @@ const SectionListInscriptions = () => {
                         onRemove={fetchInscriptions}
                     />
 
-                    <div className="mt-4 text-right">
+                    <div className="w-full mt-4 text-right lg:w-auto">
                         <Button
                             onClick={() => navigate('/my-inscriptions')}
                             text="Ver todas mis inscripciones"
+                            className="w-full lg:w-auto"
                         />
                     </div>
                 </>
