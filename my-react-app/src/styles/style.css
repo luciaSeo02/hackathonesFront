@@ -7,43 +7,43 @@
 
 @layer base {
     h1 {
-        @apply font-display font-black text-white text-5xl sm:text-9xl;
+        @apply font-display font-black text-white text-5xl lg:text-9xl dark:text-white;
     }
 
     h2 {
-        @apply font-display font-black text-3xl sm:text-6xl;
+        @apply font-display font-black text-3xl lg:text-6xl;
     }
 
     h3 {
-        @apply font-display font-black text-2xl sm:text-4xl;
+        @apply font-display font-black text-2xl lg:text-4xl;
     }
 
     h4 {
-        @apply font-display font-black text-white;
+        @apply font-display font-black text-white dark:text-white;
     }
 
     p {
-        @apply font-body text-sm sm:text-base;
+        @apply font-body text-sm lg:text-base;
     }
 
     a {
-        @apply font-body text-sm sm:text-base;
+        @apply font-body text-sm lg:text-base;
     }
 
     input {
-        @apply font-body bg-inherit text-sm sm:text-base;
+        @apply font-body bg-inherit text-sm lg:text-base;
     }
 
     textarea {
-        @apply font-body bg-inherit text-sm sm:text-base;
+        @apply font-body bg-inherit text-sm lg:text-base;
     }
 
     select {
-        @apply font-body bg-inherit text-sm sm:text-base;
+        @apply font-body bg-inherit text-sm lg:text-base;
     }
 
     option {
-        @apply font-body bg-inherit text-sm sm:text-base;
+        @apply font-body bg-inherit text-sm lg:text-base;
     }
 
     body {

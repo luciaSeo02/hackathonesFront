@@ -221,7 +221,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
             </div>
 
             {/* Descripción completa */}
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base mb-3 whitespace-pre-line">
+            <p className="text-gray-600 leading-relaxed text-base mb-3 whitespace-pre-line">
                 {hackathon?.description}
             </p>
 
@@ -237,7 +237,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                     <span className="block text-xs font-semibold text-indigo-700">
                         Modalidad:
                     </span>
-                    <span className="text-gray-700 dark:text-gray-200 text-sm">
+                    <span className="text-gray-700 text-sm">
                         {hackathon?.modality === 'online'
                             ? 'Online'
                             : hackathon?.modality === 'onsite'
@@ -250,7 +250,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                         <span className="block text-xs font-semibold text-indigo-700">
                             Ubicación:
                         </span>
-                        <span className="text-gray-700 dark:text-gray-200 text-sm">
+                        <span className="text-gray-700 text-sm">
                             {hackathon.location}
                         </span>
                     </div>
@@ -264,7 +264,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                             href={hackathon.onlineUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 break-all text-sm"
+                            className="text-indigo-600 hover:text-indigo-800 break-all text-sm"
                         >
                             {hackathon.onlineUrl}
                         </a>
@@ -274,7 +274,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                     <span className="block text-xs font-semibold text-indigo-700">
                         Fecha de inicio:
                     </span>
-                    <span className="text-gray-700 dark:text-gray-200 text-sm">
+                    <span className="text-gray-700 text-sm">
                         {formatDate(hackathon?.startDate)}
                     </span>
                 </div>
@@ -282,7 +282,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                     <span className="block text-xs font-semibold text-indigo-700">
                         Fecha de fin:
                     </span>
-                    <span className="text-gray-700 dark:text-gray-200 text-sm">
+                    <span className="text-gray-700 text-sm">
                         {formatDate(hackathon?.endDate)}
                     </span>
                 </div>
@@ -297,7 +297,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                 .map((tech, idx) => (
                                     <span
                                         key={idx}
-                                        className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs rounded-full"
+                                        className="px-2 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full"
                                     >
                                         {tech.trim()}
                                     </span>
@@ -328,7 +328,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2"
             onClick={handleOverlayClick}
         >
-            <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-full max-h-[98vh] overflow-y-auto shadow-2xl no-scrollbar p-0 lg:max-w-7xl lg:p-0 relative">
+            <div className="bg-white rounded-2xl w-full max-w-full max-h-[98vh] overflow-y-auto shadow-2xl no-scrollbar p-0 lg:max-w-7xl lg:p-0 relative">
                 <div className="absolute top-3 right-3 z-10 lg:hidden">
                     <CloseX onClick={onClose} size={32} />
                 </div>
@@ -343,7 +343,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                         </div>
 
                         {/* Descripción corta */}
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base mb-3 line-clamp-6 min-h-[7em]">
+                        <p className="text-gray-600 leading-relaxed text-base mb-3 line-clamp-6 min-h-[7em]">
                             {hackathon?.description}
                         </p>
 
@@ -435,7 +435,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                         {/* Línea para ver documentos */}
                         <div className="w-full mt-5">
                             <button
-                                className="w-full flex items-center justify-between px-3 py-2 bg-indigo-50 dark:bg-indigo-900 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-800 transition font-semibold text-indigo-700 dark:text-indigo-200 text-base"
+                                className="w-full flex items-center justify-between px-3 py-2 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition font-semibold text-indigo-700 text-base"
                                 onClick={() => setShowDocs((prev) => !prev)}
                             >
                                 <p>Ver documentación</p>
@@ -454,7 +454,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             href={doc.url || doc.fileUrl}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="block px-2 py-2 rounded hover:bg-indigo-100 dark:hover:bg-indigo-800 text-indigo-800 dark:text-indigo-100 transition text-sm"
+                                            className="block px-2 py-2 rounded hover:bg-indigo-100 text-indigo-800 transition text-sm"
                                         >
                                             {doc.name ||
                                                 doc.originalName ||
@@ -509,7 +509,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                         {/* Contenido */}
                         {loading && (
                             <div className="text-center py-10">
-                                <p className="text-gray-600 dark:text-gray-300 text-lg">
+                                <p className="text-gray-600 text-lg">
                                     Cargando detalles...
                                 </p>
                             </div>
@@ -525,7 +525,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                             <div className="space-y-6 lg:space-y-8">
                                 {/* Descripcion */}
                                 <div>
-                                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base lg:text-lg mb-4 whitespace-pre-line">
+                                    <p className="text-gray-600 leading-relaxed text-base lg:text-lg mb-4 whitespace-pre-line">
                                         {hackathon.description}
                                     </p>
                                 </div>
@@ -534,7 +534,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
                                     <div className="space-y-4 lg:space-y-5">
                                         <div>
-                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                            <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                 Modalidad
                                             </h4>
                                             {isEditing ? (
@@ -557,7 +557,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                     </option>
                                                 </select>
                                             ) : (
-                                                <p className="text-gray-600 dark:text-gray-300 text-base">
+                                                <p className="text-gray-600 text-base">
                                                     {hackathon.modality ===
                                                     'online'
                                                         ? 'Online'
@@ -570,7 +570,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                         </div>
                                         {isEditing ? (
                                             <div>
-                                                <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                                <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                     Ubicación
                                                 </h4>
                                                 <input
@@ -586,7 +586,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                         ) : (
                                             hackathon.location && (
                                                 <div>
-                                                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                                    <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                         Ubicación
                                                     </h4>
                                                     <p className="text-base">
@@ -597,7 +597,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                         )}
                                         {isEditing ? (
                                             <div>
-                                                <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                                <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                     URL del evento
                                                 </h4>
                                                 <input
@@ -613,7 +613,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                         ) : (
                                             hackathon.onlineUrl && (
                                                 <div>
-                                                    <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                                    <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                         URL del evento
                                                     </h4>
                                                     <a
@@ -622,7 +622,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                         }
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 break-all text-base"
+                                                        className="text-indigo-600 hover:text-indigo-800 break-all text-base"
                                                     >
                                                         {hackathon.onlineUrl}
                                                     </a>
@@ -632,7 +632,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                     </div>
                                     <div className="space-y-4 lg:space-y-5">
                                         <div>
-                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                            <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                 Fecha de inicio
                                             </h4>
                                             {isEditing ? (
@@ -654,7 +654,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             )}
                                         </div>
                                         <div>
-                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                            <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                 Fecha de fin
                                             </h4>
                                             {isEditing ? (
@@ -676,7 +676,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             )}
                                         </div>
                                         <div>
-                                            <h4 className="font-semibold text-gray-900 dark:text-white mb-1 text-base lg:text-lg">
+                                            <h4 className="font-semibold text-gray-900 mb-1 text-base lg:text-lg">
                                                 Tecnologías
                                             </h4>
                                             {isEditing ? (
@@ -705,7 +705,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                                         key={
                                                                             index
                                                                         }
-                                                                        className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-base rounded-full"
+                                                                        className="px-2 py-1 bg-indigo-100 text-indigo-800 text-base rounded-full"
                                                                     >
                                                                         {tech.trim()}
                                                                     </span>
@@ -719,7 +719,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                 </div>
 
                                 {/* Botones */}
-                                <div className="flex flex-col justify-end gap-3 pt-6 border-t border-gray-200 dark:border-gray-700 lg:flex-row lg:gap-4 lg:pt-8">
+                                <div className="flex flex-col justify-end gap-3 pt-6 border-t border-gray-200 lg:flex-row lg:gap-4 lg:pt-8">
                                     {!isEditing && (
                                         <>
                                             <Button
@@ -805,7 +805,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center">
                                                 <Button
                                                     onClick={handleInscription}
-                                                    className="bg-light-gradient dark:bg-dark-gradient px-4 py-2"
+                                                    className="bg-light-gradient px-4 py-2"
                                                     text="Sí, inscribirme"
                                                 />
                                                 <Button

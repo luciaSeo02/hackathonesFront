@@ -57,10 +57,10 @@ const MyInscriptionsPage = () => {
 
     return (
         <div className="flex-1 flex items-start justify-center w-full px-4 pt-8">
-            <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl px-4 py-6 w-full max-w-3xl mx-auto">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <div className="bg-white rounded-3xl shadow-2xl px-4 py-6 w-full max-w-3xl mx-auto">
+                <h3 className="mb-6">
                     Todas mis inscripciones
-                </h1>
+                </h3>
 
                 <div className="mb-6 flex gap-4">
                     <button
