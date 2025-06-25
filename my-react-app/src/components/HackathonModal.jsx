@@ -14,6 +14,7 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isEditing, setIsEditing] = useState(false);
@@ -68,6 +69,34 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
         }
     };
 
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_URL_API}/hackathons/${hackathon.id}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: token ? `Bearer ${token}` : '',
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || 'Error al eliminar el hackathon'
+                );
+            }
+
+            setSuccessMessage('Hackathon eliminado exitosamente');
+        } catch (error) {
+            setErrorMessage(error.message);
+        } finally {
+            setShowDeletePopup(false);
+        }
+    };
+
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('es-ES', {
             year: 'numeric',
@@ -113,7 +142,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                         startDate: editData.startDate,
                         endDate: editData.endDate,
                         topicName: editData.topic,
-                        technologyNames: editData.technologyNames?.split(',').map(t => t.trim()),
+                        technologyNames: editData.technologyNames
+                            ?.split(',')
+                            .map((t) => t.trim()),
                     }),
                 }
             );
@@ -148,21 +179,33 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
     if (!isOpen) return null;
 
     // Filtrar imágenes y documentos
-    const images = hackathon?.attachments?.filter(a => a.type === 'image' || a.fileType === 'image') || [];
+    const images =
+        hackathon?.attachments?.filter(
+            (a) => a.type === 'image' || a.fileType === 'image'
+        ) || [];
     const mainImage = images[0]?.url || images[0]?.fileUrl;
     const smallImage1 = images[1]?.url || images[1]?.fileUrl;
     const smallImage2 = images[2]?.url || images[2]?.fileUrl;
 
     // Filtrar documentos .pdf y .doc/.docx
-    const docs = hackathon?.attachments?.filter(a =>
-        (a.fileType === 'pdf' || a.fileType === 'doc' || a.fileType === 'docx') ||
-        (a.url && (a.url.endsWith('.pdf') || a.url.endsWith('.doc') || a.url.endsWith('.docx'))) ||
-        (a.fileUrl && (a.fileUrl.endsWith('.pdf') || a.fileUrl.endsWith('.doc') || a.fileUrl.endsWith('.docx')))
-    ) || [];
+    const docs =
+        hackathon?.attachments?.filter(
+            (a) =>
+                a.fileType === 'pdf' ||
+                a.fileType === 'doc' ||
+                a.fileType === 'docx' ||
+                (a.url &&
+                    (a.url.endsWith('.pdf') ||
+                        a.url.endsWith('.doc') ||
+                        a.url.endsWith('.docx'))) ||
+                (a.fileUrl &&
+                    (a.fileUrl.endsWith('.pdf') ||
+                        a.fileUrl.endsWith('.doc') ||
+                        a.fileUrl.endsWith('.docx')))
+        ) || [];
 
     const MobileFullInfo = () => (
         <div className="flex flex-col gap-4 p-4 lg:hidden">
-
             {/* Título */}
             <div className="flex items-start justify-between mb-2">
                 <h2 className="text-2xl font-bold break-words pr-14 w-full">
@@ -184,7 +227,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
             {/* Detalles */}
             <div className="space-y-2">
                 <div>
-                    <span className="block text-xs font-semibold text-indigo-700">Modalidad:</span>
+                    <span className="block text-xs font-semibold text-indigo-700">
+                        Modalidad:
+                    </span>
                     <span className="text-gray-700 dark:text-gray-200 text-sm">
                         {hackathon?.modality === 'online'
                             ? 'Online'
@@ -195,7 +240,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                 </div>
                 {hackathon?.location && (
                     <div>
-                        <span className="block text-xs font-semibold text-indigo-700">Ubicación:</span>
+                        <span className="block text-xs font-semibold text-indigo-700">
+                            Ubicación:
+                        </span>
                         <span className="text-gray-700 dark:text-gray-200 text-sm">
                             {hackathon.location}
                         </span>
@@ -203,7 +250,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                 )}
                 {hackathon?.onlineUrl && (
                     <div>
-                        <span className="block text-xs font-semibold text-indigo-700">URL del evento:</span>
+                        <span className="block text-xs font-semibold text-indigo-700">
+                            URL del evento:
+                        </span>
                         <a
                             href={hackathon.onlineUrl}
                             target="_blank"
@@ -215,29 +264,37 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                     </div>
                 )}
                 <div>
-                    <span className="block text-xs font-semibold text-indigo-700">Fecha de inicio:</span>
+                    <span className="block text-xs font-semibold text-indigo-700">
+                        Fecha de inicio:
+                    </span>
                     <span className="text-gray-700 dark:text-gray-200 text-sm">
                         {formatDate(hackathon?.startDate)}
                     </span>
                 </div>
                 <div>
-                    <span className="block text-xs font-semibold text-indigo-700">Fecha de fin:</span>
+                    <span className="block text-xs font-semibold text-indigo-700">
+                        Fecha de fin:
+                    </span>
                     <span className="text-gray-700 dark:text-gray-200 text-sm">
                         {formatDate(hackathon?.endDate)}
                     </span>
                 </div>
                 {hackathon?.technologyNames && (
                     <div>
-                        <span className="block text-xs font-semibold text-indigo-700">Tecnologías:</span>
+                        <span className="block text-xs font-semibold text-indigo-700">
+                            Tecnologías:
+                        </span>
                         <div className="flex flex-wrap gap-2 mt-1">
-                            {hackathon.technologyNames.split(',').map((tech, idx) => (
-                                <span
-                                    key={idx}
-                                    className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs rounded-full"
-                                >
-                                    {tech.trim()}
-                                </span>
-                            ))}
+                            {hackathon.technologyNames
+                                .split(',')
+                                .map((tech, idx) => (
+                                    <span
+                                        key={idx}
+                                        className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-xs rounded-full"
+                                    >
+                                        {tech.trim()}
+                                    </span>
+                                ))}
                         </div>
                     </div>
                 )}
@@ -265,14 +322,12 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
             onClick={handleOverlayClick}
         >
             <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-full max-h-[98vh] overflow-y-auto shadow-2xl no-scrollbar p-0 lg:max-w-7xl lg:p-0 relative">
-
                 <div className="absolute top-3 right-3 z-10 lg:hidden">
                     <CloseX onClick={onClose} size={32} />
                 </div>
 
                 {!showFullDescription ? (
                     <div className="flex flex-col gap-4 p-4 lg:hidden">
-
                         {/* Título y X */}
                         <div className="flex items-start justify-between mb-2">
                             <h2 className="text-2xl font-bold break-words pr-14 w-full">
@@ -305,7 +360,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                     className="object-cover w-full h-full max-h-[400px]"
                                 />
                             ) : (
-                                <span className="text-gray-400 text-lg">Sin imagen</span>
+                                <span className="text-gray-400 text-lg">
+                                    Sin imagen
+                                </span>
                             )}
                         </div>
 
@@ -321,10 +378,8 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
 
                 {/* Escritorio */}
                 <div className="hidden lg:flex flex-col gap-6 p-3 lg:flex-row lg:gap-10 lg:p-10">
-
                     {/* Columna de imágenes */}
                     <div className="w-full flex flex-col items-center lg:w-1/2">
-
                         {/* Imagen principal */}
                         <div className="w-full aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center overflow-hidden mb-4 min-h-[180px] max-h-[340px]">
                             {mainImage ? (
@@ -334,7 +389,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                     className="object-cover w-full h-full max-h-[400px]"
                                 />
                             ) : (
-                                <span className="text-gray-400 text-lg">Sin imagen</span>
+                                <span className="text-gray-400 text-lg">
+                                    Sin imagen
+                                </span>
                             )}
                         </div>
 
@@ -348,7 +405,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                         className="object-cover w-full h-full"
                                     />
                                 ) : (
-                                    <span className="text-gray-300 text-base">Sin imagen</span>
+                                    <span className="text-gray-300 text-base">
+                                        Sin imagen
+                                    </span>
                                 )}
                             </div>
                             <div className="w-1/2 aspect-[4/3] bg-gray-200 rounded-xl flex items-center justify-center overflow-hidden">
@@ -359,7 +418,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                         className="object-cover w-full h-full"
                                     />
                                 ) : (
-                                    <span className="text-gray-300 text-base">Sin imagen</span>
+                                    <span className="text-gray-300 text-base">
+                                        Sin imagen
+                                    </span>
                                 )}
                             </div>
                         </div>
@@ -376,7 +437,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                             {showDocs && (
                                 <div className="mt-2 space-y-2 px-1">
                                     {docs.length === 0 && (
-                                        <div className="text-gray-500 text-base">No hay documentación subida.</div>
+                                        <div className="text-gray-500 text-base">
+                                            No hay documentación subida.
+                                        </div>
                                     )}
                                     {docs.map((doc, idx) => (
                                         <a
@@ -386,7 +449,10 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             rel="noopener noreferrer"
                                             className="block px-2 py-2 rounded hover:bg-indigo-100 dark:hover:bg-indigo-800 text-indigo-800 dark:text-indigo-100 transition text-sm"
                                         >
-                                            {doc.name || doc.originalName || doc.url?.split('/').pop() || doc.fileUrl?.split('/').pop()}
+                                            {doc.name ||
+                                                doc.originalName ||
+                                                doc.url?.split('/').pop() ||
+                                                doc.fileUrl?.split('/').pop()}
                                         </a>
                                     ))}
                                 </div>
@@ -396,7 +462,6 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
 
                     {/* Columna de información */}
                     <section className="w-full flex flex-col lg:w-1/2">
-
                         {/* Cabecera */}
                         <div className="flex flex-col justify-between items-start mb-6 gap-2 lg:flex-row lg:mb-8">
                             <div className="w-full">
@@ -437,17 +502,20 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                         {/* Contenido */}
                         {loading && (
                             <div className="text-center py-10">
-                                <p className="text-gray-600 dark:text-gray-300 text-lg">Cargando detalles...</p>
+                                <p className="text-gray-600 dark:text-gray-300 text-lg">
+                                    Cargando detalles...
+                                </p>
                             </div>
                         )}
                         {error && (
                             <div className="text-center py-10">
-                                <p className="text-red-600 text-lg">Error: {error}</p>
+                                <p className="text-red-600 text-lg">
+                                    Error: {error}
+                                </p>
                             </div>
                         )}
                         {hackathon && !loading && (
                             <div className="space-y-6 lg:space-y-8">
-
                                 {/* Descripcion */}
                                 <div>
                                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base lg:text-lg mb-4 whitespace-pre-line">
@@ -465,19 +533,31 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             {isEditing ? (
                                                 <select
                                                     name="modality"
-                                                    value={editData.modality || ''}
+                                                    value={
+                                                        editData.modality || ''
+                                                    }
                                                     onChange={handleEditChange}
                                                     className="border rounded px-2 py-1 w-full"
                                                 >
-                                                    <option value="">Selecciona</option>
-                                                    <option value="online">Online</option>
-                                                    <option value="onsite">Presencial</option>
+                                                    <option value="">
+                                                        Selecciona
+                                                    </option>
+                                                    <option value="online">
+                                                        Online
+                                                    </option>
+                                                    <option value="onsite">
+                                                        Presencial
+                                                    </option>
                                                 </select>
                                             ) : (
                                                 <p className="text-gray-600 dark:text-gray-300 text-base">
-                                                    {hackathon.modality === 'online' ? 'Online' :
-                                                        hackathon.modality === 'onsite' ? 'Presencial' :
-                                                            hackathon.modality}
+                                                    {hackathon.modality ===
+                                                    'online'
+                                                        ? 'Online'
+                                                        : hackathon.modality ===
+                                                          'onsite'
+                                                        ? 'Presencial'
+                                                        : hackathon.modality}
                                                 </p>
                                             )}
                                         </div>
@@ -489,7 +569,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                 <input
                                                     type="text"
                                                     name="location"
-                                                    value={editData.location || ''}
+                                                    value={
+                                                        editData.location || ''
+                                                    }
                                                     onChange={handleEditChange}
                                                     className="border rounded px-2 py-1 w-full"
                                                 />
@@ -514,7 +596,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                 <input
                                                     type="text"
                                                     name="onlineUrl"
-                                                    value={editData.onlineUrl || ''}
+                                                    value={
+                                                        editData.onlineUrl || ''
+                                                    }
                                                     onChange={handleEditChange}
                                                     className="border rounded px-2 py-1 w-full"
                                                 />
@@ -526,7 +610,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                         URL del evento
                                                     </h4>
                                                     <a
-                                                        href={hackathon.onlineUrl}
+                                                        href={
+                                                            hackathon.onlineUrl
+                                                        }
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 break-all text-base"
@@ -546,13 +632,17 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                 <input
                                                     type="date"
                                                     name="startDate"
-                                                    value={editData.startDate || ''}
+                                                    value={
+                                                        editData.startDate || ''
+                                                    }
                                                     onChange={handleEditChange}
                                                     className="border rounded px-2 py-1 w-full"
                                                 />
                                             ) : (
                                                 <p className="text-base">
-                                                    {formatDate(hackathon.startDate)}
+                                                    {formatDate(
+                                                        hackathon.startDate
+                                                    )}
                                                 </p>
                                             )}
                                         </div>
@@ -564,13 +654,17 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                 <input
                                                     type="date"
                                                     name="endDate"
-                                                    value={editData.endDate || ''}
+                                                    value={
+                                                        editData.endDate || ''
+                                                    }
                                                     onChange={handleEditChange}
                                                     className="border rounded px-2 py-1 w-full"
                                                 />
                                             ) : (
                                                 <p className="text-base">
-                                                    {formatDate(hackathon.endDate)}
+                                                    {formatDate(
+                                                        hackathon.endDate
+                                                    )}
                                                 </p>
                                             )}
                                         </div>
@@ -582,7 +676,10 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                                 <input
                                                     type="text"
                                                     name="technologyNames"
-                                                    value={editData.technologyNames || ''}
+                                                    value={
+                                                        editData.technologyNames ||
+                                                        ''
+                                                    }
                                                     onChange={handleEditChange}
                                                     className="border rounded px-2 py-1 w-full"
                                                     placeholder="Separadas por coma"
@@ -590,14 +687,23 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             ) : (
                                                 hackathon.technologyNames && (
                                                     <div className="flex flex-wrap gap-2">
-                                                        {hackathon.technologyNames.split(',').map((tech, index) => (
-                                                            <span
-                                                                key={index}
-                                                                className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-base rounded-full"
-                                                            >
-                                                                {tech.trim()}
-                                                            </span>
-                                                        ))}
+                                                        {hackathon.technologyNames
+                                                            .split(',')
+                                                            .map(
+                                                                (
+                                                                    tech,
+                                                                    index
+                                                                ) => (
+                                                                    <span
+                                                                        key={
+                                                                            index
+                                                                        }
+                                                                        className="px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 text-base rounded-full"
+                                                                    >
+                                                                        {tech.trim()}
+                                                                    </span>
+                                                                )
+                                                            )}
                                                     </div>
                                                 )
                                             )}
@@ -610,14 +716,28 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                     {!isEditing && (
                                         <>
                                             <Button
-                                                onClick={() => setShowPopup(true)}
+                                                onClick={() =>
+                                                    setShowPopup(true)
+                                                }
                                                 text="Reservar hackathon"
                                             />
                                             {isAdmin && (
-                                                <Button
-                                                    text="Editar"
-                                                    onClick={() => setIsEditing(true)}
-                                                />
+                                                <div className="flex gap-2">
+                                                    <Button
+                                                        text="Editar"
+                                                        onClick={() =>
+                                                            setIsEditing(true)
+                                                        }
+                                                    />
+                                                    <Button
+                                                        text="Eliminar"
+                                                        onClick={() =>
+                                                            setShowDeletePopup(
+                                                                true
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
                                             )}
                                         </>
                                     )}
@@ -630,29 +750,62 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                             />
                                             <Button
                                                 text="Cancelar"
-                                                onClick={() => setIsEditing(false)}
+                                                onClick={() =>
+                                                    setIsEditing(false)
+                                                }
                                                 className="bg-gray-400 hover:bg-gray-500"
                                             />
                                         </>
                                     )}
                                 </div>
-                                
+
+                                {showDeletePopup && (
+                                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+                                        <div className="bg-white p-4 rounded-xl shadow-xl flex flex-col items-center w-[95vw] max-w-xs">
+                                            <p className="mb-4 font-semibold text-gray-800 text-center">
+                                                ¿Estás seguro de que deseas
+                                                eliminar este hackathon? Esta
+                                                acción no se puede deshacer.
+                                            </p>
+                                            <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center">
+                                                <Button
+                                                    onClick={handleDelete}
+                                                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                                                    text="Sí, eliminar"
+                                                />
+                                                <Button
+                                                    onClick={() =>
+                                                        setShowDeletePopup(
+                                                            false
+                                                        )
+                                                    }
+                                                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                                                    text="Cancelar"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* Popup inscripción */}
                                 {showPopup && (
                                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
                                         <div className="bg-white p-4 rounded-xl shadow-xl flex flex-col items-center w-[95vw] max-w-xs">
                                             <p className="mb-4 font-semibold text-gray-800 text-center">
-                                                ¿Seguro que quieres inscribirte en este hackathon?
+                                                ¿Seguro que quieres inscribirte
+                                                en este hackathon?
                                             </p>
-                                            <div className="flex flex-col gap-2 w-full lg:flex-row lg:gap-4">
+                                            <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center">
                                                 <Button
                                                     onClick={handleInscription}
-                                                    className="bg-light-gradient dark:bg-dark-gradient px-3 py-[6px] rounded-sm text-white text-xs"
+                                                    className="bg-light-gradient dark:bg-dark-gradient px-4 py-2"
                                                     text="Sí, inscribirme"
                                                 />
                                                 <Button
-                                                    onClick={() => setShowPopup(false)}
-                                                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg"
+                                                    onClick={() =>
+                                                        setShowPopup(false)
+                                                    }
+                                                    className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2"
                                                     text="Cancelar"
                                                 />
                                             </div>
@@ -662,7 +815,9 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                 {successMessage && (
                                     <Success success={successMessage} />
                                 )}
-                                {errorMessage && <ErrorDiv error={errorMessage} />}
+                                {errorMessage && (
+                                    <ErrorDiv error={errorMessage} />
+                                )}
                             </div>
                         )}
                     </section>
