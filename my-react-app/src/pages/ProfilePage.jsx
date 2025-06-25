@@ -140,7 +140,7 @@ const ProfilePage = () => {
                             Perfil del usuario
                         </h3>
 
-                        <div className="flex flex-col items-center gap-8 w-full">
+                        <div className="flex flex-col items-center gap-6 w-full">
                             <div className="relative group w-40 h-40 lg:w-60 lg:h-60">
                                 <img
                                     src={
@@ -241,6 +241,7 @@ const ProfilePage = () => {
                                                             false
                                                         );
                                                     }}
+                                                    className="w-44"
                                                 />
                                                 <Button
                                                     text="Cambiar contraseña"
@@ -250,6 +251,7 @@ const ProfilePage = () => {
                                                         );
                                                         setIsEditing(false);
                                                     }}
+                                                    className="w-44"
                                                 />
                                             </>
                                         )}
