@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
 import Pagination from './ui/Pagination';
+import spinnerGif from '../assets/ZKZg.gif';
 
 const LIMIT = 12;
 
@@ -73,7 +74,16 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
         setPage(newPage);
     };
 
-    if (loading) return <p>Cargando hackathones...</p>;
+    if (loading)
+        return (
+            <div className="text-center">
+                <img
+                    src={spinnerGif}
+                    alt="Loading..."
+                    className="w-32 h-32 mx-auto mb-4"
+                />
+            </div>
+        );
     if (error) return <p>Error: {error}</p>;
 
     return (
