@@ -35,7 +35,7 @@ const ValidatePage = () => {
     }, [registrationCode, navigate]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1565C0] to-[#9D4EDD]">
+        <div className="min-h-screen flex items-center justify-center">
             <div className="text-center">
                 <img
                     src={spinnerGif}
