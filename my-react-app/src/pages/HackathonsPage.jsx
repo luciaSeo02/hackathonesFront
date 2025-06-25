@@ -63,7 +63,7 @@ const HackathonsPage = () => {
             {userLogged?.role === 'admin' && (
                 <div
                     ref={buttonRef}
-                    className={`z-50 ${
+                    className={`z-40 ${
                     footerVisible
                         ? 'absolute right-4  lg:right-8 '
                         : 'fixed bottom-24 right-4 lg:bottom-24 lg:right-8'
