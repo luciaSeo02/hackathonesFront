@@ -6,6 +6,8 @@ import getInscriptionsToMyHackathonsService from '../services/getInscriptionsToM
 import UserInscriptionsList from './UserInscriptionsList';
 import PeopleInscriptionsList from './PeopleInscriptionsList';
 
+import Button from './ui/Button';
+
 const SectionListInscriptions = () => {
     const { userLogged } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -78,12 +80,10 @@ const SectionListInscriptions = () => {
                     />
 
                     <div className="mt-4 text-right">
-                        <button
+                        <Button
                             onClick={() => navigate('/my-inscriptions')}
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-                        >
-                            Ver todas mis inscripciones
-                        </button>
+                            text="Ver todas mis inscripciones"
+                        />
                     </div>
                 </>
             )}

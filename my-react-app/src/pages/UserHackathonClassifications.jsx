@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContextProvider';
+import Button from '../components/ui/Button';
 
 const UserHackathonClassifications = () => {
     const { userLogged } = useContext(AuthContext);
@@ -71,20 +72,19 @@ const UserHackathonClassifications = () => {
                             <h3 className="font-semibold text-lg text-indigo-700">
                                 {h.name}
                             </h3>
-                            {/* <p className="text-gray-500 text-sm">
+                            <p className="text-gray-500 text-sm mt-2">
                                 {h.topic || 'Sin categoría'}
-                            </p> */}
-                            <button
-                                className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                            </p>
+                            <Button
+                                className="mt-4"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     navigate(
                                         `/hackathons/${h.id}/classification/view`
                                     );
                                 }}
-                            >
-                                Ver Clasificación
-                            </button>
+                                text="Ver Clasificación"
+                            />
                         </div>
                         <span className="text-xs text-gray-400 self-end">
                             {new Date(h.startDate).toLocaleDateString()} -{' '}

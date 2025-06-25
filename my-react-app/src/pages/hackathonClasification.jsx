@@ -1,6 +1,9 @@
 import { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
+import CloseX from '../components/ui/CloseX';
+import Button from '../components/ui/Button';
+import ButtonBig from '../components/ui/ButtonBig';
 import AuthContext from '../context/AuthContextProvider';
 import fetchApiAuth from '../services/Postclassification';
 import ErrorDiv from '../components/ui/ErrorDiv';
@@ -97,14 +100,11 @@ const PublishRankingPage = () => {
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-blue-700 to-purple-600 p-4">
             <div className="bg-white rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md relative">
                 {/* Botón X para volver atrás */}
-                <button
+                <CloseX
                     onClick={() => navigate(-1)}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition"
-                    aria-label="Volver"
-                    type="button"
-                >
-                    <X size={28} />
-                </button>
+                    size={28}
+                    className="absolute top-4 right-4"
+                />
 
                 <h2 className="text-2xl font-bold text-blue-700 mb-6">
                     Publicar Clasificación
@@ -174,6 +174,7 @@ const PublishRankingPage = () => {
                         >
                             Añadir participante
                         </button>
+
                         <button
                             type="submit"
                             className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition"

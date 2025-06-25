@@ -2,6 +2,7 @@ import { useEffect, useState, useContext, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import FormClassifications from '../components/FormClassifications';
 import AuthContext from '../context/AuthContextProvider';
+import Button from '../components/ui/Button';
 
 const PublishClassificationPage = () => {
     const { hackathonId } = useParams();
@@ -70,8 +71,8 @@ const PublishClassificationPage = () => {
                             <p className="text-gray-500 text-sm">
                                 {h.topic || 'Sin categoría'}
                             </p>
-                            <button
-                                className="mt-2 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition"
+                            <Button
+                                className="mt-5"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     navigate(
@@ -83,9 +84,8 @@ const PublishClassificationPage = () => {
                                         });
                                     }, 100);
                                 }}
-                            >
-                                Publicar clasificación
-                            </button>
+                                text="Publicar clasificación"
+                            />
                         </div>
                         <span className="text-xs text-gray-400 self-end">
                             {new Date(h.startDate).toLocaleDateString()} -{' '}
