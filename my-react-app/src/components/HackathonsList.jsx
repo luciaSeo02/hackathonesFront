@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
 
-const LIMIT = 9; 
+const LIMIT = 9;
 
 const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
     const [hackathons, setHackathons] = useState([]);
@@ -24,7 +24,9 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                 params.set('page', page);
 
                 const res = await fetch(
-                    `${import.meta.env.VITE_URL_API}/hackathons?${params.toString()}`
+                    `${
+                        import.meta.env.VITE_URL_API
+                    }/hackathons?${params.toString()}`
                 );
                 const json = await res.json();
 
@@ -41,9 +43,7 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
 
                 setHackathons(futureHackathons);
 
-                setHackathons(json.data);
-                setTotal(json.total || 0);
-
+                setTotal(futureHackathons.length);
             } catch (err) {
                 setError(err.message);
             } finally {
