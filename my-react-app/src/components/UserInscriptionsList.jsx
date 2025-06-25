@@ -12,26 +12,6 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
     const [modalHackathonId, setModalHackathonId] = useState(null);
     const [imageIndex, setImageIndex] = useState({});
 
-    const handleNext = (hackathonId, totalImages) => {
-        setImageIndex((prev) => {
-            const current = prev[hackathonId] ?? 0;
-            return {
-                ...prev,
-                [hackathonId]: (current + 1) % totalImages,
-            };
-        });
-    };
-
-    const handlePrev = (hackathonId, totalImages) => {
-        setImageIndex((prev) => {
-            const current = prev[hackathonId] ?? 0;
-            return {
-                ...prev,
-                [hackathonId]: current === 0 ? totalImages - 1 : current - 1,
-            };
-        });
-    };
-
     const handleDelete = async (hackathonId) => {
         try {
             await deleteInscriptionService(hackathonId);
@@ -71,7 +51,7 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                     return (
                         <li
                             key={hackathonId}
-                            className="group relative flex flex-col sm:flex-row gap-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-md p-4 w-full sm:h-48 overflow-hidden"
+                            className="group relative flex flex-col sm:flex-row gap-4 bg-white border border-gray-200 rounded-xl shadow-md p-4 w-full sm:h-48 overflow-hidden"
                         >
                             <div className="relative w-full sm:w-1/3 aspect-video overflow-hidden rounded-xl bg-gray-200">
                                 <img
@@ -79,33 +59,6 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                                     alt={hackathon.name}
                                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                 />
-                                {images.length > 1 && (
-                                    <>
-                                        <button
-                                            onClick={() =>
-                                                handlePrev(
-                                                    hackathonId,
-                                                    images.length
-                                                )
-                                            }
-                                            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full"
-                                        >
-                                            <ChevronLeft className="w-5 h-5" />
-                                        </button>
-
-                                        <button
-                                            onClick={() =>
-                                                handleNext(
-                                                    hackathonId,
-                                                    images.length
-                                                )
-                                            }
-                                            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 text-white bg-black/30 hover:bg-black/50 p-2 rounded-full"
-                                        >
-                                            <ChevronRight className="w-5 h-5" />
-                                        </button>
-                                    </>
-                                )}
                             </div>
 
                             <div className="flex flex-col flex-grow">

@@ -66,10 +66,10 @@ const SectionListInscriptions = () => {
 
     console.log('peopleInscriptions', peopleInscriptions);
     return (
-        <section className="mt-10 p-6 bg-neutral-100 dark:bg-gray-800 rounded-xl shadow font-body">
-            <h2 className="text-xl font-display font-bold text-gray-900 dark:text-white mb-4">
+        <section className="mt-10 p-6 bg-neutral-100 rounded-xl shadow font-body">
+            <h4 className="text-black mb-4">
                 Mis inscripciones
-            </h2>
+            </h4>
             {loadingInscriptions ? (
                 <p className="text-gray-500">Cargando inscripciones...</p>
             ) : (

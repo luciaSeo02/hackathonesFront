@@ -136,7 +136,7 @@ const ProfilePage = () => {
             <div className="w-full max-w-6xl mx-auto p-6 rounded-xl shadow-xl mt-16">
                 <div className="flex flex-col lg:flex-row gap-12">
                     <div className="w-full lg:w-1/2 flex flex-col items-center text-center space-y-8">
-                        <h3 className="text-xl lg:text-3xl font-semibold">
+                        <h3>
                             Perfil del usuario
                         </h3>
 
@@ -148,7 +148,7 @@ const ProfilePage = () => {
                                         '/defaultAvatar.png'
                                     }
                                     alt="Avatar"
-                                    className="w-full h-full rounded-full object-cover border-2 border-purple-400"
+                                    className="w-full h-full rounded-full object-cover border-4 border-[#5F3DC4]"
                                 />
                                 <button
                                     onClick={() => {
@@ -173,7 +173,7 @@ const ProfilePage = () => {
                                     <div>
                                         <label
                                             htmlFor="avatar-upload"
-                                            className="cursor-pointer inline-flex items-center gap-2 px-3 py-2 rounded-lg border-2 text-sm font-medium text-gray-800 bg-transparent border-indigo-500 hover:bg-indigo-50"
+                                            className="cursor-pointer inline-flex items-center gap-2 px-3 py-2 rounded-lg border-2 text-sm font-medium bg-transparent border-[#5F3DC4] hover:bg-indigo-50"
                                         >
                                             Seleccionar archivo
                                         </label>

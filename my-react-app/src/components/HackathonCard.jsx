@@ -17,14 +17,6 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
 
     const imageUrl = images[imageIndex]?.url || '/hackathons.jpg';
 
-    const handleNext = () => {
-        setImageIndex((prev) => (prev + 1) % images.length);
-    };
-
-    const handlePrev = () => {
-        setImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    };
-
     const handleDetailsClick = () => {
         if (!userLogged) {
             setShowLoginModal(true);
@@ -67,23 +59,6 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
             />
 
             <div className="absolute inset-0 bg-black/20 z-5"></div>
-
-            {images.length > 1 && (
-                <>
-                    <button
-                        onClick={handlePrev}
-                        className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 text-white text-lg bg-black/30 hover:bg-black/50 p-2 rounded-full"
-                    >
-                        <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                        onClick={handleNext}
-                        className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 text-white text-lg bg-black/30 hover:bg-black/50 p-2 rounded-full"
-                    >
-                        <ChevronRight className="w-5 h-5" />
-                    </button>
-                </>
-            )}
 
             <span className="absolute top-4 left-4 z-6 bg-white/80 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-md uppercase tracking-wide shadow-sm">
                 {hackathon.topic || 'Sin categoría'}

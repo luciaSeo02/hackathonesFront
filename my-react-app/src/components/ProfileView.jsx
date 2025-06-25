@@ -1,6 +1,6 @@
 const ProfileView = ({ user }) => {
     return (
-        <div className="text-gray-800 dark:text-gray-200 space-y-2 text-sm md:text-base">
+        <div className="space-y-2 text-sm lg:text-base">
             {user.role !== 'admin' && (
                 <>
                     <p>
