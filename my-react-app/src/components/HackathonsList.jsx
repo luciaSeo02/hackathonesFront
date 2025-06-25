@@ -3,23 +3,28 @@ import { useNavigate } from 'react-router-dom';
 import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
 
+const LIMIT = 9; 
+
 const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
     const [hackathons, setHackathons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [selectedHackathonId, setSelectedHackathonId] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchHackathons = async () => {
             setLoading(true);
             try {
-                const queryString = searchParams
-                    ? `?${searchParams.toString()}`
-                    : '';
+                const params = new URLSearchParams(searchParams);
+                params.set('limit', LIMIT);
+                params.set('page', page);
+
                 const res = await fetch(
-                    `${import.meta.env.VITE_URL_API}/hackathons${queryString}`
+                    `${import.meta.env.VITE_URL_API}/hackathons?${params.toString()}`
                 );
                 const json = await res.json();
 
@@ -27,7 +32,6 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                     throw new Error(
                         json.message || 'Error al cargar los hackathones'
                     );
-
                 const now = new Date();
                 const futureHackathons = (json.data || [])
                     .filter((h) => new Date(h.endDate) > now)
@@ -36,6 +40,10 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                     );
 
                 setHackathons(futureHackathons);
+
+                setHackathons(json.data);
+                setTotal(json.total || 0);
+
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -44,7 +52,7 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
         };
 
         fetchHackathons();
-    }, [searchParams, redirectIfEmpty, navigate]);
+    }, [searchParams, redirectIfEmpty, navigate, page]);
 
     const handleShowDetails = (hackathonId) => {
         setSelectedHackathonId(hackathonId);
@@ -55,6 +63,8 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
         setIsModalOpen(false);
         setSelectedHackathonId(null);
     };
+
+    const totalPages = Math.ceil(total / LIMIT);
 
     if (loading) return <p>Cargando hackathones...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -76,6 +86,39 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                             />
                         ))}
                     </ul>
+
+                    {/* Paginas lista */}
+                    {totalPages > 1 && (
+                        <div className="flex justify-center mt-8 gap-2">
+                            <button
+                                disabled={page === 1}
+                                onClick={() => setPage(page - 1)}
+                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                            >
+                                Anterior
+                            </button>
+                            {[...Array(totalPages)].map((_, i) => (
+                                <button
+                                    key={i}
+                                    className={`px-3 py-1 rounded ${
+                                        page === i + 1
+                                            ? 'bg-indigo-600 text-white'
+                                            : 'bg-gray-200 hover:bg-gray-300'
+                                    }`}
+                                    onClick={() => setPage(i + 1)}
+                                >
+                                    {i + 1}
+                                </button>
+                            ))}
+                            <button
+                                disabled={page === totalPages}
+                                onClick={() => setPage(page + 1)}
+                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                            >
+                                Siguiente
+                            </button>
+                        </div>
+                    )}
 
                     <HackathonModal
                         hackathonId={selectedHackathonId}
