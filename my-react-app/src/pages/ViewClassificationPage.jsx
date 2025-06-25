@@ -28,7 +28,7 @@ const ViewClassificationPage = () => {
   if (error) return <p className="text-center mt-8 text-red-600">{error}</p>;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-blue-700 to-purple-600 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-xl">
         <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center">Clasificación</h2>
         {classification.length === 0 ? (
