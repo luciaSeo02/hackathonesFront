@@ -184,8 +184,10 @@ const PublishRankingPage = () => {
                     </div>
                 </form>
 
-                {errorMessage && <ErrorDiv error={errorMessage} />}
-                {successMessage && <Success success={successMessage} />}
+                <div className='mt-6 w-full'>
+                    {errorMessage && <ErrorDiv error={errorMessage} />}
+                    {successMessage && <Success success={successMessage} />}
+                </div>
             </div>
         </div>
     );
