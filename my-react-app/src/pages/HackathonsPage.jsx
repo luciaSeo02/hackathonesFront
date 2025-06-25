@@ -64,20 +64,20 @@ const HackathonsPage = () => {
                 <div
                     ref={buttonRef}
                     className={`z-50 ${
-                        footerVisible
-                            ? 'absolute right-8'
-                            : 'fixed bottom-8 right-8'
+                    footerVisible
+                        ? 'absolute right-4  lg:right-8 '
+                        : 'fixed bottom-24 right-4 lg:bottom-24 lg:right-8'
                     }`}
-                    style={{ transition: 'none' }}
-                >
-                    <button
-                        onClick={handleCreateClick}
-                        className="bg-light-gradient hover:bg-indigo-700 text-white p-4 rounded-full shadow-lg"
-                        title="Crear nuevo hackathon"
+                        style={{ transition: 'none' }}
                     >
-                        <Plus className="w-6 h-6" />
-                    </button>
-                </div>
+        <button
+            onClick={handleCreateClick}
+            className="bg-light-gradient hover:bg-indigo-700 text-white p-2 rounded-full shadow-lg lg:p-4"
+            title="Crear nuevo hackathon"
+        >
+            <Plus className="w-5 h-5 lg:w-6 lg:h-6" />
+        </button>
+    </div>
             )}
         </div>
     );

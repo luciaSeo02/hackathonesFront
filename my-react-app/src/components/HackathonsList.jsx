@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
-const LIMIT = 9;
+const LIMIT = 12;
 
 const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
     const [hackathons, setHackathons] = useState([]);
@@ -34,16 +35,18 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                     throw new Error(
                         json.message || 'Error al cargar los hackathones'
                     );
-                const now = new Date();
-                const futureHackathons = (json.data || [])
-                    .filter((h) => new Date(h.endDate) > now)
-                    .sort(
-                        (a, b) => new Date(a.startDate) - new Date(b.startDate)
-                    );
 
-                setHackathons(futureHackathons);
+                // const now = new Date();
+                // const futureHackathons = (json.data || [])
+                //     .filter((h) => new Date(h.endDate) > now)
+                //     .sort(
+                //         (a, b) => new Date(a.startDate) - new Date(b.startDate)
+                //     );
 
-                setTotal(futureHackathons.length);
+                setHackathons(json.data || []);
+
+                // setTotal(futureHackathons.length);
+                setTotal(json.total || 0);
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -88,19 +91,40 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                     </ul>
 
                     {/* Paginas lista */}
+
                     {totalPages > 1 && (
                         <div className="flex justify-center mt-8 gap-2">
+
+                        {/* Mobile: solo flechas */}
                             <button
                                 disabled={page === 1}
                                 onClick={() => setPage(page - 1)}
-                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 block lg:hidden"
+                                aria-label="Anterior"
+                            >
+                            <ChevronLeft className="w-5 h-5" />
+                            </button>
+                            <button
+                                disabled={page === totalPages}
+                                onClick={() => setPage(page + 1)}
+                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 block lg:hidden"
+                                aria-label="Siguiente"
+                            >
+                            <ChevronRight className="w-5 h-5" />
+                            </button>
+
+                        {/* Desktop: texto y números */}
+                            <button
+                                disabled={page === 1}
+                                onClick={() => setPage(page - 1)}
+                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 hidden lg:block"
                             >
                                 Anterior
                             </button>
-                            {[...Array(totalPages)].map((_, i) => (
+                        {[...Array(totalPages)].map((_, i) => (
                                 <button
                                     key={i}
-                                    className={`px-3 py-1 rounded ${
+                                    className={`px-3 py-1 rounded hidden lg:inline-block ${
                                         page === i + 1
                                             ? 'bg-indigo-600 text-white'
                                             : 'bg-gray-200 hover:bg-gray-300'
@@ -110,15 +134,15 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                                     {i + 1}
                                 </button>
                             ))}
-                            <button
-                                disabled={page === totalPages}
-                                onClick={() => setPage(page + 1)}
-                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
-                            >
-                                Siguiente
-                            </button>
-                        </div>
-                    )}
+                                <button
+                                    disabled={page === totalPages}
+                                    onClick={() => setPage(page + 1)}
+                                    className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 hidden lg:block"
+                                >
+                                    Siguiente 
+                                </button>
+                            </div>
+                        )}
 
                     <HackathonModal
                         hackathonId={selectedHackathonId}
