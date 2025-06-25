@@ -2,6 +2,9 @@ import { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
+import Pagination from '../components/ui/Pagination';
+
+const LIMIT = 8;
 
 const UserHackathonClassifications = () => {
     const { userLogged } = useContext(AuthContext);
@@ -9,23 +12,33 @@ const UserHackathonClassifications = () => {
     const [hackathon, setHackathon] = useState(null);
     const [classification, setClassification] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
     const formRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         if (userLogged) {
-            fetch(`${import.meta.env.VITE_URL_API}/inscriptions`, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,
-                },
-            })
+            fetch(
+                `${
+                    import.meta.env.VITE_URL_API
+                }/inscriptions?limit=${LIMIT}&page=${page}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            'token'
+                        )}`,
+                    },
+                }
+            )
                 .then((res) => res.json())
                 .then((data) => {
                     console.log('INSCRIPTIONS RESPONSE:', data);
                     setMyHackathons(data.inscriptions || []);
+                    setTotal(data.total || 0);
                 });
         }
-    }, [userLogged]);
+    }, [userLogged, page]);
 
     const handleViewClassification = (h) => {
         setLoading(true);
@@ -43,6 +56,12 @@ const UserHackathonClassifications = () => {
                 }, 100);
             })
             .finally(() => setLoading(false));
+    };
+
+    const totalPages = Math.ceil(total / LIMIT);
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
     };
 
     if (!userLogged) return <p>Debes iniciar sesión.</p>;
@@ -93,6 +112,12 @@ const UserHackathonClassifications = () => {
                     </div>
                 ))}
             </div>
+
+            <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
 
             {hackathon && (
                 <div ref={formRef}>

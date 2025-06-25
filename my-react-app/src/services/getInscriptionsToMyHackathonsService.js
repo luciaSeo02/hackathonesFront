@@ -1,6 +1,8 @@
-const getInscriptionsToMyHackathonsService = async () => {
-    const token = localStorage.getItem("token");
-    const url = `${import.meta.env.VITE_URL_API}/inscriptions-to-my-hackathons`;
+const getInscriptionsToMyHackathonsService = async (limit = 24, page = 1) => {
+    const token = localStorage.getItem('token');
+    const url = `${
+        import.meta.env.VITE_URL_API
+    }/inscriptions-to-my-hackathons?limit=${limit}&page=${page}`;
 
     const response = await fetch(url, {
         headers: {
@@ -10,7 +12,7 @@ const getInscriptionsToMyHackathonsService = async () => {
 
     const data = await response.json();
     if (!response.ok) throw new Error(data.message);
-    return data.inscriptions;
+    return data;
 };
 
 export default getInscriptionsToMyHackathonsService;

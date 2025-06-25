@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import Pagination from './ui/Pagination';
 
 const LIMIT = 12;
 
@@ -69,6 +69,10 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
 
     const totalPages = Math.ceil(total / LIMIT);
 
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
+    };
+
     if (loading) return <p>Cargando hackathones...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -90,59 +94,11 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                         ))}
                     </ul>
 
-                    {/* Paginas lista */}
-
-                    {totalPages > 1 && (
-                        <div className="flex justify-center mt-8 gap-2">
-
-                        {/* Mobile: solo flechas */}
-                            <button
-                                disabled={page === 1}
-                                onClick={() => setPage(page - 1)}
-                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 block lg:hidden"
-                                aria-label="Anterior"
-                            >
-                            <ChevronLeft className="w-5 h-5" />
-                            </button>
-                            <button
-                                disabled={page === totalPages}
-                                onClick={() => setPage(page + 1)}
-                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 block lg:hidden"
-                                aria-label="Siguiente"
-                            >
-                            <ChevronRight className="w-5 h-5" />
-                            </button>
-
-                        {/* Desktop: texto y números */}
-                            <button
-                                disabled={page === 1}
-                                onClick={() => setPage(page - 1)}
-                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 hidden lg:block"
-                            >
-                                Anterior
-                            </button>
-                        {[...Array(totalPages)].map((_, i) => (
-                                <button
-                                    key={i}
-                                    className={`px-3 py-1 rounded hidden lg:inline-block ${
-                                        page === i + 1
-                                            ? 'bg-indigo-600 text-white'
-                                            : 'bg-gray-200 hover:bg-gray-300'
-                                    }`}
-                                    onClick={() => setPage(i + 1)}
-                                >
-                                    {i + 1}
-                                </button>
-                            ))}
-                                <button
-                                    disabled={page === totalPages}
-                                    onClick={() => setPage(page + 1)}
-                                    className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50 hidden lg:block"
-                                >
-                                    Siguiente 
-                                </button>
-                            </div>
-                        )}
+                    <Pagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
 
                     <HackathonModal
                         hackathonId={selectedHackathonId}
