@@ -6,10 +6,12 @@ import HackathonModal from './HackathonModal';
 import StarRating from './StarRating';
 
 const UserInscriptionsList = ({ inscriptions, onRemove }) => {
+    //  eslint-disable-next-line
     const [message, setMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
     const [modalHackathonId, setModalHackathonId] = useState(null);
+    //  eslint-disable-next-line
     const [imageIndex, setImageIndex] = useState({});
 
     const handleDelete = async (hackathonId) => {
@@ -53,7 +55,8 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                             key={hackathonId}
                             className="group relative flex flex-col sm:flex-row gap-4 bg-white border border-gray-200 rounded-xl shadow-md p-4 w-full sm:h-48 overflow-hidden"
                         >
-                            <div className="relative w-full sm:w-1/3 aspect-square overflow-hidden rounded-xl bg-gray-200">
+                            {/* Contenedor de imagen con dimensiones fijas */}
+                            <div className="relative w-full sm:w-48 h-48 sm:h-full flex-shrink-0 overflow-hidden rounded-xl bg-gray-200">
                                 <img
                                     src={imageUrl}
                                     alt={hackathon.name}
@@ -61,7 +64,7 @@ const UserInscriptionsList = ({ inscriptions, onRemove }) => {
                                 />
                             </div>
 
-                            <div className="flex flex-col flex-grow">
+                            <div className="flex flex-col flex-grow min-w-0">
                                 <button
                                     onClick={() =>
                                         setModalHackathonId(hackathonId)

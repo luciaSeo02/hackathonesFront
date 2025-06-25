@@ -97,8 +97,8 @@ const PublishRankingPage = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-blue-700 to-purple-600 p-4">
-            <div className="bg-white rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md relative">
+        <div className="min-h-screen w-full flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl shadow-2xl p-12 flex flex-col items-center w-full max-w-md relative">
                 {/* Botón X para volver atrás */}
                 <CloseX
                     onClick={() => navigate(-1)}
@@ -106,7 +106,7 @@ const PublishRankingPage = () => {
                     className="absolute top-4 right-4"
                 />
 
-                <h2 className="text-2xl font-bold text-blue-700 mb-6">
+                <h2 className="text-2xl font-bold mb-8">
                     Publicar Clasificación
                 </h2>
 
@@ -114,7 +114,7 @@ const PublishRankingPage = () => {
                     {ranking.map((row, i) => (
                         <div key={i} className="flex gap-3 items-center">
                             <select
-                                className="w-1/2 px-4 py-2 rounded-md border border-gray-300"
+                                className="w-1/2 px-4 py-2 rounded-md focus:ring-2 focus:ring-black"
                                 value={row.userId}
                                 onChange={(e) =>
                                     handleChange(i, 'userId', e.target.value)
@@ -142,7 +142,7 @@ const PublishRankingPage = () => {
                                     ))}
                             </select>
                             <input
-                                className="w-1/2 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                                className="w-1/2 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black"
                                 placeholder="Posición"
                                 value={row.position}
                                 onChange={(e) =>
@@ -165,11 +165,11 @@ const PublishRankingPage = () => {
                         </div>
                     ))}
 
-                    <div className="flex gap-2">
+                    <div className="flex flex-col items-center gap-4 lg:flex-row">
                         <button
                             type="button"
                             onClick={addRow}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition w-full h-12 lg:w-44"
                             disabled={ranking.length >= participants.length}
                         >
                             Añadir participante
@@ -177,7 +177,7 @@ const PublishRankingPage = () => {
 
                         <button
                             type="submit"
-                            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition"
+                            className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition w-full h-12 lg:w-44"
                         >
                             Publicar
                         </button>
