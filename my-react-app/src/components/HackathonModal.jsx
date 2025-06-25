@@ -111,6 +111,13 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
         }
     };
 
+    useEffect(() => {
+        if (!isOpen) {
+            setSuccessMessage('');
+            setErrorMessage('');
+        }
+    }, [isOpen]);
+
     const handleEditChange = (e) => {
         const { name, value } = e.target;
         setEditData((prev) => ({

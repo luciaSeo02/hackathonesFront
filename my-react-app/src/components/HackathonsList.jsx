@@ -32,9 +32,18 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                     throw new Error(
                         json.message || 'Error al cargar los hackathones'
                     );
+                const now = new Date();
+                const futureHackathons = (json.data || [])
+                    .filter((h) => new Date(h.endDate) > now)
+                    .sort(
+                        (a, b) => new Date(a.startDate) - new Date(b.startDate)
+                    );
+
+                setHackathons(futureHackathons);
 
                 setHackathons(json.data);
                 setTotal(json.total || 0);
+
             } catch (err) {
                 setError(err.message);
             } finally {

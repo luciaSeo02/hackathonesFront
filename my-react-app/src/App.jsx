@@ -70,21 +70,50 @@ function App() {
                 <Route path="/privacy" element={<Privacy />} />
                 <Route
                     path="/hackathons/:hackathonId/classification/view"
-                    element={<ViewClassificationPage />}
+                    element={
+                        <ProtectedRoute>
+                            <ViewClassificationPage />
+                        </ProtectedRoute>
+                    }
                 />
                 <Route
                     path="/my-inscriptions"
-                    element={<MyInscriptionsPage />}
+                    element={
+                        <ProtectedRoute>
+                            <MyInscriptionsPage />
+                        </ProtectedRoute>
+                    }
                 />
                 <Route path="*" element={<NotFoundPage />} />
                 <Route path="/not-authorized" element={<NotAuthorizedPage />} />
-                <Route path="/hackathons/classification" element={<PublishRankingPage />} />
-                <Route path="/hackathons/:hackathonId/classification" element={<HackathonClasification />} />
-                <Route path="/my-classifications" element={<UserHackathonClassifications />} />
+
+                <Route
+                    path="/hackathons/classification"
+                    element={
+                        <ProtectedRoute requiredRole="admin">
+                            <PublishRankingPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/hackathons/:hackathonId/classification"
+                    element={
+                        <ProtectedRoute requiredRole="admin">
+                            <HackathonClasification />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/my-classifications"
+                    element={
+                        <ProtectedRoute>
+                            <UserHackathonClassifications />
+                        </ProtectedRoute>
+                    }
+                />
             </Route>
         </Routes>
     );
 }
 
 export default App;
-

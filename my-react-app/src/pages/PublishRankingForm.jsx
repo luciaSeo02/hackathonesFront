@@ -55,44 +55,49 @@ const PublishClassificationPage = () => {
                         No has creado ningún hackathon.
                     </div>
                 )}
-                {myHackathons.map((h) => (
-                    <div
-                        key={h.id}
-                        className={`bg-white rounded-xl shadow-md p-5 flex flex-col gap-2 transition border-2 ${
-                            h.id === hackathonId
-                                ? 'border-indigo-500 ring-2 ring-indigo-200'
-                                : 'border-transparent hover:border-indigo-300'
-                        }`}
-                    >
-                        <div>
-                            <h3 className="font-semibold text-lg text-indigo-700">
-                                {h.name}
-                            </h3>
-                            <p className="text-gray-500 text-sm">
-                                {h.topic || 'Sin categoría'}
-                            </p>
-                            <Button
-                                className="mt-5"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    navigate(
-                                        `/hackathons/${h.id}/classification`
-                                    );
-                                    setTimeout(() => {
-                                        formRef.current?.scrollIntoView({
-                                            behavior: 'smooth',
-                                        });
-                                    }, 100);
-                                }}
-                                text="Publicar clasificación"
-                            />
+                {myHackathons
+                    .slice()
+                    .sort(
+                        (a, b) => new Date(a.startDate) - new Date(b.startDate)
+                    )
+                    .map((h) => (
+                        <div
+                            key={h.id}
+                            className={`bg-white rounded-xl shadow-md p-5 flex flex-col gap-2 transition border-2 ${
+                                h.id === hackathonId
+                                    ? 'border-indigo-500 ring-2 ring-indigo-200'
+                                    : 'border-transparent hover:border-indigo-300'
+                            }`}
+                        >
+                            <div>
+                                <h3 className="font-semibold text-lg text-indigo-700">
+                                    {h.name}
+                                </h3>
+                                <p className="text-gray-500 text-sm">
+                                    {h.topic || 'Sin categoría'}
+                                </p>
+                                <Button
+                                    className="mt-5"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        navigate(
+                                            `/hackathons/${h.id}/classification`
+                                        );
+                                        setTimeout(() => {
+                                            formRef.current?.scrollIntoView({
+                                                behavior: 'smooth',
+                                            });
+                                        }, 100);
+                                    }}
+                                    text="Publicar clasificación"
+                                />
+                            </div>
+                            <span className="text-xs text-gray-400 self-end">
+                                {new Date(h.startDate).toLocaleDateString()} -{' '}
+                                {new Date(h.endDate).toLocaleDateString()}
+                            </span>
                         </div>
-                        <span className="text-xs text-gray-400 self-end">
-                            {new Date(h.startDate).toLocaleDateString()} -{' '}
-                            {new Date(h.endDate).toLocaleDateString()}
-                        </span>
-                    </div>
-                ))}
+                    ))}
             </div>
 
             {hackathon && (
