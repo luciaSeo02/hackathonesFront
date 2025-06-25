@@ -28,7 +28,14 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                         json.message || 'Error al cargar los hackathones'
                     );
 
-                setHackathons(json.data);
+                const now = new Date();
+                const futureHackathons = (json.data || [])
+                    .filter((h) => new Date(h.endDate) > now)
+                    .sort(
+                        (a, b) => new Date(a.startDate) - new Date(b.startDate)
+                    );
+
+                setHackathons(futureHackathons);
             } catch (err) {
                 setError(err.message);
             } finally {
