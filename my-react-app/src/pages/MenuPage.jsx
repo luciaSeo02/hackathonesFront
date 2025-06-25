@@ -28,7 +28,7 @@ const MenuPage = () => {
     };
 
     return (
-        <div className="fixed inset-0 bg-[#afafaf80] backdrop-blur-md z-50 flex flex-col">
+        <div className="fixed inset-0 bg-neutral-300 z-50 flex flex-col">
             {/* Header */}
             <header className="flex justify-between items-center p-[18px]">
                 <NavLink to="/">
@@ -52,24 +52,24 @@ const MenuPage = () => {
 
             {/* Menú central */}
             <menu className="flex flex-col items-center flex-1 justify-center pt-20 gap-2">
-                <NavLink to={'/hackathons'} className="text-white">
+                <NavLink to={'/hackathons'}>
                     Hackathones
                 </NavLink>
-                <NavLink to={'/about'} className="text-white">
+                <NavLink to={'/about'}>
                     Sobre Hackathones
                 </NavLink>
-                <NavLink to={'/contact'} className="text-white">
+                <NavLink to={'/contact'}>
                     Contacto
                 </NavLink>
-                <NavLink to={'/terms'} className="text-white">
+                <NavLink to={'/terms'}>
                     Términos y Condiciones
                 </NavLink>
-                <NavLink to={'/privacy'} className="text-white">
+                <NavLink to={'/privacy'}>
                     Política de Privacidad
                 </NavLink>
 
                 {/* SearchBar */}
-                <div className="mt-8">
+                <div className="mt-4 mb-4">
                     <SearchBar onSearch={handleSearch} />
                 </div>
 
@@ -93,7 +93,7 @@ const MenuPage = () => {
 
             {/* Redes sociales */}
             <div className="w-full flex flex-col items-center mb-4 mt-8 pt-14">
-                <hr className="w-11/12 border-gray-300 mb-3" />
+                <hr className="w-11/12 border-white mb-3" />
                 <div className="flex gap-3">
                     <a
                         href="https://www.instagram.com/"

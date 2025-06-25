@@ -26,6 +26,10 @@
         @apply font-body text-sm sm:text-base;
     }
 
+    a {
+        @apply font-body text-sm sm:text-base;
+    }
+
     input {
         @apply font-body bg-inherit text-sm sm:text-base;
     }
