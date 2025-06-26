@@ -1,15 +1,19 @@
 const NotAuthorizedPage = () => {
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
-            <img
-                src="https://media.giphy.com/media/jpbnoe3UIa8TU8LM13/giphy.gif"
-                alt="Acceso denegado"
-                className="w-64 h-64 mb-8"
-            />
-            <h1 className="text-4xl font-bold text-red-600 mb-4">
-                Acceso denegado
-            </h1>
-            <p className="text-lg text-gray-700 mb-6">
+        <div className="min-h-screen flex flex-col items-center justify-center">
+            <div className="relative w-24 h-32 mb-14">
+                <img
+                    src="/notAuthorizedLogo.PNG"
+                    alt="Acceso denegado"
+                    className="w-full h-full object-cover z-0 relative top-3 opacity-90"
+                />
+
+                <h2 className="absolute -bot-0 left-1/2 -translate-x-1/2 text-5xl font-bold text-indigo-900 z-10 whitespace-nowrap">
+                    Acceso denegado
+                </h2>
+            </div>
+
+            <p className="text-lg text-gray-700 text-center">
                 Lo sentimos, no tienes permiso para ver esta página.
             </p>
         </div>
