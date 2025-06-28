@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
@@ -9,12 +9,8 @@ const LIMIT = 8;
 const UserHackathonClassifications = () => {
     const { userLogged } = useContext(AuthContext);
     const [myHackathons, setMyHackathons] = useState([]);
-    const [hackathon, setHackathon] = useState(null);
-    const [classification, setClassification] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
-    const formRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,30 +29,11 @@ const UserHackathonClassifications = () => {
             )
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log('INSCRIPTIONS RESPONSE:', data);
                     setMyHackathons(data.inscriptions || []);
                     setTotal(data.total || 0);
                 });
         }
     }, [userLogged, page]);
-
-    const handleViewClassification = (h) => {
-        setLoading(true);
-        setHackathon(h);
-        fetch(
-            `${import.meta.env.VITE_URL_API}/hackathons/${
-                h.hackathonId
-            }/classification/view`
-        )
-            .then((res) => res.json())
-            .then((data) => {
-                setClassification(data.classification || []);
-                setTimeout(() => {
-                    formRef.current?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-            })
-            .finally(() => setLoading(false));
-    };
 
     const totalPages = Math.ceil(total / LIMIT);
 
@@ -80,12 +57,8 @@ const UserHackathonClassifications = () => {
                 {myHackathons.map((h) => (
                     <div
                         key={h.id}
-                        className={`cursor-pointer bg-white rounded-xl shadow-md p-5 flex flex-col gap-2 transition border-2 ${
-                            hackathon && h.hackathonId === hackathon.hackathonId
-                                ? 'border-indigo-500 ring-2 ring-indigo-200'
-                                : 'border-transparent hover:border-indigo-300'
-                        }`}
-                        onClick={() => handleViewClassification(h)}
+                        className="cursor-pointer bg-white rounded-xl shadow-md p-5 flex flex-col gap-2 transition border-2 border-transparent hover:border-indigo-300"
+                        onClick={() => navigate(`/hackathons/${h.id}/classification/view`)}
                     >
                         <div>
                             <h3 className="font-semibold text-lg text-indigo-700">
@@ -118,55 +91,6 @@ const UserHackathonClassifications = () => {
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
             />
-
-            {hackathon && (
-                <div ref={formRef}>
-                    <h2 className="text-xl font-semibold mb-4 text-center">
-                        Clasificación de:{' '}
-                        <span className="text-indigo-700">
-                            {hackathon.name}
-                        </span>
-                    </h2>
-                    {loading ? (
-                        <p className="text-center">Cargando clasificación...</p>
-                    ) : classification.length === 0 ? (
-                        <p className="text-center text-gray-500">
-                            Aún no hay clasificación publicada.
-                        </p>
-                    ) : (
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr>
-                                    <th className="py-2 px-4 border-b">
-                                        Posición
-                                    </th>
-                                    <th className="py-2 px-4 border-b">
-                                        Usuario
-                                    </th>
-                                    <th className="py-2 px-4 border-b">
-                                        Email
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {classification.map((row, i) => (
-                                    <tr key={i}>
-                                        <td className="py-2 px-4 border-b">
-                                            {row.position}
-                                        </td>
-                                        <td className="py-2 px-4 border-b">
-                                            {row.username}
-                                        </td>
-                                        <td className="py-2 px-4 border-b">
-                                            {row.email}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
-            )}
         </div>
     );
 };
