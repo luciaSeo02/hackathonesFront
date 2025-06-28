@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import AuthContext from '../context/AuthContextProvider';
+import { Plus } from 'lucide-react';
 
 import HackathonsList from '../components/HackathonsList';
 import HackathonFilters from '../components/HackathonFilters';
-import { Plus } from 'lucide-react';
 
 const HackathonsPage = () => {
     const { userLogged } = useContext(AuthContext);
@@ -64,20 +64,20 @@ const HackathonsPage = () => {
                 <div
                     ref={buttonRef}
                     className={`z-40 ${
-                    footerVisible
-                        ? 'absolute right-4  lg:right-8 '
-                        : 'fixed bottom-24 right-4 lg:bottom-24 lg:right-8'
+                        footerVisible
+                            ? 'absolute right-4  lg:right-8 '
+                            : 'fixed bottom-24 right-4 lg:bottom-24 lg:right-8'
                     }`}
-                        style={{ transition: 'none' }}
+                    style={{ transition: 'none' }}
+                >
+                    <button
+                        onClick={handleCreateClick}
+                        className="bg-light-gradient hover:bg-indigo-700 text-white p-2 rounded-full shadow-lg lg:p-4"
+                        title="Crear nuevo hackathon"
                     >
-        <button
-            onClick={handleCreateClick}
-            className="bg-light-gradient hover:bg-indigo-700 text-white p-2 rounded-full shadow-lg lg:p-4"
-            title="Crear nuevo hackathon"
-        >
-            <Plus className="w-5 h-5 lg:w-6 lg:h-6" />
-        </button>
-    </div>
+                        <Plus className="w-5 h-5 lg:w-6 lg:h-6" />
+                    </button>
+                </div>
             )}
         </div>
     );

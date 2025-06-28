@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Eye, EyeOff, Lock, Mail, User, UserRoundPlus, X } from 'lucide-react';
 import registerUserService from '../services/registerUserService.js';
 import ButtonBig from './ui/ButtonBig';
 import ErrorDiv from './ui/ErrorDiv';
@@ -88,24 +87,18 @@ const RegisterForm = () => {
 
     return (
         <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
-            <div className="bg-neutral-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
-                <UserRoundPlus className="w-5 h-5 sm:w-7 sm:h-7" />
-            </div>
-
             <div className="absolute top-2.5 right-2.5 lg:top-4 lg:right-4">
-                <X
+                <button
                     onClick={handleClose}
-                    width="25"
-                    height="25"
-                    fill="none"
-                    stroke="#5F3DC4"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
                     style={{ cursor: 'pointer' }}
-                />
+                    aria-label="Cerrar"
+                    className="w-[25px] h-[25px] text-[#5F3DC4] text-xl font-bold flex items-center justify-center bg-transparent border-none"
+                >
+                    ×
+                </button>
             </div>
 
-            <article>
+            <article className="mt-10 mb-2 w-full">
                 <h3 className="text-center text-2xl sm:text-4xl">
                     Registrarse
                 </h3>
@@ -120,9 +113,6 @@ const RegisterForm = () => {
             >
                 {/* Username field */}
                 <div className="relative w-full">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <User className="size-[18px] text-blue-600" />
-                    </div>
                     <input
                         type="text"
                         name="username"
@@ -131,15 +121,12 @@ const RegisterForm = () => {
                         required
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg"
                     />
                 </div>
 
                 {/* Email field */}
                 <div className="relative w-full">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Mail className="size-[18px] text-blue-600" />
-                    </div>
                     <input
                         type="email"
                         name="email"
@@ -148,15 +135,12 @@ const RegisterForm = () => {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg"
                     />
                 </div>
 
                 {/* Password field */}
                 <div className="relative w-full">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Lock className="size-[18px] text-blue-600" />
-                    </div>
                     <input
                         type={showPassword ? 'text' : 'password'}
                         name="password"
@@ -165,26 +149,22 @@ const RegisterForm = () => {
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg"
                     />
                     <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-blue-600 text-sm"
+                        style={{ background: 'none', border: 'none' }}
+                        tabIndex={-1}
+                        aria-label="Mostrar/ocultar contraseña"
                     >
-                        {showPassword ? (
-                            <EyeOff className="size-[18px] text-blue-600" />
-                        ) : (
-                            <Eye className="size-[18px] text-blue-600" />
-                        )}
+                        {showPassword ? 'Ocultar' : 'Mostrar'}
                     </button>
                 </div>
 
                 {/* Confirm Password field */}
                 <div className="relative w-full">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Lock className="size-[18px] text-blue-600" />
-                    </div>
                     <input
                         type={showConfirmPassword ? 'text' : 'password'}
                         name="confirmPassword"
@@ -193,20 +173,19 @@ const RegisterForm = () => {
                         required
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg"
+                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg"
                     />
                     <button
                         type="button"
                         onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                         }
-                        className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-blue-600 text-sm"
+                        style={{ background: 'none', border: 'none' }}
+                        tabIndex={-1}
+                        aria-label="Mostrar/ocultar contraseña"
                     >
-                        {showConfirmPassword ? (
-                            <EyeOff className="size-[18px] text-blue-600" />
-                        ) : (
-                            <Eye className="size-[18px] text-blue-600" />
-                        )}
+                        {showConfirmPassword ? 'Ocultar' : 'Mostrar'}
                     </button>
                 </div>
 

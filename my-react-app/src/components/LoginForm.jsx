@@ -1,6 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Eye, EyeOff, Lock, LogIn, Mail, X } from 'lucide-react';
 import ButtonBig from './ui/ButtonBig.jsx';
 import AuthContext from '../context/AuthContextProvider.jsx';
 import loginUserService from '../services/loginUserService.js';
@@ -54,23 +53,19 @@ const LoginForm = () => {
     };
 
     return (
-        <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
-            <div className="bg-neutral-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
-                <LogIn className="w-5 h-5 sm:w-7 sm:h-7" />
-            </div>
-
+        <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px] min-h-[480px]">
             <div className="absolute top-2.5 right-2.5 lg:top-4 lg:right-4">
-                <X
+                <button
                     onClick={handleClose}
-                    width="25"
-                    height="25"
-                    stroke="#5F3DC4"
-                    strokeWidth="2"
                     style={{ cursor: 'pointer' }}
-                />
+                    aria-label="Cerrar"
+                    className="w-[25px] h-[25px] text-[#5F3DC4] text-xl font-bold flex items-center justify-center bg-transparent border-none"
+                >
+                    ×
+                </button>
             </div>
 
-            <article>
+            <article className="mt-10 mb-2 w-full">
                 <h3 className="text-center text-2xl sm:text-4xl">
                     Iniciar Sesión
                 </h3>
@@ -85,11 +80,8 @@ const LoginForm = () => {
                 onSubmit={handleSubmit}
             >
                 <div className="relative w-full">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Mail className="size-[18px] text-blue-600" />
-                    </div>
                     <input
-                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
+                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
                         type="email"
                         name="email"
                         placeholder="Correo electrónico"
@@ -100,11 +92,8 @@ const LoginForm = () => {
                 </div>
 
                 <div className="relative w-full">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Lock className="size-[18px] text-blue-600" />
-                    </div>
                     <input
-                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
+                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
                         type={showPassword ? 'text' : 'password'}
                         name="password"
                         placeholder="Contraseña"
@@ -114,14 +103,13 @@ const LoginForm = () => {
                     />
                     <button
                         type="button"
-                        className="absolute inset-y-0 right-0 pr-4 flex items-center"
+                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-blue-600 text-sm"
                         onClick={() => setShowPassword(!showPassword)}
+                        style={{ background: 'none', border: 'none' }}
+                        tabIndex={-1}
+                        aria-label="Mostrar/ocultar contraseña"
                     >
-                        {showPassword ? (
-                            <EyeOff className="size-[18px] text-blue-600" />
-                        ) : (
-                            <Eye className="size-[18px] text-blue-600" />
-                        )}
+                        {showPassword ? 'Ocultar' : 'Mostrar'}
                     </button>
                 </div>
 

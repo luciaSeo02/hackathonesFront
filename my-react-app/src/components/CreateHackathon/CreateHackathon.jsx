@@ -30,12 +30,9 @@ const CreateHackathon = () => {
 
     return (
         <div className="w-full flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-2xl relative p-4 lg:w-[800px] max-h-[90vh] overflow-y-auto no-scrollbar">
+            <div className="bg-white rounded-2xl shadow-2xl relative p-4 lg:w-[800px] max-h-[90vh] overflow-y-auto rounded-scrollbar">
                 {/* Header */}
-                <div className="flex flex-col items-center text-center space-y-2 mb-4">
-                    <div className="bg-neutral-100 size-11 p-2 rounded-md flex justify-center items-center shadow-md lg:size-16 sm:p-5 sm:rounded-lg">
-                        <CalendarPlus className="w-5 h-5 sm:w-7 sm:h-7" />
-                    </div>
+                <div className="flex flex-col items-center text-center space-y-2 mb-4 mt-10">
                     <div className="absolute top-1 right-2.5 lg:top-2 lg:right-4">
                         <X
                             onClick={handleClose}
@@ -59,6 +56,7 @@ const CreateHackathon = () => {
                     success={success}
                     isUploading={isUploading}
                     setIsUploading={setIsUploading}
+                    navigate={navigate}
                 />
             </div>
         </div>

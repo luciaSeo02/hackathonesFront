@@ -60,4 +60,25 @@
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
+
+    /* Scrollbar personalizado para mantener el border-radius */
+    .rounded-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: #c4b5fd #f3f4f6;
+        border-radius: 1rem;
+    }
+    .rounded-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        border-radius: 1rem;
+        background: #f3f4f6;
+    }
+    .rounded-scrollbar::-webkit-scrollbar-thumb {
+        background: #c4b5fd;
+        border-radius: 1rem;
+        min-height: 24px;
+    }
+    .rounded-scrollbar::-webkit-scrollbar-corner {
+        background: #f3f4f6;
+        border-radius: 1rem;
+    }
 }

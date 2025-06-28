@@ -21,6 +21,7 @@ const CreateHackathonForm = ({
     success,
     isUploading,
     setIsUploading,
+    navigate,
 }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -56,7 +57,9 @@ const CreateHackathonForm = ({
             formDataFile.append('attachment', fileItem.file);
             formDataFile.append('fileType', fileItem.type);
             const response = await fetch(
-                `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}/attachments`,
+                `${
+                    import.meta.env.VITE_URL_API
+                }/hackathons/${hackathonId}/attachments`,
                 {
                     method: 'POST',
                     headers: {
@@ -67,7 +70,9 @@ const CreateHackathonForm = ({
             );
             if (!response.ok) {
                 const json = await response.json();
-                throw new Error(`Error subiendo ${fileItem.name}: ${json.message}`);
+                throw new Error(
+                    `Error subiendo ${fileItem.name}: ${json.message}`
+                );
             }
         }
     };
@@ -87,10 +92,15 @@ const CreateHackathonForm = ({
             };
             const json = await createHackathon(data);
             const hackathonId = json.data?.id || json.hackathonId;
-            if (!hackathonId) throw new Error('No se pudo obtener el ID del hackathon creado');
+            if (!hackathonId)
+                throw new Error(
+                    'No se pudo obtener el ID del hackathon creado'
+                );
             if (selectedFiles.length > 0) await uploadFiles(hackathonId);
             setSuccess(
-                `Hackathon creado correctamente${selectedFiles.length > 0 ? ' con archivos adjuntos' : ''}.`
+                `Hackathon creado correctamente${
+                    selectedFiles.length > 0 ? ' con archivos adjuntos' : ''
+                }.`
             );
             setFormData({
                 name: '',
@@ -104,6 +114,7 @@ const CreateHackathonForm = ({
                 technologyNames: '',
             });
             setSelectedFiles([]);
+            if (navigate) navigate('/hackathons');
         } catch (error) {
             setError(error.message);
         } finally {
@@ -114,10 +125,22 @@ const CreateHackathonForm = ({
     return (
         <form className="space-y-2" onSubmit={handleSubmit}>
             <HackathonNameInput value={formData.name} onChange={handleChange} />
-            <HackathonDescriptionInput value={formData.description} onChange={handleChange} />
-            <HackathonModalitySelect value={formData.modality} onChange={handleChange} />
-            <HackathonLocationInput value={formData.location} onChange={handleChange} />
-            <HackathonOnlineUrlInput value={formData.onlineUrl} onChange={handleChange} />
+            <HackathonDescriptionInput
+                value={formData.description}
+                onChange={handleChange}
+            />
+            <HackathonModalitySelect
+                value={formData.modality}
+                onChange={handleChange}
+            />
+            <HackathonLocationInput
+                value={formData.location}
+                onChange={handleChange}
+            />
+            <HackathonOnlineUrlInput
+                value={formData.onlineUrl}
+                onChange={handleChange}
+            />
             <HackathonDatesInputs
                 startDate={formData.startDate}
                 endDate={formData.endDate}
@@ -146,6 +169,6 @@ const CreateHackathonForm = ({
             {success && <Success success={success} />}
         </form>
     );
-}
+};
 
 export default CreateHackathonForm;
