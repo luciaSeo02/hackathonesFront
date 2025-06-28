@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Star, StarOff, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, StarOff } from 'lucide-react';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
 import LoginRequiredModal from './LoginRequiredModal';
@@ -60,14 +60,14 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
 
             <div className="absolute inset-0 bg-black/20 z-5"></div>
 
-            <span className="absolute top-4 left-4 z-6 bg-white/80 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-md uppercase tracking-wide shadow-sm">
+            <span className="absolute top-4 left-4 z-6 bg-white/90 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-md uppercase tracking-wide shadow-sm">
                 {hackathon.topic || 'Sin categoría'}
             </span>
 
             {userLogged?.role === 'admin' && (
                 <button
                     onClick={handleToggleFavourite}
-                    className="absolute top-4 right-4 z-10 bg-white/70 hover:bg-white p-1 rounded-full shadow"
+                    className="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white p-1 rounded-full shadow"
                     title={isFavourite ? 'Quitar de destacados' : 'Destacar'}
                 >
                     {isFavourite ? (
