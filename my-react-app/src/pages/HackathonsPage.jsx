@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import AuthContext from '../context/AuthContextProvider';
 import { Plus } from 'lucide-react';
+import AuthContext from '../context/AuthContextProvider';
 
 import HackathonsList from '../components/HackathonsList';
 import HackathonFilters from '../components/HackathonFilters';
@@ -48,7 +48,7 @@ const HackathonsPage = () => {
     };
 
     return (
-        <div className="p-4 lg:mt-8 relative min-h-screen">
+        <div className="mt-8 p-2.5 lg:mt-16 relative min-h-screen">
             <div className="mb-6 text-center px-10">
                 <h2>Nuestros Hackathones</h2>
             </div>
@@ -65,8 +65,8 @@ const HackathonsPage = () => {
                     ref={buttonRef}
                     className={`z-40 ${
                         footerVisible
-                            ? 'absolute right-4  lg:right-8 '
-                            : 'fixed bottom-24 right-4 lg:bottom-24 lg:right-8'
+                            ? 'absolute right-4 lg:right-10'
+                            : 'fixed bottom-4 right-4 lg:bottom-10 lg:right-10'
                     }`}
                     style={{ transition: 'none' }}
                 >
@@ -75,7 +75,7 @@ const HackathonsPage = () => {
                         className="bg-light-gradient hover:bg-indigo-700 text-white p-2 rounded-full shadow-lg lg:p-4"
                         title="Crear nuevo hackathon"
                     >
-                        <Plus className="w-5 h-5 lg:w-6 lg:h-6" />
+                        <Plus className="size-5 lg:size-6" />
                     </button>
                 </div>
             )}

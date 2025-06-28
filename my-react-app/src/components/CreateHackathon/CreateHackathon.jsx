@@ -32,8 +32,8 @@ const CreateHackathon = () => {
         <div className="w-full flex items-center justify-center p-4">
             <div className="bg-white rounded-2xl shadow-2xl relative p-4 lg:w-[800px] max-h-[90vh] overflow-y-auto rounded-scrollbar">
                 {/* Header */}
-                <div className="flex flex-col items-center text-center space-y-2 mb-4 mt-10">
-                    <div className="absolute top-1 right-2.5 lg:top-2 lg:right-4">
+                <div className="flex flex-col items-center text-center space-y-2 mb-4 mt-5">
+                    <div className="absolute top-2.5 right-2.5 lg:top-4 lg:right-4">
                         <X
                             onClick={handleClose}
                             width="25"
