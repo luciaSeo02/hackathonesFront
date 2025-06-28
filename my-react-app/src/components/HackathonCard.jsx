@@ -86,6 +86,13 @@ const HackathonCard = ({ hackathon, onShowDetails }) => {
                     {hackathon.description || fallbackDescription}
                 </p>
 
+                {hackathon.startDate && (
+                    <p className="text-xs text-indigo-600 mt-2 font-medium">
+                        Fecha inicio:{' '}
+                        {new Date(hackathon.startDate).toLocaleDateString()}
+                    </p>
+                )}
+
                 <div className="mt-2 self-end flex gap-2">
                     <Button
                         onClick={handleDetailsClick}

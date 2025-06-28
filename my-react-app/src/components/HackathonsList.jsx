@@ -24,6 +24,7 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                 const params = new URLSearchParams(searchParams);
                 params.set('limit', LIMIT);
                 params.set('page', page);
+                params.set('activeOnly', 'true');
 
                 const res = await fetch(
                     `${
@@ -37,16 +38,7 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
                         json.message || 'Error al cargar los hackathones'
                     );
 
-                // const now = new Date();
-                // const futureHackathons = (json.data || [])
-                //     .filter((h) => new Date(h.endDate) > now)
-                //     .sort(
-                //         (a, b) => new Date(a.startDate) - new Date(b.startDate)
-                //     );
-
                 setHackathons(json.data || []);
-
-                // setTotal(futureHackathons.length);
                 setTotal(json.total || 0);
             } catch (err) {
                 setError(err.message);

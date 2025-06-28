@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Filter, ChevronDown, FunnelX } from 'lucide-react';
 import FilterModal from './FilterModal';
 
-const HackathonFilters = ({ filters, onChange }) => {
+const HackathonFilters = ({ filters, onChange, isAdmin = false }) => {
     const [localFilters, setLocalFilters] = useState(filters);
     const [technologiesList, setTechnologiesList] = useState([]);
 
@@ -33,10 +33,38 @@ const HackathonFilters = ({ filters, onChange }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        const updated = { ...localFilters, [name]: value };
+        const updated = { ...localFilters };
+
+        if (name === 'sortOrder') {
+            updated.orderBy = 'startDate';
+            updated.orderDirection = value;
+        } else {
+            updated[name] = value;
+        }
+
         setLocalFilters(updated);
-        const { ...filtersOnly } = updated;
-        onChange(filtersOnly);
+
+        const {
+            search,
+            topic,
+            modality,
+            startDate,
+            endDate,
+            technologies,
+            orderBy,
+            orderDirection,
+        } = updated;
+
+        onChange({
+            search,
+            topic,
+            modality,
+            startDate,
+            endDate,
+            technologies,
+            orderBy,
+            orderDirection,
+        });
     };
 
     const clearFilters = () => {
@@ -47,11 +75,9 @@ const HackathonFilters = ({ filters, onChange }) => {
             startDate: '',
             endDate: '',
             technologies: '',
+            orderBy: 'startDate',
+            orderDirection: 'asc',
         };
-        setLocalFilters({
-            ...localFilters,
-            ...emptyFilters,
-        });
         setLocalFilters(emptyFilters);
         onChange(emptyFilters);
     };
@@ -79,8 +105,7 @@ const HackathonFilters = ({ filters, onChange }) => {
                         className="appearance-none bg-transparent text-xs sm:text-sm font-medium text-gray-800 border-indigo-500 border-[2px] px-4 py-3 rounded-sm sm:rounded-lg w-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         <option value="" disabled hidden>
-                            {' '}
-                            Temática{' '}
+                            Temática
                         </option>
                         <option value="Inteligencia Artificial">
                             Inteligencia Artificial
@@ -88,22 +113,23 @@ const HackathonFilters = ({ filters, onChange }) => {
                         <option value="Desarrollador de Software">
                             Desarrollador de Software
                         </option>
-                        <option value="Desarrollo Web"> Desarrollo Web </option>
-                        <option value="Data Science"> Data Science </option>
-                        <option value="Ciberseguridad"> Ciberseguridad </option>
+                        <option value="Desarrollo Web">Desarrollo Web</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Ciberseguridad">Ciberseguridad</option>
                         <option value="Realidad Virtual">
                             Realidad Virtual
                         </option>
-                        <option value="Robótica"> Robótica </option>
-                        <option value="Hardware"> Hardware </option>
-                        <option value="Gaming"> Gaming </option>
-                        <option value="LAN Parties"> LAN Parties </option>
+                        <option value="Robótica">Robótica</option>
+                        <option value="Hardware">Hardware</option>
+                        <option value="Gaming">Gaming</option>
+                        <option value="LAN Parties">LAN Parties</option>
                     </select>
                     <ChevronDown
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"
                         size={20}
                     />
                 </div>
+
                 {/* Modalidad */}
                 <div className="relative w-full sm:w-[150px]">
                     <select
@@ -123,6 +149,7 @@ const HackathonFilters = ({ filters, onChange }) => {
                         size={20}
                     />
                 </div>
+
                 {/* Tecnologías */}
                 <div className="relative w-full sm:w-[150px]">
                     <select
@@ -161,16 +188,40 @@ const HackathonFilters = ({ filters, onChange }) => {
                     onChange={handleChange}
                     className="w-full sm:w-[160px] px-4 py-3 rounded-sm sm:rounded-lg border-[2px] text-xs sm:text-sm font-medium text-gray-800 bg-transparent border-indigo-500 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
-                {/* Orden */}
-                <div className="relative w-full sm:w-[150px]">
+
+                {/* Orden por fecha */}
+                <div className="relative w-full sm:w-[180px]">
                     <select
                         name="sortOrder"
-                        value={localFilters.sortOrder || 'asc'}
-                        onChange={handleChange}
+                        value={
+                            localFilters.orderBy === 'createdAt'
+                                ? 'created-desc'
+                                : localFilters.orderDirection || 'asc'
+                        }
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            const updated = { ...localFilters };
+
+                            if (value === 'created-desc') {
+                                updated.orderBy = 'createdAt';
+                                updated.orderDirection = 'desc';
+                            } else {
+                                updated.orderBy = 'startDate';
+                                updated.orderDirection = value;
+                            }
+
+                            setLocalFilters(updated);
+                            onChange(updated);
+                        }}
                         className="appearance-none bg-transparent text-xs sm:text-sm font-medium text-gray-800 border-indigo-500 border-[2px] px-4 py-3 rounded-sm sm:rounded-lg w-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
                         <option value="asc">Más próximos</option>
                         <option value="desc">Más lejanos</option>
+                        {isAdmin && (
+                            <option value="created-desc">
+                                Últimos creados
+                            </option>
+                        )}
                     </select>
                     <ChevronDown
                         className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none"

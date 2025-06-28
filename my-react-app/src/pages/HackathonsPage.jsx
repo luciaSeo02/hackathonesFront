@@ -32,6 +32,35 @@ const HackathonsPage = () => {
         return () => observer.disconnect();
     }, []);
 
+    useEffect(() => {
+        const updatedParams = new URLSearchParams(searchParams);
+        let modified = false;
+
+        if (!updatedParams.has('orderBy')) {
+            if (userLogged?.role === 'admin') {
+                updatedParams.set('orderBy', 'createdAt');
+                modified = true;
+            } else {
+                updatedParams.set('orderBy', 'startDate');
+                modified = true;
+            }
+        }
+
+        if (!updatedParams.has('orderDirection')) {
+            if (userLogged?.role === 'admin') {
+                updatedParams.set('orderDirection', 'desc');
+                modified = true;
+            } else {
+                updatedParams.set('orderDirection', 'asc');
+                modified = true;
+            }
+        }
+
+        if (modified) {
+            setSearchParams(updatedParams, { replace: true });
+        }
+    }, [userLogged, searchParams, setSearchParams]);
+
     const filtersObject = Object.fromEntries([...searchParams.entries()]);
 
     const handleFiltersChange = (filters) => {
@@ -55,7 +84,9 @@ const HackathonsPage = () => {
             <HackathonFilters
                 filters={filtersObject}
                 onChange={handleFiltersChange}
+                isAdmin={userLogged?.role === 'admin'}
             />
+
             <HackathonsList
                 searchParams={searchParams}
                 redirectIfEmpty={false}
