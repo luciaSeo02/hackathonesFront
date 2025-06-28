@@ -1,8 +1,11 @@
 import { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Eye, EyeOff, Lock, Mail, X } from 'lucide-react';
 import ButtonBig from './ui/ButtonBig.jsx';
 import AuthContext from '../context/AuthContextProvider.jsx';
 import loginUserService from '../services/loginUserService.js';
+import ErrorDiv from './ui/ErrorDiv.jsx';
+import Success from './ui/Success.jsx';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -53,19 +56,19 @@ const LoginForm = () => {
     };
 
     return (
-        <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px] min-h-[480px]">
+        <section className="bg-white relative p-10 rounded-2xl flex flex-col justify-center items-center gap-6 lg:w-[440px]">
             <div className="absolute top-2.5 right-2.5 lg:top-4 lg:right-4">
-                <button
+                <X
                     onClick={handleClose}
+                    width="25"
+                    height="25"
+                    stroke="#5F3DC4"
+                    strokeWidth="2"
                     style={{ cursor: 'pointer' }}
-                    aria-label="Cerrar"
-                    className="w-[25px] h-[25px] text-[#5F3DC4] text-xl font-bold flex items-center justify-center bg-transparent border-none"
-                >
-                    ×
-                </button>
+                />
             </div>
 
-            <article className="mt-10 mb-2 w-full">
+            <article>
                 <h3 className="text-center text-2xl sm:text-4xl">
                     Iniciar Sesión
                 </h3>
@@ -80,8 +83,12 @@ const LoginForm = () => {
                 onSubmit={handleSubmit}
             >
                 <div className="relative w-full">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Mail className="size-[18px] text-blue-600" />
+                    </div>
+
                     <input
-                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
+                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
                         type="email"
                         name="email"
                         placeholder="Correo electrónico"
@@ -92,8 +99,12 @@ const LoginForm = () => {
                 </div>
 
                 <div className="relative w-full">
+                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <Lock className="size-[18px] text-blue-600" />
+                    </div>
+
                     <input
-                        className="bg-neutral-100 size-full px-3 py-3 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
+                        className="bg-neutral-100 size-full px-3 py-3 pl-11 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
                         type={showPassword ? 'text' : 'password'}
                         name="password"
                         placeholder="Contraseña"
@@ -103,13 +114,14 @@ const LoginForm = () => {
                     />
                     <button
                         type="button"
-                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-blue-600 text-sm"
+                        className="absolute inset-y-0 right-0 pr-4 flex items-center"
                         onClick={() => setShowPassword(!showPassword)}
-                        style={{ background: 'none', border: 'none' }}
-                        tabIndex={-1}
-                        aria-label="Mostrar/ocultar contraseña"
                     >
-                        {showPassword ? 'Ocultar' : 'Mostrar'}
+                        {showPassword ? (
+                            <EyeOff className="size-[18px] text-blue-600" />
+                        ) : (
+                            <Eye className="size-[18px] text-blue-600" />
+                        )}
                     </button>
                 </div>
 
@@ -132,21 +144,15 @@ const LoginForm = () => {
 
                 <ButtonBig type="submit" text="Continuar" />
 
-                <div className="my-3 flex gap-1">
+                <div className="mt-3 flex gap-1">
                     <p>Si no tienes cuenta,</p>
                     <Link className="text-blue-600" to={'/register'}>
                         <p>regístrate</p>
                     </Link>
                 </div>
 
-                {error && (
-                    <p className="text-red-600 text-sm text-center">{error}</p>
-                )}
-                {success && (
-                    <p className="text-green-600 text-sm text-center">
-                        {success}
-                    </p>
-                )}
+                {error && <ErrorDiv error={error} />}
+                {success && <Success success={success} />}
             </form>
         </section>
     );
