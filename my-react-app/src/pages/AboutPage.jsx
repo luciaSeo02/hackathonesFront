@@ -19,14 +19,16 @@ const AboutPage = () => {
                     se juntan las personas adecuadas.
                 </p>
                 <img
-                    className="w-[calc(100vw-20px)] ml-2.5 rounded-xl lg:order-first lg:w-[440px] lg:h-[500px] lg:ml-0 lg:rounded-2xl"
+                    className="w-[calc(100vw-20px)] ml-2.5 rounded-xl lg:order-first lg:w-[440px] lg:h-[350px] lg:ml-0 lg:rounded-2xl"
                     src="./about.jpg"
                     alt="Robot"
                 />
-                <p className="text-center px-11 flex flex-col justify-between lg:text-left lg:w-[440px] lg:px-0">
+                <p className="text-center px-11 flex flex-col justify-center lg:text-left lg:w-[440px] lg:px-0">
                     <span className="hidden font-semibold lg:block">
                         Creemos en el poder de las ideas y en lo que sucede
                         cuando se juntan las personas adecuadas.
+                        <br />
+                        <br />
                     </span>
                     Esta plataforma nace con un objetivo claro: hacer de los
                     hackathons algo más que una competición. Queremos que sean

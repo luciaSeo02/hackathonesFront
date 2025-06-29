@@ -5,7 +5,7 @@ import Banner from '../components/ui/Banner.jsx';
 const HomePage = () => {
     return (
         <>
-            <section className="bg-[url('/hero.jpg')] bg-cover bg-center h-[60vh] -mt-20 flex justify-center items-center">
+            <section className="bg-[url('/hero.jpg')] bg-cover bg-center h-[30vh] -mt-20 pb-14 flex justify-center items-end lg:h-[45vh]">
                 <h1>HackNMeet</h1>
             </section>
 
