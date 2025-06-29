@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Filter, ChevronDown, FunnelX } from 'lucide-react';
 import FilterModal from './FilterModal';
+import useAutoScroll from '../hooks/useAutoScroll';
 
 const HackathonFilters = ({ filters, onChange, isAdmin = false }) => {
     const [localFilters, setLocalFilters] = useState(filters);
     const [technologiesList, setTechnologiesList] = useState([]);
+    const { scrollToTop } = useAutoScroll();
 
     useEffect(() => {
         setLocalFilters(filters);
@@ -65,6 +67,8 @@ const HackathonFilters = ({ filters, onChange, isAdmin = false }) => {
             orderBy,
             orderDirection,
         });
+
+        scrollToTop();
     };
 
     const clearFilters = () => {
@@ -80,6 +84,8 @@ const HackathonFilters = ({ filters, onChange, isAdmin = false }) => {
         };
         setLocalFilters(emptyFilters);
         onChange(emptyFilters);
+
+        scrollToTop();
     };
 
     const [showModal, setShowModal] = useState(false);
@@ -212,6 +218,8 @@ const HackathonFilters = ({ filters, onChange, isAdmin = false }) => {
 
                             setLocalFilters(updated);
                             onChange(updated);
+
+                            scrollToTop();
                         }}
                         className="appearance-none bg-transparent text-xs sm:text-sm font-medium text-gray-800 border-indigo-500 border-[2px] px-4 py-3 rounded-sm sm:rounded-lg w-full hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >

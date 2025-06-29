@@ -3,6 +3,7 @@ import AuthContext from '../context/AuthContextProvider';
 import getUserInscriptionsService from '../services/getUserInscriptionsService';
 import UserInscriptionsList from '../components/UserInscriptionsList';
 import Pagination from '../components/ui/Pagination';
+import useAutoScroll from '../hooks/useAutoScroll';
 
 const LIMIT = 6;
 
@@ -14,6 +15,7 @@ const MyInscriptionsPage = () => {
     const [filter, setFilter] = useState('all');
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
+    const { scrollToTop } = useAutoScroll();
 
     const now = useMemo(() => new Date(), []);
 
@@ -73,6 +75,7 @@ const MyInscriptionsPage = () => {
 
     const handlePageChange = (newPage) => {
         setPage(newPage);
+        scrollToTop();
     };
 
     return (
@@ -87,7 +90,10 @@ const MyInscriptionsPage = () => {
                                 ? 'bg-light-gradient dark:bg-dark-gradient text-white border-transparent'
                                 : 'bg-gray-200 text-gray-800'
                         }`}
-                        onClick={() => setFilter('all')}
+                        onClick={() => {
+                            setFilter('all');
+                            scrollToTop();
+                        }}
                     >
                         Todas
                     </button>
@@ -97,7 +103,10 @@ const MyInscriptionsPage = () => {
                                 ? 'bg-light-gradient dark:bg-dark-gradient text-white border-transparent'
                                 : 'bg-gray-200 text-gray-800'
                         }`}
-                        onClick={() => setFilter('current')}
+                        onClick={() => {
+                            setFilter('current');
+                            scrollToTop();
+                        }}
                     >
                         Actuales
                     </button>
@@ -107,7 +116,10 @@ const MyInscriptionsPage = () => {
                                 ? 'bg-light-gradient dark:bg-dark-gradient text-white border-transparent'
                                 : 'bg-gray-200 text-gray-800'
                         }`}
-                        onClick={() => setFilter('past')}
+                        onClick={() => {
+                            setFilter('past');
+                            scrollToTop();
+                        }}
                     >
                         Pasadas
                     </button>
