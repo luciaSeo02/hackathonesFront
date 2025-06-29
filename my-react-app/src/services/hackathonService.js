@@ -13,7 +13,14 @@ export async function createHackathon(hackathonData) {
 
     const json = await response.json();
 
-    if (!response.ok) throw new Error(json.message);
+    if (!response.ok) {
+        if (Array.isArray(json.error)) {
+            const joined = json.error.join('\n');
+            throw new Error(joined);
+        } else {
+            throw new Error(json.message || 'Error al crear hackathon');
+        }
+    }
 
     return json;
 }

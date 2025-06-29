@@ -6,6 +6,7 @@ import Success from './ui/Success';
 import ErrorDiv from './ui/ErrorDiv';
 import AuthContext from '../context/AuthContextProvider.jsx';
 import inscriptionService from '../services/inscriptionService';
+import HackathonFileUpload from './CreateHackathon/HackathonFileUpload.jsx';
 
 const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
     const { userLogged, token } = useContext(AuthContext);
@@ -21,6 +22,23 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
     const [editData, setEditData] = useState({});
     const [showDocs, setShowDocs] = useState(false);
     const [showFullDescription, setShowFullDescription] = useState(false);
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [showDeleteFilePopup, setShowDeleteFilePopup] = useState(false);
+    const [fileIdToDelete, setFileIdToDelete] = useState(null);
+    const [fileUploadError, setFileUploadError] = useState('');
+
+    const confirmDeleteAttachment = (fileId) => {
+        setFileIdToDelete(fileId);
+        setShowDeleteFilePopup(true);
+    };
+
+    const handleFileSelect = (files) => {
+        setSelectedFiles(files);
+    };
+
+    const removeFile = (fileId) => {
+        setSelectedFiles((prev) => prev.filter((f) => f.id !== fileId));
+    };
 
     useEffect(() => {
         if (successMessage || errorMessage) {
@@ -97,6 +115,75 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
         }
     };
 
+    const handleDeleteAttachment = async () => {
+        try {
+            const response = await fetch(
+                `${
+                    import.meta.env.VITE_URL_API
+                }/hackathons/${hackathonId}/files/${fileIdToDelete}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: token ? `Bearer ${token}` : '',
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(
+                    errorData.message || 'Error al eliminar el archivo'
+                );
+            }
+
+            setSuccessMessage('Archivo eliminado correctamente');
+            setHackathon((prev) => ({
+                ...prev,
+                attachments: prev.attachments.filter(
+                    (a) => a.id !== fileIdToDelete
+                ),
+            }));
+        } catch (err) {
+            setErrorMessage(err.message);
+        } finally {
+            setShowDeleteFilePopup(false);
+            setFileIdToDelete(null);
+        }
+    };
+
+    const uploadFiles = async (hackathonId) => {
+        if (selectedFiles.length === 0) return;
+        const token = localStorage.getItem('token');
+        const imageFiles = selectedFiles.filter((f) => f.type === 'image');
+        if (imageFiles.length > 3) {
+            throw new Error('No puedes subir más de 3 imágenes.');
+        }
+
+        for (const fileItem of selectedFiles) {
+            const formDataFile = new FormData();
+            formDataFile.append('attachment', fileItem.file);
+            formDataFile.append('fileType', fileItem.type);
+            const response = await fetch(
+                `${
+                    import.meta.env.VITE_URL_API
+                }/hackathons/${hackathonId}/attachments`,
+                {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: formDataFile,
+                }
+            );
+            if (!response.ok) {
+                const json = await response.json();
+                throw new Error(
+                    `Error subiendo ${fileItem.name}: ${json.message}`
+                );
+            }
+        }
+    };
+
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('es-ES', {
             year: 'numeric',
@@ -131,6 +218,12 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
         setError('');
         setSuccessMessage('');
         setErrorMessage('');
+        if (fileUploadError) {
+            setErrorMessage(fileUploadError);
+            setLoading(false);
+            return;
+        }
+
         try {
             const res = await fetch(
                 `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}`,
@@ -157,8 +250,10 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
             );
             const json = await res.json();
             if (!res.ok) throw new Error(json.message || 'Error al editar');
+            if (selectedFiles.length > 0) await uploadFiles(hackathonId);
             setSuccessMessage('¡Hackathon editado correctamente!');
             setIsEditing(false);
+            setSelectedFiles([]);
             fetchHackathonDetails();
         } catch (err) {
             setErrorMessage(err.message);
@@ -465,6 +560,77 @@ const HackathonModal = ({ hackathonId, isOpen, onClose }) => {
                                 </div>
                             )}
                         </div>
+                        {isEditing && hackathon.attachments?.length > 0 && (
+                            <div className="mt-4">
+                                <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                                    Archivos adjuntos:
+                                </h3>
+                                <ul className="space-y-2">
+                                    {hackathon.attachments.map((attachment) => (
+                                        <li
+                                            key={attachment.id}
+                                            className="flex items-center justify-between bg-gray-100 p-2 rounded"
+                                        >
+                                            <a
+                                                href={attachment.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-blue-600 text-sm truncate max-w-[70%]"
+                                            >
+                                                {attachment.url
+                                                    .split('/')
+                                                    .pop()}
+                                            </a>
+                                            <button
+                                                onClick={() =>
+                                                    confirmDeleteAttachment(
+                                                        attachment.id
+                                                    )
+                                                }
+                                                className="text-red-600 text-sm hover:underline"
+                                            >
+                                                Eliminar
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
+                        {showDeleteFilePopup && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+                                <div className="bg-white p-4 rounded-xl shadow-xl flex flex-col items-center w-[95vw] max-w-xs">
+                                    <p className="mb-4 font-semibold text-gray-800 text-center">
+                                        ¿Estás seguro de que deseas eliminar
+                                        este archivo? Esta acción no se puede
+                                        deshacer.
+                                    </p>
+                                    <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 justify-center items-center">
+                                        <Button
+                                            onClick={handleDeleteAttachment}
+                                            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                                            text="Sí, eliminar"
+                                        />
+                                        <Button
+                                            onClick={() => {
+                                                setShowDeleteFilePopup(false);
+                                                setFileIdToDelete(null);
+                                            }}
+                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                                            text="Cancelar"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                        {isEditing && (
+                            <HackathonFileUpload
+                                selectedFiles={selectedFiles}
+                                setSelectedFiles={handleFileSelect}
+                                removeFile={removeFile}
+                                setFileUploadError={setFileUploadError}
+                            />
+                        )}
                     </div>
 
                     {/* Columna de información */}
