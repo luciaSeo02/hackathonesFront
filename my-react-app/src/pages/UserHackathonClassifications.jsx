@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
 import Pagination from '../components/ui/Pagination';
+import useAutoScroll from '../hooks/useAutoScroll';
 
 const LIMIT = 8;
 
@@ -12,6 +13,7 @@ const UserHackathonClassifications = () => {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const navigate = useNavigate();
+    const { scrollToTop } = useAutoScroll();
 
     useEffect(() => {
         if (userLogged) {
@@ -39,6 +41,7 @@ const UserHackathonClassifications = () => {
 
     const handlePageChange = (newPage) => {
         setPage(newPage);
+        scrollToTop();
     };
 
     if (!userLogged) return <p>Debes iniciar sesión.</p>;

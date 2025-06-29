@@ -4,6 +4,7 @@ import HackathonCard from './HackathonCard';
 import HackathonModal from './HackathonModal';
 import Pagination from './ui/Pagination';
 import spinnerGif from '../assets/ZKZg.gif';
+import useAutoScroll from '../hooks/useAutoScroll';
 
 const LIMIT = 12;
 
@@ -16,6 +17,7 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const navigate = useNavigate();
+    const { scrollToTop } = useAutoScroll();
 
     useEffect(() => {
         const fetchHackathons = async () => {
@@ -50,6 +52,12 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
         fetchHackathons();
     }, [searchParams, redirectIfEmpty, navigate, page]);
 
+    // Scroll automático cuando cambian los parámetros (nuevos filtros)
+    useEffect(() => {
+        scrollToTop();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams.toString()]);
+
     const handleShowDetails = (hackathonId) => {
         setSelectedHackathonId(hackathonId);
         setIsModalOpen(true);
@@ -64,6 +72,7 @@ const HackathonsList = ({ searchParams, redirectIfEmpty = false }) => {
 
     const handlePageChange = (newPage) => {
         setPage(newPage);
+        scrollToTop();
     };
 
     if (loading)
