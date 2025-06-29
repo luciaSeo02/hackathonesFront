@@ -11,7 +11,7 @@ import NotFoundPage from './pages/NotFoundPage.jsx';
 import AdminCreateHackathon from './pages/AdminCreateHackathon.jsx';
 import ValidatePage from './pages/ValidatePage.jsx';
 import MenuPage from './pages/MenuPage.jsx';
-import PublishRankingPage from './pages/PublishRankingForm.jsx';
+import PublishRankingPage from './pages/PublishRankingPage.jsx';
 import ViewClassificationPage from './pages/ViewClassificationPage';
 import RecoverPasswordPage from './pages/RecoverPasswordPage.jsx';
 import ChangePasswordPage from './pages/ChangePasswordPage.jsx';
@@ -84,8 +84,6 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
-                <Route path="*" element={<NotFoundPage />} />
-                <Route path="/not-authorized" element={<NotAuthorizedPage />} />
 
                 <Route
                     path="/hackathons/classification"
@@ -95,6 +93,7 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="/hackathons/:hackathonId/classification"
                     element={
@@ -111,6 +110,9 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+
+                <Route path="*" element={<NotFoundPage />} />
+                <Route path="/not-authorized" element={<NotAuthorizedPage />} />
             </Route>
         </Routes>
     );

@@ -2,14 +2,12 @@ import { useState, useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { X } from 'lucide-react';
 import CloseX from '../components/ui/CloseX';
-import Button from '../components/ui/Button';
-import ButtonBig from '../components/ui/ButtonBig';
 import AuthContext from '../context/AuthContextProvider';
 import fetchApiAuth from '../services/Postclassification';
 import ErrorDiv from '../components/ui/ErrorDiv';
 import Success from '../components/ui/Success';
 
-const PublishRankingPage = () => {
+const HackathonClasification = () => {
     const { hackathonId } = useParams();
     const { userLogged } = useContext(AuthContext);
     const [ranking, setRanking] = useState([{ userId: '', position: '' }]);
@@ -184,7 +182,7 @@ const PublishRankingPage = () => {
                     </div>
                 </form>
 
-                <div className='mt-6 w-full'>
+                <div className="mt-6 w-full">
                     {errorMessage && <ErrorDiv error={errorMessage} />}
                     {successMessage && <Success success={successMessage} />}
                 </div>
@@ -193,4 +191,4 @@ const PublishRankingPage = () => {
     );
 };
 
-export default PublishRankingPage;
+export default HackathonClasification;

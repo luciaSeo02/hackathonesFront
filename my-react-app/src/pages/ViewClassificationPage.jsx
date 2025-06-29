@@ -12,7 +12,9 @@ const ViewClassificationPage = () => {
         const fetchClassification = async () => {
             try {
                 const res = await fetchApi(
-                    `${import.meta.env.VITE_URL_API}/hackathons/${hackathonId}/classification/view`
+                    `${
+                        import.meta.env.VITE_URL_API
+                    }/hackathons/${hackathonId}/classification/view`
                 );
                 setClassification(res.classification || []);
                 // eslint-disable-next-line
@@ -39,7 +41,7 @@ const ViewClassificationPage = () => {
         );
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="min-h-screen flex items-center justify-center p-5 bg-white">
             <div className="rounded-3xl shadow-2xl border-2 border-gray-200 p-6 sm:p-10 w-full max-w-md sm:max-w-lg flex flex-col items-center transition-shadow hover:shadow-[0_8px_40px_rgba(95,61,196,0.15)] bg-white">
                 <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center">
                     Clasificación
@@ -52,7 +54,7 @@ const ViewClassificationPage = () => {
                     <div className="w-full flex justify-center">
                         <div className="overflow-x-auto w-full">
                             <table className="mx-auto w-full max-w-xs sm:max-w-md text-left border-collapse">
-                               <thead>
+                                <thead>
                                     <tr>
                                         <th className="py-2 px-2 sm:px-4 border-b border-gray-300 text-center">
                                             Avatar
@@ -72,9 +74,17 @@ const ViewClassificationPage = () => {
                                                 <img
                                                     src={
                                                         row.avatar
-                                                            ? row.avatar.startsWith('http')
+                                                            ? row.avatar.startsWith(
+                                                                  'http'
+                                                              )
                                                                 ? row.avatar
-                                                                : `${import.meta.env.VITE_URL_API}/uploads/avatar/${row.avatar}`
+                                                                : `${
+                                                                      import.meta
+                                                                          .env
+                                                                          .VITE_URL_API
+                                                                  }/uploads/avatar/${
+                                                                      row.avatar
+                                                                  }`
                                                             : '/defaultAvatar.png'
                                                     }
                                                     alt={row.username}

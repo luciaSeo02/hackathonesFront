@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import FormClassifications from '../components/FormClassifications';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
 
@@ -99,23 +98,6 @@ const PublishClassificationPage = () => {
                         </div>
                     ))}
             </div>
-
-            {hackathon && (
-                <>
-                    <h2 className="text-xl font-semibold mb-4 text-center">
-                        Publicar Clasificación para:{' '}
-                        <span className="text-indigo-700">
-                            {hackathon.name}
-                        </span>
-                    </h2>
-                    <div ref={formRef}>
-                        <FormClassifications
-                            hackathon={hackathon}
-                            participants={participants}
-                        />
-                    </div>
-                </>
-            )}
         </div>
     );
 };

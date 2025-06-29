@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext} from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../context/AuthContextProvider';
 import Button from '../components/ui/Button';
@@ -45,9 +45,9 @@ const UserHackathonClassifications = () => {
 
     return (
         <div className="max-w-3xl mx-auto py-8">
-            <h1 className="text-2xl font-bold mb-6 text-center">
+            <h3 className="text-2xl font-bold mb-6 text-center mt-5">
                 Hackathones en los que participas
-            </h1>
+            </h3>
             <div className="grid gap-4 mb-8">
                 {myHackathons.length === 0 && (
                     <div className="bg-white rounded-xl shadow p-6 text-center text-gray-500">
@@ -58,7 +58,9 @@ const UserHackathonClassifications = () => {
                     <div
                         key={h.id}
                         className="cursor-pointer bg-white rounded-xl shadow-md p-5 flex flex-col gap-2 transition border-2 border-transparent hover:border-indigo-300"
-                        onClick={() => navigate(`/hackathons/${h.id}/classification/view`)}
+                        onClick={() =>
+                            navigate(`/hackathons/${h.id}/classification/view`)
+                        }
                     >
                         <div>
                             <h3 className="font-semibold text-lg text-indigo-700">
