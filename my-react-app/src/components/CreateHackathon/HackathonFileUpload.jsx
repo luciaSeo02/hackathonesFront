@@ -1,18 +1,55 @@
 import { Upload, Image, FileText, X } from 'lucide-react';
 import formatFileSize from '../../services/fileUtils';
+import ErrorDiv from '../ui/ErrorDiv';
+import { useState } from 'react';
 
-const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) => {
+const HackathonFileUpload = ({
+    selectedFiles,
+    setSelectedFiles,
+    removeFile,
+    setFileUploadError,
+}) => {
+    const [error, setError] = useState('');
+
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);
-        const newFiles = files.map((file) => ({
-            file,
-            id: Date.now() + Math.random(),
-            type: file.type.startsWith('image/') ? 'image' : 'document',
-            name: file.name,
-            size: file.size,
-        }));
+
+        const existingImages = selectedFiles.filter(
+            (file) => file.type === 'image'
+        );
+        const imageCount = existingImages.length;
+
+        const newFiles = [];
+        for (let file of files) {
+            const isImage = file.type.startsWith('image/');
+            if (
+                isImage &&
+                imageCount +
+                    newFiles.filter((f) => f.type === 'image').length >=
+                    3
+            ) {
+                continue;
+            }
+
+            newFiles.push({
+                file,
+                id: Date.now() + Math.random(),
+                type: isImage ? 'image' : 'document',
+                name: file.name,
+                size: file.size,
+            });
+        }
+
         setSelectedFiles([...selectedFiles, ...newFiles]);
         e.target.value = '';
+        if (
+            imageCount + newFiles.filter((f) => f.type === 'image').length <
+            files.filter((f) => f.type.startsWith('image/')).length
+        ) {
+            setFileUploadError('Solo puedes subir hasta 3 imágenes.');
+        } else {
+            setFileUploadError('');
+        }
     };
 
     return (
@@ -35,7 +72,8 @@ const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) =>
                             Arrastra archivos aquí o haz clic para seleccionar
                         </p>
                         <p className="text-xs text-gray-400 mt-1">
-                            Imágenes (JPG, PNG, WebP) y documentos (PDF, DOC, DOCX, ZIP)
+                            Imágenes (JPG, PNG, WebP) y documentos (PDF, DOC,
+                            DOCX, ZIP)
                         </p>
                     </div>
                 </div>
@@ -63,7 +101,9 @@ const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) =>
                                         </p>
                                         <p className="text-xs text-gray-500">
                                             {formatFileSize(fileItem.size)} •{' '}
-                                            {fileItem.type === 'image' ? 'Imagen' : 'Documento'}
+                                            {fileItem.type === 'image'
+                                                ? 'Imagen'
+                                                : 'Documento'}
                                         </p>
                                     </div>
                                 </div>
@@ -79,8 +119,10 @@ const HackathonFileUpload = ({ selectedFiles, setSelectedFiles, removeFile }) =>
                     </div>
                 </div>
             )}
+
+            {error && <ErrorDiv error={error} />}
         </div>
     );
-}
+};
 
 export default HackathonFileUpload;

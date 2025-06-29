@@ -35,6 +35,7 @@ const CreateHackathonForm = ({
         technologyNames: '',
     });
     const [selectedFiles, setSelectedFiles] = useState([]);
+    const [fileUploadError, setFileUploadError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -52,6 +53,11 @@ const CreateHackathonForm = ({
     const uploadFiles = async (hackathonId) => {
         if (selectedFiles.length === 0) return;
         const token = localStorage.getItem('token');
+        const imageFiles = selectedFiles.filter((f) => f.type === 'image');
+        if (imageFiles.length > 3) {
+            throw new Error('No puedes subir más de 3 imágenes.');
+        }
+
         for (const fileItem of selectedFiles) {
             const formDataFile = new FormData();
             formDataFile.append('attachment', fileItem.file);
@@ -81,6 +87,18 @@ const CreateHackathonForm = ({
         e.preventDefault();
         setError('');
         setSuccess('');
+        const imageFiles = selectedFiles.filter(
+            (file) => file.type === 'image'
+        );
+        if (imageFiles.length > 3) {
+            setError('No puedes subir más de 3 imágenes.');
+            return;
+        }
+        if (fileUploadError) {
+            setError(fileUploadError);
+            return;
+        }
+
         setIsUploading(true);
         try {
             const data = {
@@ -159,6 +177,7 @@ const CreateHackathonForm = ({
                 selectedFiles={selectedFiles}
                 setSelectedFiles={handleFileSelect}
                 removeFile={removeFile}
+                setFileUploadError={setFileUploadError}
             />
             <ButtonBig
                 type="submit"

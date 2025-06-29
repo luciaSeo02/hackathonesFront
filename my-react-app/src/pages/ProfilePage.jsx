@@ -136,9 +136,7 @@ const ProfilePage = () => {
             <div className="w-full max-w-6xl mx-auto p-6 rounded-xl shadow-xl mt-16">
                 <div className="flex flex-col lg:flex-row gap-12">
                     <div className="w-full lg:w-1/3 flex flex-col items-center text-center space-y-8">
-                        <h3>
-                            Perfil del usuario
-                        </h3>
+                        <h3>Perfil del usuario</h3>
 
                         <div className="flex flex-col items-center gap-6 w-full">
                             <div className="relative group w-40 h-40 lg:w-60 lg:h-60">
@@ -233,16 +231,19 @@ const ProfilePage = () => {
                                     <div className="flex gap-3 flex-wrap justify-center">
                                         {!isEditing && !showPasswordForm && (
                                             <>
-                                                <Button
-                                                    text="Editar perfil"
-                                                    onClick={() => {
-                                                        setIsEditing(true);
-                                                        setShowPasswordForm(
-                                                            false
-                                                        );
-                                                    }}
-                                                    className="w-44"
-                                                />
+                                                {userLogged.role !==
+                                                    'admin' && (
+                                                    <Button
+                                                        text="Editar perfil"
+                                                        onClick={() => {
+                                                            setIsEditing(true);
+                                                            setShowPasswordForm(
+                                                                false
+                                                            );
+                                                        }}
+                                                        className="w-44"
+                                                    />
+                                                )}
                                                 <Button
                                                     text="Cambiar contraseña"
                                                     onClick={() => {
